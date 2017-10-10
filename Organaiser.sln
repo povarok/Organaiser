@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25402.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndroidSQLite", "AndroidSQLite.csproj", "{B2620831-BDC3-470D-AB3D-A3220CBBCE31}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Organaiser", "Organaiser.csproj", "{B2620831-BDC3-470D-AB3D-A3220CBBCE31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,5 +20,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7A5EE125-DB57-4142-95EF-48330F4388A4}
 	EndGlobalSection
 EndGlobal
