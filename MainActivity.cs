@@ -18,6 +18,7 @@ namespace AndroidSQLite
         ListView lstData;
         List<Person> lstSource = new List<Person>();
         DataBase db;
+       
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
@@ -110,9 +111,25 @@ namespace AndroidSQLite
                         elementId = db.selectQuery(lstData.Adapter.GetItemId(e.Position));
                         Console.WriteLine("Выбран элемент с id= " + elementId);
 
-
+                        FragmentTransaction ft = FragmentManager.BeginTransaction();
+                        Fragment prev = FragmentManager.FindFragmentByTag("dialog");
+                        Bundle frag_bundle = new Bundle();
+                        frag_bundle.PutLong("Id", elementId);
+                        
+                        
+                        if (prev != null)
+                        {
+                            ft.Remove(prev);
+                        }
+                        ft.AddToBackStack(null);
+                        DialogFragment1 newFr = DialogFragment1.NewInstance(frag_bundle);
+                        //newFr.Arguments.PutLong("Id", elementId);
+                        
+                        
+                        newFr.Show(ft, "dialog");
+                        
                         //Toast.MakeText(this, db.get_Element(elementId)[0].Name, ToastLength.Long).Show();
-                      
+
 
                     }
 
@@ -140,6 +157,7 @@ namespace AndroidSQLite
             };
 
         }
+       
 
         private void LoadData()
         {

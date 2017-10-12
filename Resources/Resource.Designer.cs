@@ -79,41 +79,53 @@ namespace AndroidSQLite
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f070002
-			public const int CloseButton = 2131165186;
-			
-			// aapt resource value: 0x7f070008
-			public const int btnAdd = 2131165192;
-			
-			// aapt resource value: 0x7f070007
-			public const int btnCreateDialog = 2131165191;
-			
-			// aapt resource value: 0x7f07000a
-			public const int btnDelete = 2131165194;
-			
-			// aapt resource value: 0x7f070009
-			public const int btnEdit = 2131165193;
-			
-			// aapt resource value: 0x7f070005
-			public const int edtAge = 2131165189;
-			
 			// aapt resource value: 0x7f070006
-			public const int edtEmail = 2131165190;
+			public const int CloseButton = 2131165190;
 			
-			// aapt resource value: 0x7f070004
-			public const int edtName = 2131165188;
+			// aapt resource value: 0x7f07000c
+			public const int btnAdd = 2131165196;
 			
 			// aapt resource value: 0x7f07000b
-			public const int listView = 2131165195;
+			public const int btnCreateDialog = 2131165195;
+			
+			// aapt resource value: 0x7f07000e
+			public const int btnDelete = 2131165198;
+			
+			// aapt resource value: 0x7f07000d
+			public const int btnEdit = 2131165197;
+			
+			// aapt resource value: 0x7f070005
+			public const int btnSaveFr = 2131165189;
+			
+			// aapt resource value: 0x7f070009
+			public const int edtAge = 2131165193;
+			
+			// aapt resource value: 0x7f070002
+			public const int edtAgeFr = 2131165186;
+			
+			// aapt resource value: 0x7f07000a
+			public const int edtEmail = 2131165194;
+			
+			// aapt resource value: 0x7f070003
+			public const int edtEmailFr = 2131165187;
+			
+			// aapt resource value: 0x7f070008
+			public const int edtName = 2131165192;
+			
+			// aapt resource value: 0x7f070001
+			public const int edtNameFr = 2131165185;
+			
+			// aapt resource value: 0x7f07000f
+			public const int listView = 2131165199;
 			
 			// aapt resource value: 0x7f070000
 			public const int textView1 = 2131165184;
 			
-			// aapt resource value: 0x7f070001
-			public const int textView2 = 2131165185;
+			// aapt resource value: 0x7f070004
+			public const int textView2 = 2131165188;
 			
-			// aapt resource value: 0x7f070003
-			public const int textView3 = 2131165187;
+			// aapt resource value: 0x7f070007
+			public const int textView3 = 2131165191;
 			
 			static Id()
 			{

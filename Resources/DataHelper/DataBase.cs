@@ -144,8 +144,8 @@ namespace AndroidSQLite.Resources.DataHelper
             {
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "Persons.db")))
                 {
-                    var someData = connection.Query<Person>("SELECT Name FROM Person Where Id=?", Id);
-                    //var dataName = someData[0];
+                    var someData = connection.Query<Person>("SELECT * FROM Person Where Id=?", Id);
+                   
 
                     return someData;
                 }
