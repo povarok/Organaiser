@@ -23,23 +23,17 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
-            android:id="@+id/btnCreateDialog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Dialog"
-            android:layout_weight="1" />
-        <Button
             android:id="@+id/btnAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add"
             android:layout_weight="1" />
-        <Button
+        <!--<Button
             android:id="@+id/btnEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Edit"
-            android:layout_weight="1" />
+            android:layout_weight="1" />-->
         <Button
             android:id="@+id/btnDelete"
             android:layout_width="wrap_content"

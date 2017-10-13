@@ -21,6 +21,10 @@ namespace AndroidSQLite
         ListView lstData;
         List<Person> lstSource = new List<Person>();
         DataBase db;
+        
+
+
+
         public static DialogFragment1 NewInstance(Bundle bundle)
         {
             DialogFragment1 fragment = new DialogFragment1();
@@ -30,18 +34,21 @@ namespace AndroidSQLite
     
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
+            
+
+
             db = new DataBase();
             db.createDataBase();
             string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             View view = inflater.Inflate(Resource.Layout.fragment_layout, container, false);
             Button buttonSave = view.FindViewById<Button>(Resource.Id.btnSaveFr);
             Button buttonCl = view.FindViewById<Button>(Resource.Id.CloseButton);
-            TextView txtView = view.FindViewById<TextView>(Resource.Id.textView2);
+            
             EditText editName = view.FindViewById<EditText>(Resource.Id.edtNameFr);
             EditText editEmail = view.FindViewById<EditText>(Resource.Id.edtEmailFr);
             EditText editAge = view.FindViewById<EditText>(Resource.Id.edtAgeFr);
             //var getID = savedInstanceState.GetLong("Id",1288);
-            var getID = Arguments.GetLong("Id", 1243);
+            var getID = Arguments.GetLong("Id", 0);
             //Bundle new_bundle = this.Arguments.GetBundle("ID");
 
             var selected_Element = db.get_Element(getID)[0];
@@ -49,25 +56,32 @@ namespace AndroidSQLite
             editAge.Text = selected_Element.Age.ToString();
             editEmail.Text = selected_Element.Email;
            
-            //var getID = this.Arguments.GetLong("Id", 1488);
-            txtView.Text =  selected_Element.Age.ToString();
             buttonSave.Click += delegate
             {
-                selected_Element.Id = int.Parse(getID.ToString());//int.Parse(editName.Tag.ToString());
-                selected_Element.Name = "Nsmr";//editName.Text;
-                selected_Element.Age = 15;//int.Parse(editAge.Text);
-                selected_Element.Email = "dfefwe";//editEmail.Text;
-               //Person person = new Person()
-               // {
-               //     Id = int.Parse(editName.Tag.ToString()),
-               //     Name = editName.Text,
-               //     Age = int.Parse(editAge.Text),
-               //     Email = editEmail.Text
-               // };
+                selected_Element.Id = int.Parse(getID.ToString());
+
+                if(editName.Text != null)
+                    { selected_Element.Name = editName.Text;}
+                else
+                { selected_Element.Name = "Null"; }
+
+                if (editAge.Text != null)
+                { selected_Element.Age =int.Parse( editAge.Text); }
+                else
+                { selected_Element.Age = 0; }
+                if (editEmail.Text != null)
+                { selected_Element.Email = editEmail.Text; }
+                else
+                { selected_Element.Name = "Null"; }
+                
+              
                 db.updateTablePerson(selected_Element);
                 //Закрыть фрагмент
+                MainActivity ma = (MainActivity)this.Activity;
+                ma.LoadData();
                 Dismiss();
-               // LoadData();
+                
+                // LoadData();
             };
 
             buttonCl.Click += delegate

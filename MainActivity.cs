@@ -40,9 +40,9 @@ namespace AndroidSQLite
             var edtEmail = FindViewById<EditText>(Resource.Id.edtEmail);
 
             var btnAdd = FindViewById<Button>(Resource.Id.btnAdd);
-            var btnEdit = FindViewById<Button>(Resource.Id.btnEdit);
+            //var btnEdit = FindViewById<Button>(Resource.Id.btnEdit);
             var btnDelete = FindViewById<Button>(Resource.Id.btnDelete);
-            var crtDiaog = FindViewById<Button>(Resource.Id.btnCreateDialog);
+            
 
             //LoadData
             LoadData();
@@ -59,17 +59,17 @@ namespace AndroidSQLite
                 LoadData();
             };
 
-            btnEdit.Click += delegate {
-                Person person = new Person()
-                {
-                    Id=int.Parse(edtName.Tag.ToString()),
-                    Name = edtName.Text,
-                    Age = int.Parse(edtAge.Text),
-                    Email = edtEmail.Text
-                };
-                db.updateTablePerson(person);
-                LoadData();
-            };
+            //btnEdit.Click += delegate {
+            //    Person person = new Person()
+            //    {
+            //        Id=int.Parse(edtName.Tag.ToString()),
+            //        Name = edtName.Text,
+            //        Age = int.Parse(edtAge.Text),
+            //        Email = edtEmail.Text
+            //    };
+            //    db.updateTablePerson(person);
+            //    LoadData();
+            //};
 
             btnDelete.Click += delegate {
                 Person person = new Person()
@@ -83,19 +83,7 @@ namespace AndroidSQLite
                 LoadData();
             };
 
-            crtDiaog.Click += delegate
-            {
-                //Вставить для создания диалога 
-                FragmentTransaction ft = FragmentManager.BeginTransaction();
-                Fragment prev = FragmentManager.FindFragmentByTag("dialog");
-                if (prev != null)
-                {
-                    ft.Remove(prev);
-                }
-                ft.AddToBackStack(null);
-                DialogFragment1 newFr = DialogFragment1.NewInstance(null);
-                newFr.Show(ft, "dialog");
-            };
+           
 
             lstData.ItemClick += (s,e) =>{
                 //lstData
@@ -159,7 +147,7 @@ namespace AndroidSQLite
         }
        
 
-        private void LoadData()
+        public void LoadData()
         {
             lstSource = db.selectTablePerson();
             var adapter = new ListViewAdapter(this, lstSource);
