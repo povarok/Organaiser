@@ -49,13 +49,29 @@ namespace AndroidSQLite
             EditText editAge = view.FindViewById<EditText>(Resource.Id.edtAgeFr);
             //var getID = savedInstanceState.GetLong("Id",1288);
             var getID = Arguments.GetLong("Id", 0);
+            Console.Write("asd");
             //Bundle new_bundle = this.Arguments.GetBundle("ID");
 
-            var selected_Element = db.get_Element(getID)[0];
-            editName.Text = selected_Element.Name;
-            editAge.Text = selected_Element.Age.ToString();
-            editEmail.Text = selected_Element.Email;
-           
+            //var selected_Element = new AndroidSQLite.Resources.Model.Person();
+
+            //if (getID != ((long)0))
+            //{
+              var  selected_Element = db.get_Element(getID)[0];
+                editName.Text = selected_Element.Name;
+                editAge.Text = selected_Element.Age.ToString();
+                editEmail.Text = selected_Element.Email;
+            //}
+
+            //else
+            //{
+
+            //    //editName.Text = "";
+            //    //editAge.Text = "";
+            //    //editEmail.Text = "";
+
+
+            //}
+
             buttonSave.Click += delegate
             {
                 selected_Element.Id = int.Parse(getID.ToString());

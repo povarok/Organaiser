@@ -82,11 +82,11 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f070005
 			public const int CloseButton = 2131165189;
 			
-			// aapt resource value: 0x7f07000b
-			public const int btnAdd = 2131165195;
+			// aapt resource value: 0x7f07000d
+			public const int btnAdd = 2131165197;
 			
-			// aapt resource value: 0x7f07000c
-			public const int btnDelete = 2131165196;
+			// aapt resource value: 0x7f07000b
+			public const int btnDelete = 2131165195;
 			
 			// aapt resource value: 0x7f070004
 			public const int btnSaveFr = 2131165188;
@@ -109,8 +109,8 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f070001
 			public const int edtNameFr = 2131165185;
 			
-			// aapt resource value: 0x7f07000d
-			public const int listView = 2131165197;
+			// aapt resource value: 0x7f07000c
+			public const int listView = 2131165196;
 			
 			// aapt resource value: 0x7f070000
 			public const int textView1 = 2131165184;

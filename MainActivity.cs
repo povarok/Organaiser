@@ -9,6 +9,8 @@ using AndroidSQLite.Resources;
 using Android.Util;
 using SQLite;
 using Android.Content;
+using static Android.Views.View;
+using Android.Views;
 
 namespace AndroidSQLite
 {
@@ -50,13 +52,34 @@ namespace AndroidSQLite
             //Event
             btnAdd.Click += delegate
             {
-                Person person = new Person() {
-                    Name = edtName.Text,
-                    Age = int.Parse(edtAge.Text),
-                    Email = edtEmail.Text
+                
+
+                Person person = new Person()
+                {
+                    Name = "",
+                    Age = 0,
+                    Email = ""
                 };
                 db.insertIntoTablePerson(person);
-                LoadData();
+                //LoadData();
+
+                FragmentTransaction ft = FragmentManager.BeginTransaction();
+                Fragment prev = FragmentManager.FindFragmentByTag("dialog");
+                Bundle frag_bundle = new Bundle();
+                frag_bundle.PutLong("Id", person.Id);
+
+
+                if (prev != null)
+                {
+                    ft.Remove(prev);
+                }
+                ft.AddToBackStack(null);
+                DialogFragment1 newFr = DialogFragment1.NewInstance(frag_bundle);
+                //newFr.Arguments.PutLong("Id", elementId);
+
+
+                newFr.Show(ft, "dialog");
+
             };
 
             //btnEdit.Click += delegate {
@@ -70,7 +93,7 @@ namespace AndroidSQLite
             //    db.updateTablePerson(person);
             //    LoadData();
             //};
-
+            //lstData.SetOnTouchListener(new IOnTouchListener)
             btnDelete.Click += delegate {
                 Person person = new Person()
                 {
@@ -82,9 +105,21 @@ namespace AndroidSQLite
                 db.deleteTablePerson(person);
                 LoadData();
             };
+            //Эдик разбирайся
+            //Хрень для свайпа10!)
+            //lstData.Touch += (s, e) =>
+            //{
+            //    var handled = false;
+            //    if (e.Event.Action == OverScroll)//MotionEventActions.Down)
+            //    {
+            //        // do stuff
+            //        Console.WriteLine("Doim stuff");
+            //        handled = true;
+            //    }
+                
 
-           
-
+            //    e.Handled = handled;
+            //};
             lstData.ItemClick += (s,e) =>{
                 //lstData
                 //Set background for selected item

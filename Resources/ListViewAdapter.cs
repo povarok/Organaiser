@@ -48,6 +48,16 @@ namespace AndroidSQLite.Resources
         {
             return lstPerson[position].Id;
         }
+        //public bool OnTouch(View view, MotionEvent motionEvent)
+        //{
+        //    if (motionEvent.Action == MotionEventActions.Down)
+        //    {
+
+        //        return true;
+        //    }
+        //    return false;
+        //}
+
 
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
