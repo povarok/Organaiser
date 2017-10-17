@@ -11,76 +11,99 @@ using SQLite;
 using Android.Content;
 using static Android.Views.View;
 using Android.Views;
+using Android.Support.V4.View;
+using Android.Support.V4.App;
 
 namespace AndroidSQLite
 {
     [Activity(Label = "AndroidSQLite", MainLauncher = true, Icon = "@drawable/icon")]
-    public class MainActivity : Activity
+    public class MainActivity : FragmentActivity
     {
         ListView lstData;
         List<Person> lstSource = new List<Person>();
         DataBase db;
-       
+        int count = 1;
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            long elementId;
+           // long elementId;
             
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
 
+
+            ActionBar.NavigationMode = ActionBarNavigationMode.Tabs;
+            var pager = FindViewById<ViewPager>(Resource.Id.pager);
+            var adaptor = new GenericFragmentPagerAdaptor(SupportFragmentManager);
+            adaptor.AddFragmentView((i, v, b) => {
+                var view = i.Inflate(Resource.Layout.SecondFragmentLayout, v, false);
+                
+                return view;
+            });
+
+            //adaptor.AddFragmentView((i, v, b) => {
+            //    var view = i.Inflate(Resource.Layout.tab, v, false);
+                
+                
+            //    return view;
+            //});
+
+            pager.Adapter = adaptor;
+            pager.SetOnPageChangeListener(new ViewPageListenerForActionBar(ActionBar));
+
+            ActionBar.AddTab(pager.GetViewPageTab(ActionBar, "First Tab"));
+            //ActionBar.AddTab(pager.GetViewPageTab(ActionBar, "Second Tab"));
             //Create DataBase
-            db = new DataBase();
-            db.createDataBase();
-            string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
-            Log.Info("DB_PATH", folder);
+            //db = new DataBase();
+            //db.createDataBase();
+            //string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+            //Log.Info("DB_PATH", folder);
 
-            lstData = FindViewById<ListView>(Resource.Id.listView);
+            //lstData = FindViewById<ListView>(Resource.Id.listView);
 
-            var edtName = FindViewById<EditText>(Resource.Id.edtName);
-            var edtAge = FindViewById<EditText>(Resource.Id.edtAge);
-            var edtEmail = FindViewById<EditText>(Resource.Id.edtEmail);
+            //var edtName = FindViewById<EditText>(Resource.Id.edtName);
+            //var edtAge = FindViewById<EditText>(Resource.Id.edtAge);
+            //var edtEmail = FindViewById<EditText>(Resource.Id.edtEmail);
 
-            var btnAdd = FindViewById<Button>(Resource.Id.btnAdd);
-            //var btnEdit = FindViewById<Button>(Resource.Id.btnEdit);
-            var btnDelete = FindViewById<Button>(Resource.Id.btnDelete);
-            
+            //var btnAdd = FindViewById<Button>(Resource.Id.btnAdd);
+            //var btnDelete = FindViewById<Button>(Resource.Id.btnDelete);
+
 
             //LoadData
-            LoadData();
+            //LoadData();
 
             //Event
-            btnAdd.Click += delegate
-            {
-                
-
-                Person person = new Person()
-                {
-                    Name = "",
-                    Age = 0,
-                    Email = ""
-                };
-                db.insertIntoTablePerson(person);
-                //LoadData();
-
-                FragmentTransaction ft = FragmentManager.BeginTransaction();
-                Fragment prev = FragmentManager.FindFragmentByTag("dialog");
-                Bundle frag_bundle = new Bundle();
-                frag_bundle.PutLong("Id", person.Id);
+            //btnAdd.Click += delegate
+            //{
 
 
-                if (prev != null)
-                {
-                    ft.Remove(prev);
-                }
-                ft.AddToBackStack(null);
-                DialogFragment1 newFr = DialogFragment1.NewInstance(frag_bundle);
-                //newFr.Arguments.PutLong("Id", elementId);
+            //    Person person = new Person()
+            //    {
+            //        Name = "",
+            //        Age = 0,
+            //        Email = ""
+            //    };
+            //    db.insertIntoTablePerson(person);
+            //    //LoadData();
+
+            //    FragmentTransaction ft = FragmentManager.BeginTransaction();
+            //    Fragment prev = FragmentManager.FindFragmentByTag("dialog");
+            //    Bundle frag_bundle = new Bundle();
+            //    frag_bundle.PutLong("Id", person.Id);
 
 
-                newFr.Show(ft, "dialog");
+            //    if (prev != null)
+            //    {
+            //        ft.Remove(prev);
+            //    }
+            //    ft.AddToBackStack(null);
+            //    DialogFragment1 newFr = DialogFragment1.NewInstance(frag_bundle);
+            //    //newFr.Arguments.PutLong("Id", elementId);
 
-            };
+
+            //    newFr.Show(ft, "dialog");
+
+            //};
 
             //btnEdit.Click += delegate {
             //    Person person = new Person()
@@ -94,17 +117,17 @@ namespace AndroidSQLite
             //    LoadData();
             //};
             //lstData.SetOnTouchListener(new IOnTouchListener)
-            btnDelete.Click += delegate {
-                Person person = new Person()
-                {
-                    Id = int.Parse(edtName.Tag.ToString()),
-                    Name = edtName.Text,
-                    Age = int.Parse(edtAge.Text),
-                    Email = edtEmail.Text
-                };
-                db.deleteTablePerson(person);
-                LoadData();
-            };
+            //btnDelete.Click += delegate {
+            //    Person person = new Person()
+            //    {
+            //        Id = int.Parse(edtName.Tag.ToString()),
+            //        Name = edtName.Text,
+            //        Age = int.Parse(edtAge.Text),
+            //        Email = edtEmail.Text
+            //    };
+            //    db.deleteTablePerson(person);
+            //    LoadData();
+            //};
             //Эдик разбирайся
             //Хрень для свайпа10!)
             //lstData.Touch += (s, e) =>
@@ -116,68 +139,68 @@ namespace AndroidSQLite
             //        Console.WriteLine("Doim stuff");
             //        handled = true;
             //    }
-                
+
 
             //    e.Handled = handled;
             //};
-            lstData.ItemClick += (s,e) =>{
-                //lstData
-                //Set background for selected item
-                for(int i = 0; i < lstData.Count; i++)
-                {
-                    if (e.Position == i)
-                    {
-                        //спросить про Intent
-                      //  Intent intent = new Intent(this,  )
-                       // lstData.GetChildAt(i).SetBackgroundColor(Android.Graphics.Color.DarkGray);
-                       //Получаем id выбранного в списке элемента
-                        elementId = db.selectQuery(lstData.Adapter.GetItemId(e.Position));
-                        Console.WriteLine("Выбран элемент с id= " + elementId);
+            //lstData.ItemClick += (s,e) =>{
+            //    //lstData
+            //    //Set background for selected item
+            //    for(int i = 0; i < lstData.Count; i++)
+            //    {
+            //        if (e.Position == i)
+            //        {
+            //            //спросить про Intent
+            //          //  Intent intent = new Intent(this,  )
+            //           // lstData.GetChildAt(i).SetBackgroundColor(Android.Graphics.Color.DarkGray);
+            //           //Получаем id выбранного в списке элемента
+            //            elementId = db.selectQuery(lstData.Adapter.GetItemId(e.Position));
+            //            Console.WriteLine("Выбран элемент с id= " + elementId);
 
-                        FragmentTransaction ft = FragmentManager.BeginTransaction();
-                        Fragment prev = FragmentManager.FindFragmentByTag("dialog");
-                        Bundle frag_bundle = new Bundle();
-                        frag_bundle.PutLong("Id", elementId);
-                        
-                        
-                        if (prev != null)
-                        {
-                            ft.Remove(prev);
-                        }
-                        ft.AddToBackStack(null);
-                        DialogFragment1 newFr = DialogFragment1.NewInstance(frag_bundle);
-                        //newFr.Arguments.PutLong("Id", elementId);
-                        
-                        
-                        newFr.Show(ft, "dialog");
-                        
-                        //Toast.MakeText(this, db.get_Element(elementId)[0].Name, ToastLength.Long).Show();
+            //            FragmentTransaction ft = FragmentManager.BeginTransaction();
+            //            Fragment prev = FragmentManager.FindFragmentByTag("dialog");
+            //            Bundle frag_bundle = new Bundle();
+            //            frag_bundle.PutLong("Id", elementId);
 
 
-                    }
+            //            if (prev != null)
+            //            {
+            //                ft.Remove(prev);
+            //            }
+            //            ft.AddToBackStack(null);
+            //            DialogFragment1 newFr = DialogFragment1.NewInstance(frag_bundle);
+            //            //newFr.Arguments.PutLong("Id", elementId);
 
 
-                    //else
-                    //    lstData.GetChildAt(i).SetBackgroundColor(Android.Graphics.Color.Transparent);
+            //            newFr.Show(ft, "dialog");
 
-                }
-
+            //            //Toast.MakeText(this, db.get_Element(elementId)[0].Name, ToastLength.Long).Show();
 
 
+            //        }
 
-                //Binding Data
-                var txtName = e.View.FindViewById<TextView>(Resource.Id.textView1);
-                var txtAge = e.View.FindViewById<TextView>(Resource.Id.textView2);
-                var txtEmail = e.View.FindViewById<TextView>(Resource.Id.textView3);
 
-                edtName.Text = txtName.Text;
-                edtName.Tag = e.Id;
+            //        //else
+            //        //    lstData.GetChildAt(i).SetBackgroundColor(Android.Graphics.Color.Transparent);
 
-                edtAge.Text = txtAge.Text;
+            //    }
 
-                edtEmail.Text = txtEmail.Text;
 
-            };
+
+
+            //    //Binding Data
+            //    var txtName = e.View.FindViewById<TextView>(Resource.Id.textView1);
+            //    var txtAge = e.View.FindViewById<TextView>(Resource.Id.textView2);
+            //    var txtEmail = e.View.FindViewById<TextView>(Resource.Id.textView3);
+
+            //    edtName.Text = txtName.Text;
+            //    edtName.Tag = e.Id;
+
+            //    edtAge.Text = txtAge.Text;
+
+            //    edtEmail.Text = txtEmail.Text;
+
+            //};
 
         }
        
