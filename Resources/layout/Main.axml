@@ -42,17 +42,19 @@
         android:layout_height="278.5dp"
         android:layout_marginBottom="25px"
         android:id="@+id/listView" />
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:minWidth="25px"
-        android:minHeight="25px">
-        <Button
-            android:id="@+id/btnAdd"
-            android:text="+"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="400px" />
-    </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:minWidth="25px"
+      android:minHeight="25px" >
+
+    <Button
+      android:id="@+id/btnAdd"
+      android:text="+"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="400px" />
+  </LinearLayout>
 </LinearLayout>
