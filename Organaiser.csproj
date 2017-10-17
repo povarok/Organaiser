@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DialogWindow.cs" />
+    <Compile Include="GenericViewPagerFragment.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\DataHelper\DataBase.cs" />
     <Compile Include="Resources\ListViewAdapter.cs" />
