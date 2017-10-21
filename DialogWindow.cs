@@ -16,7 +16,7 @@ using AndroidSQLite.Resources;
 
 namespace AndroidSQLite
 {
-    public class DialogFragment1 : DialogFragment
+    public class DialogFragment1 : Android.Support.V4.App.DialogFragment
     {
         ListView lstData;
         List<Person> lstSource = new List<Person>();
