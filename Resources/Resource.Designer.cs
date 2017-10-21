@@ -292,11 +292,11 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f0b0006
 			public const int blocking = 2131427334;
 			
-			// aapt resource value: 0x7f0b0017
-			public const int btnAdd = 2131427351;
+			// aapt resource value: 0x7f0b0012
+			public const int btnAdd = 2131427346;
 			
-			// aapt resource value: 0x7f0b0015
-			public const int btnDelete = 2131427349;
+			// aapt resource value: 0x7f0b0016
+			public const int btnDelete = 2131427350;
 			
 			// aapt resource value: 0x7f0b000e
 			public const int btnSaveFr = 2131427342;
@@ -307,20 +307,20 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f0b0024
 			public const int chronometer = 2131427364;
 			
-			// aapt resource value: 0x7f0b0013
-			public const int edtAge = 2131427347;
+			// aapt resource value: 0x7f0b0014
+			public const int edtAge = 2131427348;
 			
 			// aapt resource value: 0x7f0b000c
 			public const int edtAgeFr = 2131427340;
 			
-			// aapt resource value: 0x7f0b0014
-			public const int edtEmail = 2131427348;
+			// aapt resource value: 0x7f0b0015
+			public const int edtEmail = 2131427349;
 			
 			// aapt resource value: 0x7f0b000d
 			public const int edtEmailFr = 2131427341;
 			
-			// aapt resource value: 0x7f0b0012
-			public const int edtName = 2131427346;
+			// aapt resource value: 0x7f0b0013
+			public const int edtName = 2131427347;
 			
 			// aapt resource value: 0x7f0b000b
 			public const int edtNameFr = 2131427339;
@@ -349,8 +349,8 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f0b0001
 			public const int line3 = 2131427329;
 			
-			// aapt resource value: 0x7f0b0016
-			public const int listView = 2131427350;
+			// aapt resource value: 0x7f0b0017
+			public const int listView = 2131427351;
 			
 			// aapt resource value: 0x7f0b001e
 			public const int media_actions = 2131427358;
