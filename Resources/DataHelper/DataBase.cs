@@ -157,5 +157,25 @@ namespace AndroidSQLite.Resources.DataHelper
             }
         }
 
+
+        public List<Person> get_Last()
+        {
+            try
+            {
+                using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "Persons.db")))
+                {
+                    var someData = connection.Query<Person>("SELECT last_insert_rowid()");
+
+
+                    return someData;
+                }
+            }
+            catch (SQLiteException ex)
+            {
+                Log.Info("SQLiteEx", ex.Message);
+                return null;
+            }
+        }
+
     }
 }

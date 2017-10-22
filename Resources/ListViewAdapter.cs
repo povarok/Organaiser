@@ -12,6 +12,8 @@ using Android.Widget;
 using AndroidSQLite.Resources.Model;
 using Java.Lang;
 using SQLite;
+using Android.Support.V4.App;
+using Android.Support.V4.View;
 
 namespace AndroidSQLite.Resources
 {
@@ -23,9 +25,9 @@ namespace AndroidSQLite.Resources
     }
     public class ListViewAdapter:BaseAdapter
     {
-        private Activity activity;
+        private Android.Support.V4.App.Fragment activity;
         private List<Person> lstPerson;
-        public ListViewAdapter(Activity activity, List<Person> lstPerson)
+        public ListViewAdapter(Android.Support.V4.App.Fragment activity, List<Person> lstPerson)
         {
             this.activity = activity;
             this.lstPerson = lstPerson;

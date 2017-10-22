@@ -13,6 +13,7 @@ using static Android.Views.View;
 using Android.Views;
 using Android.Support.V4.App;
 using Android.Support.V4.View;
+using Android.Database;
 
 namespace AndroidSQLite
 {
@@ -28,8 +29,8 @@ namespace AndroidSQLite
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-           
-            
+
+
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
 
@@ -45,14 +46,28 @@ namespace AndroidSQLite
             string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             Log.Info("DB_PATH", folder);
 
-           
+            //var imgBtn = new ImageButton
+            var imgBtn = FindViewById<ImageButton>(Resource.Id.imgBtn);
+
+            var settingsBtn = FindViewById<Button>(Resource.Id.settingsBtn);
             
 
-          
+
+            settingsBtn.Click += delegate
+            {
+
+                Console.WriteLine("SETTINGS BUTTON PRESSED");
+
+            };
+
+            imgBtn.Click += delegate
+            {
+
+                Console.WriteLine("IMAGE BUTTON PRESSED");
+
+            };
 
         }
-       
-
         //public void LoadData()
         //{
         //    lstSource = db.selectTablePerson();
@@ -109,7 +124,8 @@ namespace AndroidSQLite
         private EditText mTxt;
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-           // MainActivity ma = (MainActivity)this.Activity;
+            
+            // MainActivity ma = (MainActivity)this.Activity;
             db = new DataBase();
             db.createDataBase();
             string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
@@ -117,7 +133,7 @@ namespace AndroidSQLite
 
             long elementId;
             var view = inflater.Inflate(Resource.Layout.SecondFragmentLayout, container, false);
-            var lstData = view.FindViewById<ListView>(Resource.Id.listView);
+            lstData = view.FindViewById<ListView>(Resource.Id.listView);
 
             var edtName = view.FindViewById<EditText>(Resource.Id.edtName);
             var edtAge = view.FindViewById<EditText>(Resource.Id.edtAge);
@@ -126,6 +142,7 @@ namespace AndroidSQLite
             var btnAdd = view.FindViewById<Button>(Resource.Id.btnAdd);
             //var btnEdit = FindViewById<Button>(Resource.Id.btnEdit);
             var btnDelete = view.FindViewById<Button>(Resource.Id.btnDelete);
+            var btnRefresh = view.FindViewById<Button>(Resource.Id.btnRefresh);
 
             //LoadData
             LoadData();
@@ -185,6 +202,13 @@ namespace AndroidSQLite
                 };
                 db.deleteTablePerson(person);
                 LoadData();
+            };
+
+            btnRefresh.Click += delegate
+            {
+                //lstData = view.FindViewById<ListView>(Resource.Id.listView);
+                LoadData();
+
             };
             //Эдик разбирайся
             //Хрень для свайпа10!)
@@ -265,18 +289,37 @@ namespace AndroidSQLite
             return view;
         }
 
+        
+
         public override string ToString() //Called on line 156 in SlidingTabScrollView
         {
             return "Fragment 2";
         }
 
-
+        //ListView lstData;
+        
         public void LoadData()
         {
             lstSource = db.selectTablePerson();
             var adapter = new ListViewAdapter(this, lstSource);
+            Console.WriteLine("LoadData" );
+            Console.WriteLine("lstdata " + lstData);
+            Console.WriteLine("adapter "+adapter);
+            
+            Console.WriteLine("массив с элементами" + db.get_Last()[0].Name);
+
             lstData.Adapter = adapter;
+
         }
+
+        public override void OnResume()
+        {
+            
+            Console.WriteLine("fr2 resumed");
+            //LoadData();
+            base.OnResume();
+        }
+        
 
     }
 

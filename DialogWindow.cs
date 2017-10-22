@@ -18,10 +18,11 @@ namespace AndroidSQLite
 {
     public class DialogFragment1 : Android.Support.V4.App.DialogFragment
     {
-        ListView lstData;
+        
+        
+        //Fragment2 ma = new Fragment2();
         List<Person> lstSource = new List<Person>();
         DataBase db;
-        
 
 
 
@@ -34,13 +35,25 @@ namespace AndroidSQLite
     
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
+            db = new DataBase();
+            
+            db.createDataBase();
+            lstSource =  new List<Person>();
+
+
+            //ma.lstData = View.FindViewById<ListView>(Resource.Id.listView);
+
+
+            string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+            Log.Info("DB_PATH", folder);
+
             
 
 
-            db = new DataBase();
-            db.createDataBase();
-            string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             View view = inflater.Inflate(Resource.Layout.fragment_layout, container, false);
+
+            var lstData = view.FindViewById<ListView>(Resource.Id.listView);
+
             Button buttonSave = view.FindViewById<Button>(Resource.Id.btnSaveFr);
             Button buttonCl = view.FindViewById<Button>(Resource.Id.CloseButton);
             
@@ -49,7 +62,7 @@ namespace AndroidSQLite
             EditText editAge = view.FindViewById<EditText>(Resource.Id.edtAgeFr);
             //var getID = savedInstanceState.GetLong("Id",1288);
             var getID = Arguments.GetLong("Id", 0);
-            Console.Write("asd");
+            //Console.Write("asd");
             //Bundle new_bundle = this.Arguments.GetBundle("ID");
 
             //var selected_Element = new AndroidSQLite.Resources.Model.Person();
@@ -71,7 +84,7 @@ namespace AndroidSQLite
 
 
             //}
-
+            
             buttonSave.Click += delegate
             {
                 selected_Element.Id = int.Parse(getID.ToString());
@@ -93,11 +106,13 @@ namespace AndroidSQLite
               
                 db.updateTablePerson(selected_Element);
                 //Закрыть фрагмент
-                MainActivity ma = (MainActivity)this.Activity;
-                ma.LoadData();
-                Dismiss();
                 
-                // LoadData();
+                
+                
+                Dismiss();
+                //ma.LoadData(lstData);
+
+
             };
 
             buttonCl.Click += delegate
@@ -120,7 +135,9 @@ namespace AndroidSQLite
             //Обращение к файлу стилей по "name"
             Dialog.Window.Attributes.WindowAnimations = Resource.Style.dialog_animation;
         }
+
         
+
         //Найти как обратится к майн активити
         //Или починить
         //Найти метод onResume или че нибудь такое... И в него запилить Loaddata 
