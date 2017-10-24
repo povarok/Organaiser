@@ -16,13 +16,34 @@ using AndroidSQLite.Resources;
 
 namespace AndroidSQLite
 {
-    public class DialogFragment1 : Android.Support.V4.App.DialogFragment
+    public class DialogFragment1 : Android.Support.V4.App.DialogFragment, IDialogInterfaceOnDismissListener
     {
         
         
         //Fragment2 ma = new Fragment2();
         List<Person> lstSource = new List<Person>();
         DataBase db;
+
+        public override void OnDismiss(IDialogInterface dialog)
+        {
+
+            Console.WriteLine("ONDISMIS");
+        }
+
+        //private sealed class OnDismissListener : Java.Lang.Object, IDialogInterfaceOnDismissListener
+        //{
+        //    private readonly Action action;
+
+        //    public OnDismissListener(Action action)
+        //    {
+        //        this.action = action;
+        //    }
+
+        //    public void OnDismiss(IDialogInterface dialog)
+        //    {
+        //        this.action();
+        //    }
+        //}
 
 
 

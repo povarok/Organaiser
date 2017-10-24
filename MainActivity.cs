@@ -18,7 +18,7 @@ using Android.Database;
 namespace AndroidSQLite
 {
     [Activity(Label = "AndroidSQLite", MainLauncher = true, Icon = "@drawable/icon")]
-    public class MainActivity : FragmentActivity
+    public class MainActivity : FragmentActivity, IDialogInterfaceOnDismissListener
     {
         //ListView lstData ;
         //List<Person> lstSource = new List<Person>();
@@ -26,11 +26,27 @@ namespace AndroidSQLite
         private ViewPager mViewPager;
         private SlidingTabScrollView mScrollView;
 
+        //void IDialogInterfaceOnDismissListener.OnDismiss(IDialogInterface dialog)
+        //{
+        //    Console.WriteLine("YESSS");
+        //}
+
+       
+
+        
+
+
+
+
+
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
 
-
+            //OnDismissListener ODL = new OnDismissListener();
+            //DialogFragment1 df = new DialogFragment1();
+            //df.
+            
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
 
@@ -75,6 +91,8 @@ namespace AndroidSQLite
         //    lstData.Adapter = adapter;
         //}
     }
+    
+    
 
     public class SamplePagerAdapter : FragmentPagerAdapter
     {
@@ -118,6 +136,9 @@ namespace AndroidSQLite
 
     public class Fragment2 : Android.Support.V4.App.Fragment
     {
+        
+
+
         ListView lstData;
         List<Person> lstSource = new List<Person>();
         DataBase db;
@@ -125,7 +146,9 @@ namespace AndroidSQLite
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             
-            // MainActivity ma = (MainActivity)this.Activity;
+            MainActivity ma = (MainActivity)this.Activity;
+            
+            
             db = new DataBase();
             db.createDataBase();
             string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
@@ -290,6 +313,9 @@ namespace AndroidSQLite
         }
 
         
+        
+        
+
 
         public override string ToString() //Called on line 156 in SlidingTabScrollView
         {
@@ -319,8 +345,10 @@ namespace AndroidSQLite
             //LoadData();
             base.OnResume();
         }
-        
 
+        
+        
+        
     }
 
     public class Fragment3 : Android.Support.V4.App.Fragment
