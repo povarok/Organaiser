@@ -162,10 +162,22 @@ namespace AndroidSQLite
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             var view = inflater.Inflate(Resource.Layout.FirstFragmentLayout, container, false);
+            
+            var img = view.FindViewById<ImageView>(Resource.Id.imageClick);
 
-           
+            img.Clickable = true;
+
+            img.Click += delegate
+            {
+                Console.WriteLine("image pressed");
+            };
+
+
+
             return view;
         }
+
+        
 
         public override string ToString() //Called on line 156 in SlidingTabScrollView
         {
