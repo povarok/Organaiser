@@ -29,12 +29,13 @@ namespace AndroidSQLite
         public static DialogFragment1 NewInstance(Bundle bundle)
         {
             DialogFragment1 fragment = new DialogFragment1();
-            fragment.Arguments = bundle;
+            fragment.Arguments = bundle;      
+            
             return fragment;
         }
     
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-        {
+        {   
             db = new DataBase();
             
             db.createDataBase();
@@ -110,6 +111,8 @@ namespace AndroidSQLite
                 
                 
                 Dismiss();
+                Fragment2 fragment2 = new Fragment2();
+                fragment2.LoadData();
                 //ma.LoadData(lstData);
 
 

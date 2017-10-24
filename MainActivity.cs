@@ -14,17 +14,42 @@ using Android.Views;
 using Android.Support.V4.App;
 using Android.Support.V4.View;
 using Android.Database;
+using Android.Support.V7.App;
+using System.Globalization;
+using Android.Graphics;
+using Com.KD.Dynamic.Calendar.Generator;
+using Java.Util;
+using static Android.App.DatePickerDialog;
 
 namespace AndroidSQLite
 {
     [Activity(Label = "AndroidSQLite", MainLauncher = true, Icon = "@drawable/icon")]
-    public class MainActivity : FragmentActivity
+    public class MainActivity : FragmentActivity, IOnDateSetListener
     {
+        Java.Util.Calendar mCurrentDate;
+        Bitmap mGenerateDateIcon;
+        ImageGenerator mGeneratorImage;
+        ImageView mDisplayGeneratedImage;
         //ListView lstData ;
         //List<Person> lstSource = new List<Person>();
         DataBase db;
         private ViewPager mViewPager;
         private SlidingTabScrollView mScrollView;
+
+        public void OnDateSet(DatePicker view, int year, int month, int dayOfMonth)
+        {
+            //Передаем выбранную дату куда нибудь
+            Toast.MakeText(this, $"{dayOfMonth}-{month + 1}-{year}", ToastLength.Long).Show();
+            mCurrentDate.Set(year, month, dayOfMonth);
+            mGenerateDateIcon = mGeneratorImage.GenerateDateImage(mCurrentDate, Resource.Drawable.EmptyCalendar);
+            mDisplayGeneratedImage.SetImageBitmap(mGenerateDateIcon);
+        }
+
+        public void OnDismiss(IDialogInterface dialog)
+        {
+            Fragment2 fragment2 = new Fragment2();
+            fragment2.LoadData();
+        }
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -33,11 +58,35 @@ namespace AndroidSQLite
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
+            mGeneratorImage = new ImageGenerator(this);
+            mDisplayGeneratedImage = FindViewById<ImageView>(Resource.Id.imageGen);
+
+            mGeneratorImage.SetIconSize(50, 50);
+            mGeneratorImage.SetDateSize(30);
+            mGeneratorImage.SetMonthSize(10);
+            mGeneratorImage.SetDatePosition(42);
+            mGeneratorImage.SetMonthPosition(14);
+            mGeneratorImage.SetDateColor(Color.ParseColor("#3c6eaf"));
+            mGeneratorImage.SetMonthColor(Color.White);
+            mGeneratorImage.SetStorageToSDCard(true);
+
+            mDisplayGeneratedImage.Click += delegate
+            {
+
+                mCurrentDate = Java.Util.Calendar.Instance;
+                int mYear = mCurrentDate.Get(CalendarField.Year);
+                int mMonth = mCurrentDate.Get(CalendarField.Month);
+                int mDay = mCurrentDate.Get(CalendarField.DayOfMonth);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(this, this, mYear, mMonth, mDay);
+                datePickerDialog.Show();
+
+            };
 
             mScrollView = FindViewById<SlidingTabScrollView>(Resource.Id.sliding_tabs);
             mViewPager = FindViewById<ViewPager>(Resource.Id.viewPager);
 
-            mViewPager.Adapter = new SamplePagerAdapter(SupportFragmentManager);
+            mViewPager.Adapter = new SamplePagerAdapter( SupportFragmentManager);
             mScrollView.ViewPager = mViewPager;
 
             //Create DataBase
@@ -47,7 +96,7 @@ namespace AndroidSQLite
             Log.Info("DB_PATH", folder);
 
             //var imgBtn = new ImageButton
-            var imgBtn = FindViewById<ImageButton>(Resource.Id.imgBtn);
+            //var imgBtn = FindViewById<ImageButton>(Resource.Id.imgBtn);
 
             var settingsBtn = FindViewById<Button>(Resource.Id.settingsBtn);
             
@@ -57,15 +106,22 @@ namespace AndroidSQLite
             {
 
                 Console.WriteLine("SETTINGS BUTTON PRESSED");
+                mCurrentDate = Java.Util.Calendar.Instance;
+                int mYear = mCurrentDate.Get(CalendarField.Year);
+                int mMonth = mCurrentDate.Get(CalendarField.Month);
+                int mDay = mCurrentDate.Get(CalendarField.DayOfMonth);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(this, this, mYear, mMonth, mDay);
+                datePickerDialog.Show();
 
             };
 
-            imgBtn.Click += delegate
-            {
+            //imgBtn.Click += delegate
+            //{
 
-                Console.WriteLine("IMAGE BUTTON PRESSED");
+            //    Console.WriteLine("IMAGE BUTTON PRESSED");
 
-            };
+            //};
 
         }
         //public void LoadData()
@@ -82,6 +138,7 @@ namespace AndroidSQLite
 
         public SamplePagerAdapter(Android.Support.V4.App.FragmentManager fragManager) : base(fragManager)
         {
+            
             mFragmentHolder = new List<Android.Support.V4.App.Fragment>();
             mFragmentHolder.Add(new Fragment1());
             mFragmentHolder.Add(new Fragment2());
@@ -177,7 +234,7 @@ namespace AndroidSQLite
 
 
                 newFr.Show(ft, "dialog");
-
+                
             };
 
             //btnEdit.Click += delegate {
@@ -314,12 +371,11 @@ namespace AndroidSQLite
 
         public override void OnResume()
         {
-            
+           
             Console.WriteLine("fr2 resumed");
             //LoadData();
             base.OnResume();
         }
-        
 
     }
 
