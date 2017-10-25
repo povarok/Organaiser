@@ -45,6 +45,7 @@ namespace AndroidSQLite
             mDisplayGeneratedImage.SetImageBitmap(mGenerateDateIcon);
         }
 
+
         public void OnDismiss(IDialogInterface dialog)
         {
             Fragment2 fragment2 = new Fragment2();
@@ -60,6 +61,7 @@ namespace AndroidSQLite
             SetContentView(Resource.Layout.Main);
             mGeneratorImage = new ImageGenerator(this);
             mDisplayGeneratedImage = FindViewById<ImageView>(Resource.Id.imageGen);
+            mCurrentDate = Java.Util.Calendar.Instance;
 
             mGeneratorImage.SetIconSize(50, 50);
             mGeneratorImage.SetDateSize(30);
@@ -70,10 +72,19 @@ namespace AndroidSQLite
             mGeneratorImage.SetMonthColor(Color.White);
             mGeneratorImage.SetStorageToSDCard(true);
 
+            //Первичная отрисовка иконки календаря
+            int primaryYear = mCurrentDate.Get(CalendarField.Year);
+            int primaryMonth = mCurrentDate.Get(CalendarField.Month);
+            int primaryDay = mCurrentDate.Get(CalendarField.DayOfMonth);
+
+            mCurrentDate.Set(primaryYear, primaryMonth, primaryDay);
+            mGenerateDateIcon = mGeneratorImage.GenerateDateImage(mCurrentDate, Resource.Drawable.EmptyCalendar);
+            mDisplayGeneratedImage.SetImageBitmap(mGenerateDateIcon);
+
             mDisplayGeneratedImage.Click += delegate
             {
 
-                mCurrentDate = Java.Util.Calendar.Instance;
+                //mCurrentDate = Java.Util.Calendar.Instance;
                 int mYear = mCurrentDate.Get(CalendarField.Year);
                 int mMonth = mCurrentDate.Get(CalendarField.Month);
                 int mDay = mCurrentDate.Get(CalendarField.DayOfMonth);
@@ -106,14 +117,6 @@ namespace AndroidSQLite
             {
 
                 Console.WriteLine("SETTINGS BUTTON PRESSED");
-                mCurrentDate = Java.Util.Calendar.Instance;
-                int mYear = mCurrentDate.Get(CalendarField.Year);
-                int mMonth = mCurrentDate.Get(CalendarField.Month);
-                int mDay = mCurrentDate.Get(CalendarField.DayOfMonth);
-
-                DatePickerDialog datePickerDialog = new DatePickerDialog(this, this, mYear, mMonth, mDay);
-                datePickerDialog.Show();
-
             };
 
             //imgBtn.Click += delegate
