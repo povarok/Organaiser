@@ -2,4 +2,16 @@
 <resources>
     <string name="Hello">Hello World, Click Me!</string>
     <string name="ApplicationName">AndroidSQLite</string>
+  <string-array name="Category">
+    <item>Спорт</item>
+    <item>Образоване</item>
+    <item>Финансы</item>
+    <item>Прочее</item>
+  </string-array>
+  
+  <string-array name="Priority">
+    <item>!</item>
+    <item>!!</item>
+    <item>!!!</item>
+  </string-array>
 </resources>

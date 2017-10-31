@@ -13,16 +13,20 @@ using Android.Widget;
 using AndroidSQLite.Resources.DataHelper;
 using AndroidSQLite.Resources.Model;
 using AndroidSQLite.Resources;
+using static Android.App.DatePickerDialog;
+using Java.Util;
 
 namespace AndroidSQLite
 {
-    public class DialogFragment1 : Android.Support.V4.App.DialogFragment, IDialogInterfaceOnDismissListener
+    public class DialogFragment1 : Android.Support.V4.App.DialogFragment, IDialogInterfaceOnDismissListener, IOnDateSetListener
     {
-        
-        
+
+
         //Fragment2 ma = new Fragment2();
         List<Person> lstSource = new List<Person>();
         DataBase db;
+        DateTime selectedDate;
+        Calendar currentDate;
 
         public override void OnDismiss(IDialogInterface dialog)
         {
@@ -50,18 +54,19 @@ namespace AndroidSQLite
         public static DialogFragment1 NewInstance(Bundle bundle)
         {
             DialogFragment1 fragment = new DialogFragment1();
-            fragment.Arguments = bundle;      
-            
+            fragment.Arguments = bundle;
+
             return fragment;
         }
-    
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-        {   
-            db = new DataBase();
-            
-            db.createDataBase();
-            lstSource =  new List<Person>();
 
+        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        {
+
+            db = new DataBase();
+
+            db.createDataBase();
+            lstSource = new List<Person>();
+            currentDate = Calendar.Instance;
 
             //ma.lstData = View.FindViewById<ListView>(Resource.Id.listView);
 
@@ -69,7 +74,6 @@ namespace AndroidSQLite
             string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             Log.Info("DB_PATH", folder);
 
-            
 
 
             View view = inflater.Inflate(Resource.Layout.fragment_layout, container, false);
@@ -78,10 +82,12 @@ namespace AndroidSQLite
 
             Button buttonSave = view.FindViewById<Button>(Resource.Id.btnSaveFr);
             Button buttonCl = view.FindViewById<Button>(Resource.Id.CloseButton);
-            
+
+            EditText setDateTime = view.FindViewById<EditText>(Resource.Id.stDate);
             EditText editName = view.FindViewById<EditText>(Resource.Id.edtNameFr);
-            EditText editEmail = view.FindViewById<EditText>(Resource.Id.edtEmailFr);
-            EditText editAge = view.FindViewById<EditText>(Resource.Id.edtAgeFr);
+            EditText editDescription = view.FindViewById<EditText>(Resource.Id.edtDescription);
+            Spinner setCategory = view.FindViewById<Spinner>(Resource.Id.stCategory);
+            Spinner setPriority = view.FindViewById<Spinner>(Resource.Id.stPriority);
             //var getID = savedInstanceState.GetLong("Id",1288);
             var getID = Arguments.GetLong("Id", 0);
             //Console.Write("asd");
@@ -91,49 +97,121 @@ namespace AndroidSQLite
 
             //if (getID != ((long)0))
             //{
-              var  selected_Element = db.get_Element(getID)[0];
-                editName.Text = selected_Element.Name;
-                editAge.Text = selected_Element.Age.ToString();
-                editEmail.Text = selected_Element.Email;
-            //}
+            //Тут наверное надо дописать для бд всю хуйню
+            var selected_Element = db.get_Element(getID)[0];
+
+
+            editName.Text = selected_Element.Name;
+            editDescription.Text = selected_Element.Description;
+            
+            setDateTime.Text = selected_Element.Date.Day.ToString() + "/" + selected_Element.Date.Month.ToString() + "/" + selected_Element.Date.Year.ToString();
+
+            if (selected_Element.Category == "Спорт")
+            {
+                setCategory.SetSelection(0);
+            }
+            if (selected_Element.Category == "Образоване")
+            {
+                setCategory.SetSelection(1);
+            }
+            if (selected_Element.Category == "Финансы")
+            {
+                setCategory.SetSelection(2);
+            }
+            if (selected_Element.Category == "Прочее")
+            {
+                setCategory.SetSelection(3);
+            }
+
+            if (selected_Element.Priority == "!")
+            {
+                setPriority.SetSelection(0);
+            }
+            if (selected_Element.Priority == "!!")
+            {
+                setPriority.SetSelection(1);
+            }
+            if (selected_Element.Priority == "!!!")
+            {
+                setPriority.SetSelection(2);
+            }
+
+
+
+
+
 
             //else
             //{
 
             //    //editName.Text = "";
             //    //editAge.Text = "";
-            //    //editEmail.Text = "";
+            //    //editDescription.Text = "";
 
 
             //}
-            
+
+
+            //Обработка выбора элемента из выпадающего списка
+            setCategory.ItemSelected += (s, e) =>
+            {
+                //Пока что вывод в консоль
+                Console.WriteLine("Выбрана категория: " + e.Parent.GetItemAtPosition(e.Position).ToString());
+            };
+
+            setPriority.ItemSelected += (s, e) =>
+            {
+                //Пока что вывод в консоль
+                Console.WriteLine("Выбран приоритет: " + e.Parent.GetItemAtPosition(e.Position).ToString());
+            };
+
+
+            setDateTime.Click += delegate
+            {
+                int Year = currentDate.Get(CalendarField.Year);
+                int Month = currentDate.Get(CalendarField.Month);
+                int Day = currentDate.Get(CalendarField.DayOfMonth);
+                
+                DatePickerDialog dateDialog = new DatePickerDialog(this.Context, Android.App.AlertDialog.ThemeDeviceDefaultLight, this, Year, Month, Day);
+                dateDialog.Show();
+            };
+
             buttonSave.Click += delegate
             {
                 selected_Element.Id = int.Parse(getID.ToString());
 
-                if(editName.Text != null)
-                    { selected_Element.Name = editName.Text;}
+                if (editName.Text != null)
+                { selected_Element.Name = editName.Text; }
                 else
                 { selected_Element.Name = "Null"; }
 
-                if (editAge.Text != null)
-                { selected_Element.Age =int.Parse( editAge.Text); }
+
+                if (editDescription.Text != null)
+                { selected_Element.Description = editDescription.Text; }
                 else
-                { selected_Element.Age = 0; }
-                if (editEmail.Text != null)
-                { selected_Element.Email = editEmail.Text; }
+                { selected_Element.Description = "Null"; }
+
+                selected_Element.Category = setCategory.SelectedItem.ToString();
+                selected_Element.Priority = setPriority.SelectedItem.ToString();
+
+
+                if (selectedDate != null)
+                {
+                    selected_Element.Date = selectedDate;
+                }
                 else
-                { selected_Element.Name = "Null"; }
-                
-              
+                {
+                    selected_Element.Date = new DateTime(1, 1, 2000);
+                }
+
                 db.updateTablePerson(selected_Element);
                 //Закрыть фрагмент
-                
-                
-                
+
+
+
                 Dismiss();
-                Fragment2 fragment2 = new Fragment2();
-                fragment2.LoadData();
+                //Fragment2 fragment2 = new Fragment2();
+                //fragment2.LoadData();
                 //ma.LoadData(lstData);
 
 
@@ -159,8 +237,16 @@ namespace AndroidSQLite
             //Обращение к файлу стилей по "name"
             Dialog.Window.Attributes.WindowAnimations = Resource.Style.dialog_animation;
         }
+        //Отсюда берем значения
+        public void OnDateSet(DatePicker view, int year, int month, int dayOfMonth)
+        {
+            Toast.MakeText(this.Context, $"{dayOfMonth}-{month + 1}-{year}", ToastLength.Long).Show();
+            
+            //Типо собираем структуру для бд. Надо проверить
+            selectedDate = new DateTime(year, month, dayOfMonth); 
+        }
 
-        
+
 
         //Найти как обратится к майн активити
         //Или починить

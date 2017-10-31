@@ -22,7 +22,7 @@ namespace AndroidSQLite.Resources.DataHelper
         {
             try
             {
-                using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "Persons.db")))
+                using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
                     connection.CreateTable<Person>();
                     return true;
@@ -39,7 +39,7 @@ namespace AndroidSQLite.Resources.DataHelper
         {
             try
             {
-                using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "Persons.db")))
+                using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
                     connection.Insert(person);
                     return true;
@@ -56,7 +56,7 @@ namespace AndroidSQLite.Resources.DataHelper
         {
             try
             {
-                using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "Persons.db")))
+                using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
                     return connection.Table<Person>().ToList();
                    
@@ -73,9 +73,10 @@ namespace AndroidSQLite.Resources.DataHelper
         {
             try
             {
-                using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "Persons.db")))
+                using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
-                    connection.Query<Person>("UPDATE Person set Name=?,Age=?,Email=? Where Id=?",person.Name,person.Age,person.Email,person.Id);
+                    connection.Query<Person>("UPDATE Person set Name=?,Date=?,Description=?,Priority=?,Category=?,Done=? Where Id=?",
+                        person.Name,person.Date,person.Description,person.Priority,person.Category,person.Done,person.Id);
                     return true;
                 }
             }
@@ -90,7 +91,7 @@ namespace AndroidSQLite.Resources.DataHelper
         {
             try
             {
-                using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "Persons.db")))
+                using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
                     connection.Delete(person);
                     return true;
@@ -107,7 +108,7 @@ namespace AndroidSQLite.Resources.DataHelper
         {
             try
             {
-                using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "Persons.db")))
+                using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
                     connection.Query<Person>("SELECT * FROM Person Where Id=?", Id);
                     return true;
@@ -123,7 +124,7 @@ namespace AndroidSQLite.Resources.DataHelper
         {
             try
             {
-                using(var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "Persons.db")))
+                using(var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
                    var someData = connection.Query<Person>("SELECT * FROM Person Where Id=?", Id);
                     long dataId =  someData[0].Id;
@@ -142,7 +143,7 @@ namespace AndroidSQLite.Resources.DataHelper
         {
             try
             {
-                using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "Persons.db")))
+                using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
                     var someData = connection.Query<Person>("SELECT * FROM Person Where Id=?", Id);
                    
@@ -162,7 +163,7 @@ namespace AndroidSQLite.Resources.DataHelper
         {
             try
             {
-                using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "Persons.db")))
+                using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
                     var someData = connection.Query<Person>("SELECT last_insert_rowid()");
 

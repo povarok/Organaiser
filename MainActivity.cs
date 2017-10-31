@@ -20,6 +20,7 @@ using Android.Graphics;
 using Com.KD.Dynamic.Calendar.Generator;
 using Java.Util;
 using static Android.App.DatePickerDialog;
+using Java.Lang;
 
 namespace AndroidSQLite
 {
@@ -43,10 +44,11 @@ namespace AndroidSQLite
             mCurrentDate.Set(year, month, dayOfMonth);
             mGenerateDateIcon = mGeneratorImage.GenerateDateImage(mCurrentDate, Resource.Drawable.EmptyCalendar);
             mDisplayGeneratedImage.SetImageBitmap(mGenerateDateIcon);
+
         }
 
 
-        public void OnDismiss(IDialogInterface dialog)
+        public void OnDismiss()
         {
             Fragment2 fragment2 = new Fragment2();
             fragment2.LoadData();
@@ -85,12 +87,15 @@ namespace AndroidSQLite
             {
 
                 //mCurrentDate = Java.Util.Calendar.Instance;
+               
                 int mYear = mCurrentDate.Get(CalendarField.Year);
                 int mMonth = mCurrentDate.Get(CalendarField.Month);
                 int mDay = mCurrentDate.Get(CalendarField.DayOfMonth);
-
-                DatePickerDialog datePickerDialog = new DatePickerDialog(this, this, mYear, mMonth, mDay);
+                //Android.App.AlertDialog.ThemeDeviceDefaultDark
+                DatePickerDialog datePickerDialog = new DatePickerDialog(this, Android.App.AlertDialog.ThemeDeviceDefaultDark, this, mYear, mMonth, mDay);
                 datePickerDialog.Show();
+
+
 
             };
 
@@ -226,10 +231,14 @@ namespace AndroidSQLite
 
                 Person person = new Person()
                 {
-                    Name = "",
-                    Age = 0,
-                    Email = ""
-                };
+                    Name = "TestName",
+                    Date = DateTime.Now,
+                   // Time = , 
+                    Description = "TestDescr", 
+                    Category = "Спорт", 
+                    Priority = "0", 
+                    Done = false
+                }; 
                 db.insertIntoTablePerson(person);
                 //LoadData();
 
@@ -264,17 +273,19 @@ namespace AndroidSQLite
             //    LoadData();
             //};
             //lstData.SetOnTouchListener(new IOnTouchListener)
-            btnDelete.Click += delegate {
-                Person person = new Person()
-                {
-                    Id = int.Parse(edtName.Tag.ToString()),
-                    Name = edtName.Text,
-                    Age = int.Parse(edtAge.Text),
-                    Email = edtEmail.Text
-                };
-                db.deleteTablePerson(person);
-                LoadData();
-            };
+            //btnDelete.Click += delegate {
+            //    Person person = new Person()
+            //    {
+            //        Id = int.Parse(edtName.Tag.ToString()),
+            //        Name = edtName.Text,
+            //        Age = int.Parse(edtAge.Text),
+            //        Email = edtEmail.Text
+            //    };
+            //    db.deleteTablePerson(person);
+            //    LoadData();
+            //};
+
+            
 
             btnRefresh.Click += delegate
             {
@@ -345,15 +356,15 @@ namespace AndroidSQLite
 
                 //Binding Data
                 var txtName = e.View.FindViewById<TextView>(Resource.Id.textView1);
-                var txtAge = e.View.FindViewById<TextView>(Resource.Id.textView2);
-                var txtEmail = e.View.FindViewById<TextView>(Resource.Id.textView3);
+                //var txtAge = e.View.FindViewById<TextView>(Resource.Id.textView2);
+                //var txtEmail = e.View.FindViewById<TextView>(Resource.Id.textView3);
 
                 edtName.Text = txtName.Text;
                 edtName.Tag = e.Id;
 
-                edtAge.Text = txtAge.Text;
+                //edtAge.Text = txtAge.Text;
 
-                edtEmail.Text = txtEmail.Text;
+                //edtEmail.Text = txtEmail.Text;
 
             };
 

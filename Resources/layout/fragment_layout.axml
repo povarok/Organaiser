@@ -14,43 +14,77 @@
         android:hint="Enter your Name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edtNameFr"
-        />
+        android:id="@+id/edtNameFr" />
+    
     <EditText
-        android:hint="Enter your Age"
+        android:hint="Enter Description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edtAgeFr" />
+        android:id="@+id/edtDescription" />
     <EditText
-        android:hint="Enter your Email"
+        android:hint="Set Date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edtEmailFr" />
-    <!--<TextView
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:gravity="center_horizontal"
+        android:id="@+id/stDate" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+        <TextView
+            android:text="Выбрать категорию: "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textCategory" />
+        <Spinner
+            android:entries="@array/Category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/stCategory" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+        <TextView
+            android:text="Выбрать важность: "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textPriority" />
+        <Spinner
+            android:entries="@array/Priority"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/stPriority" />
+    </LinearLayout>
+<!--<TextView
         android:text=""
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textView2"
         android:layout_marginTop="10dp" />-->
-  <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="horizontal">
-
-    <Button
-           android:id="@+id/btnSaveFr"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="Edit"
-            android:layout_marginTop="10dp"
-            />
-    <Button
-        android:text="Close"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/CloseButton"
-        android:layout_marginTop="10dp" />
-
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnSaveFr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit"
+            android:layout_marginTop="10dp" />
+        <Button
+            android:text="Close"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/CloseButton"
+            android:layout_marginTop="10dp" />
     </LinearLayout>
-  </LinearLayout>
+</LinearLayout>
