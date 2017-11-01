@@ -5,35 +5,37 @@
     android:layout_height="match_parent"
     android:background="#E2E2E2"
     android:id="@+id/sample_main_layout">
-    <LinearLayout
-        android:orientation="horizontal"
+
+  <AndroidSQLite.SlidingTabScrollView
+      android:id="@+id/sliding_tabs"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      />
+  <View
+       android:layout_width="match_parent"
+       android:layout_height="1dp"
+       android:background="@android:color/darker_gray" />
+  <LinearLayout
+       android:orientation="horizontal"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ok"
+        android:id="@+id/settingsBtn" />
+    <ImageView
+        android:id="@+id/imageGen"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ok"
-            android:id="@+id/settingsBtn" />
-        <ImageView
-            android:id="@+id/imageGen"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
-<!--<ImageButton
-          android:src="@drawable/hameleon_rango_prev"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:id="@+id/imgBtn" />-->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray" />
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="240dp" />
-    <AndroidSQLite.SlidingTabScrollView
-        android:id="@+id/sliding_tabs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
+  </LinearLayout>
+  <android.support.v4.view.ViewPager
+      android:id="@+id/viewPager"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent" />
+
+
+
+   
+    
 </LinearLayout>

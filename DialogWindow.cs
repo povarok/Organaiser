@@ -22,17 +22,41 @@ namespace AndroidSQLite
     {
 
 
-        //Fragment2 ma = new Fragment2();
+        MainActivity ma = new MainActivity();
+
         List<Person> lstSource = new List<Person>();
         DataBase db;
         DateTime selectedDate;
         Calendar currentDate;
 
+
+
+        // не работает 
+
+        private MainActivity _activity;
+        //public void SetActivity(MainActivity activity)
+        //{
+        //    //_activity = activity;
+        //}
+
+        
+
+
+        //Fragment2 ma = new Fragment2();
+
+
+        //List<Person> lstSource = new List<Person>();
+        //DataBase db;
+
         public override void OnDismiss(IDialogInterface dialog)
         {
-
-            Console.WriteLine("ONDISMIS");
+            //SetActivity(ma);
+            //_activity.OnDismiss();
+            Console.WriteLine("ONDISMIS from Dialog Window");
         }
+
+
+      
 
         //private sealed class OnDismissListener : Java.Lang.Object, IDialogInterfaceOnDismissListener
         //{
@@ -82,10 +106,12 @@ namespace AndroidSQLite
 
             Button buttonSave = view.FindViewById<Button>(Resource.Id.btnSaveFr);
             Button buttonCl = view.FindViewById<Button>(Resource.Id.CloseButton);
+            Button buttonDel = view.FindViewById<Button>(Resource.Id.DeleteButton);
 
             EditText setDateTime = view.FindViewById<EditText>(Resource.Id.stDate);
             EditText editName = view.FindViewById<EditText>(Resource.Id.edtNameFr);
             EditText editDescription = view.FindViewById<EditText>(Resource.Id.edtDescription);
+
             Spinner setCategory = view.FindViewById<Spinner>(Resource.Id.stCategory);
             Spinner setPriority = view.FindViewById<Spinner>(Resource.Id.stPriority);
             //var getID = savedInstanceState.GetLong("Id",1288);
@@ -176,6 +202,22 @@ namespace AndroidSQLite
                 dateDialog.Show();
             };
 
+            buttonDel.Click += delegate {
+                Person person = new Person()
+                {
+                    Id = selected_Element.Id, 
+                    Category = selected_Element.Category,
+                    Date = selected_Element.Date, 
+                    Description = selected_Element.Description,
+                    Done = selected_Element.Done,
+                    Name = selected_Element.Name,
+                    Priority = selected_Element.Priority  
+               };
+                db.deleteTablePerson(person);
+                Dismiss();
+
+
+            };
             buttonSave.Click += delegate
             {
                 selected_Element.Id = int.Parse(getID.ToString());

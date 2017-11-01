@@ -52,6 +52,7 @@ namespace AndroidSQLite
         {
             Fragment2 fragment2 = new Fragment2();
             fragment2.LoadData();
+            Console.WriteLine("ONDISMIS from MA");
         }
 
         protected override void OnCreate(Bundle bundle)
@@ -212,9 +213,9 @@ namespace AndroidSQLite
             var view = inflater.Inflate(Resource.Layout.SecondFragmentLayout, container, false);
             lstData = view.FindViewById<ListView>(Resource.Id.listView);
 
-            var edtName = view.FindViewById<EditText>(Resource.Id.edtName);
-            var edtAge = view.FindViewById<EditText>(Resource.Id.edtAge);
-            var edtEmail = view.FindViewById<EditText>(Resource.Id.edtEmail);
+            //var edtName = view.FindViewById<EditText>(Resource.Id.edtName);
+            //var edtAge = view.FindViewById<EditText>(Resource.Id.edtAge);
+            //var edtEmail = view.FindViewById<EditText>(Resource.Id.edtEmail);
 
             var btnAdd = view.FindViewById<Button>(Resource.Id.btnAdd);
             //var btnEdit = FindViewById<Button>(Resource.Id.btnEdit);
@@ -359,8 +360,8 @@ namespace AndroidSQLite
                 //var txtAge = e.View.FindViewById<TextView>(Resource.Id.textView2);
                 //var txtEmail = e.View.FindViewById<TextView>(Resource.Id.textView3);
 
-                edtName.Text = txtName.Text;
-                edtName.Tag = e.Id;
+                //edtName.Text = txtName.Text;
+                //edtName.Tag = e.Id;
 
                 //edtAge.Text = txtAge.Text;
 
@@ -395,13 +396,7 @@ namespace AndroidSQLite
 
         }
 
-        public override void OnResume()
-        {
-           
-            Console.WriteLine("fr2 resumed");
-            //LoadData();
-            base.OnResume();
-        }
+        
 
     }
 
