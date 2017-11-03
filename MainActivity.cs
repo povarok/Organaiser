@@ -228,14 +228,14 @@ namespace AndroidSQLite
             //Event
             btnAdd.Click += delegate
             {
-
+                //Создаем пустую запись в бд
 
                 Person person = new Person()
                 {
-                    Name = "TestName",
+                    Name = "",
                     Date = DateTime.Now,
                    // Time = , 
-                    Description = "TestDescr", 
+                    Description = "", 
                     Category = "Спорт", 
                     Priority = "0", 
                     Done = false

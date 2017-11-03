@@ -28,9 +28,6 @@ namespace AndroidSQLite
         DataBase db;
         DateTime selectedDate;
         Calendar currentDate;
-
-
-
         // не работает 
 
         private MainActivity _activity;
@@ -38,13 +35,7 @@ namespace AndroidSQLite
         //{
         //    //_activity = activity;
         //}
-
-        
-
-
         //Fragment2 ma = new Fragment2();
-
-
         //List<Person> lstSource = new List<Person>();
         //DataBase db;
 
@@ -54,9 +45,6 @@ namespace AndroidSQLite
             //_activity.OnDismiss();
             Console.WriteLine("ONDISMIS from Dialog Window");
         }
-
-
-      
 
         //private sealed class OnDismissListener : Java.Lang.Object, IDialogInterfaceOnDismissListener
         //{
@@ -123,7 +111,7 @@ namespace AndroidSQLite
 
             //if (getID != ((long)0))
             //{
-            //Тут наверное надо дописать для бд всю хуйню
+            
             var selected_Element = db.get_Element(getID)[0];
 
 
@@ -246,12 +234,16 @@ namespace AndroidSQLite
                     selected_Element.Date = new DateTime(1, 1, 2000);
                 }
 
-                db.updateTablePerson(selected_Element);
-                //Закрыть фрагмент
+                if (selected_Element.Name == "Null" || selected_Element.Name == "")
+                {
+                    Toast.MakeText(Activity, "Название заметки не может быть пустым!", ToastLength.Short).Show();
+                }
+                else
+                {
+                    db.updateTablePerson(selected_Element);
+                    Dismiss();
 
-
-
-                Dismiss();
+                }
                 //Fragment2 fragment2 = new Fragment2();
                 //fragment2.LoadData();
                 //ma.LoadData(lstData);
@@ -261,8 +253,21 @@ namespace AndroidSQLite
 
             buttonCl.Click += delegate
             {
-                Dismiss();
-                Toast.MakeText(Activity, "Dialog fragment dismissed!", ToastLength.Short).Show();
+                //Удаляем пустую заметку
+                if (selected_Element.Name == "" || selected_Element.Name == "Null")
+                {
+                    Toast.MakeText(Activity, "Отмена создания", ToastLength.Short).Show();
+                    db.deleteTablePerson(selected_Element);
+                    Dismiss();
+
+                }
+                //Обработать диалогом подтверждение закрытия без сохранения!!!
+                else
+                {
+
+                    Dismiss();
+                    Toast.MakeText(Activity, "Dialog fragment dismissed!", ToastLength.Short).Show();
+                }
             };
             // Use this to return your custom view for this Fragment
             // return inflater.Inflate(Resource.Layout.YourFragment, container, false);
@@ -287,7 +292,7 @@ namespace AndroidSQLite
             //Типо собираем структуру для бд. Надо проверить
             selectedDate = new DateTime(year, month, dayOfMonth); 
         }
-
+        
 
 
         //Найти как обратится к майн активити
