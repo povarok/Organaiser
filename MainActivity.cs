@@ -219,7 +219,7 @@ namespace AndroidSQLite
 
             var btnAdd = view.FindViewById<Button>(Resource.Id.btnAdd);
             //var btnEdit = FindViewById<Button>(Resource.Id.btnEdit);
-            var btnDelete = view.FindViewById<Button>(Resource.Id.btnDelete);
+            //var btnDelete = view.FindViewById<Button>(Resource.Id.btnDelete);
             var btnRefresh = view.FindViewById<Button>(Resource.Id.btnRefresh);
 
             //LoadData

@@ -27,13 +27,14 @@ namespace AndroidSQLite
 
         List<Person> lstSource = new List<Person>();
         DataBase db;
-        DateTime selectedDate;
+        DateTime selectedDateDate;
+        DateTime selectedDateTime;
         Calendar currentDate;
         EditText setTime;
         EditText setDateTime;
         // не работает 
-        int globalHour;
-        int globalMin;
+        int globalHour = 21;
+        int globalMin = 44;
         private MainActivity _activity;
         //public void SetActivity(MainActivity activity)
         //{
@@ -120,13 +121,19 @@ namespace AndroidSQLite
             
             var selected_Element = db.get_Element(getID)[0];
 
+            Console.WriteLine("Выбран " + selected_Element.Id + " ый эл-т");
+            Console.WriteLine("Name - " + selected_Element.Name);
+            Console.WriteLine("Date - " + selected_Element.Date.ToLongDateString());
+            Console.WriteLine("Time - " + selected_Element.Time.ToLongTimeString());
+
 
             editName.Text = selected_Element.Name;
             editDescription.Text = selected_Element.Description;
             
             setDateTime.Text = selected_Element.Date.Day.ToString() + "/" + selected_Element.Date.Month.ToString() + "/" + selected_Element.Date.Year.ToString();
-            setTime.Text = selected_Element.Date.Hour.ToString() + " : " + selected_Element.Date.Minute.ToString();
-            
+            selectedDateDate = selected_Element.Date;
+            setTime.Text = selected_Element.Time.Hour.ToString() + " : " + selected_Element.Time.Minute.ToString();
+            selectedDateTime = selected_Element.Time;
             if (selected_Element.Category == "Спорт")
             {
                 setCategory.SetSelection(0);
@@ -229,6 +236,7 @@ namespace AndroidSQLite
                 else
                 { selected_Element.Name = "Null"; }
 
+                //--------------------------------------------------------------------------------
 
                 if (editDescription.Text != null)
                 { selected_Element.Description = editDescription.Text; }
@@ -238,17 +246,40 @@ namespace AndroidSQLite
                 selected_Element.Category = setCategory.SelectedItem.ToString();
                 selected_Element.Priority = setPriority.SelectedItem.ToString();
 
+                //--------------------------------------------------------------------------------
 
-                if (selectedDate != null)
+                if (selectedDateDate != null)
                 {
-                    selected_Element.Date = selectedDate;
+                    selected_Element.Date = selectedDateDate;
+                    Console.WriteLine("selected date: " + selectedDateDate.ToLongDateString());
                 }
-                else
+                //else
+                //{
+                //   // selected_Element.Date = DateTime.Now;
+                //    //Было
+                //    selected_Element.Date = new DateTime(1, 1, 2018, 21, 21 , 59);
+                    
+                //    Console.WriteLine("selected date = NULL " + selectedDateDate.ToLongDateString());
+                //}
+
+                //--------------------------------------------------------------------------------
+
+                if (selectedDateTime != null)
                 {
-                   // selected_Element.Date = DateTime.Now;
-                    //Было
-                    selected_Element.Date = new DateTime(1, 1, 2018, 21, 21 , 59);
+                    selected_Element.Time = selectedDateTime;
+                    Console.WriteLine("selected time: " + selectedDateDate.ToLongTimeString());
                 }
+                //else
+                //{
+                //    // selected_Element.Date = DateTime.Now;
+                //    //Было
+                //    selected_Element.Time = new DateTime(1, 1, 2018, 21, 21, 59);
+
+                //    Console.WriteLine("selected date = NULL " + selectedDateDate.ToLongTimeString());
+                //}
+
+
+                
 
                 if (selected_Element.Name == "Null" || selected_Element.Name == "")
                 {
@@ -263,6 +294,12 @@ namespace AndroidSQLite
                 //Fragment2 fragment2 = new Fragment2();
                 //fragment2.LoadData();
                 //ma.LoadData(lstData);
+
+                Console.WriteLine("Сохраняю " + selected_Element.Id + " ый эл-т");
+                Console.WriteLine("Name - " + selected_Element.Name);
+                Console.WriteLine("Date - " + selected_Element.Date.ToLongDateString());
+                Console.WriteLine("Time - " + selected_Element.Time.ToLongTimeString());
+
 
 
             };
@@ -304,8 +341,8 @@ namespace AndroidSQLite
         public void OnDateSet(DatePicker view, int year, int month, int dayOfMonth)
         {
             Toast.MakeText(this.Context, $"{dayOfMonth}-{month + 1}-{year}", ToastLength.Long).Show();
-            selectedDate = new DateTime(year, month, dayOfMonth + 1, globalHour, globalMin, 0);
-            setDateTime.Text =selectedDate.Day.ToString()  + "/" + selectedDate.Month.ToString() + "/" + selectedDate.Date.Year.ToString();
+            selectedDateDate = new DateTime(year, month, dayOfMonth ,0, 0, 0);
+            setDateTime.Text = selectedDateDate.Day.ToString()  + "/" + selectedDateDate.Month.ToString() + "/" + selectedDateDate.Date.Year.ToString();
             //setTime.Text = globalHour.ToString() + " : " + globalMin.ToString();
 
         }
@@ -314,6 +351,8 @@ namespace AndroidSQLite
         {
             globalHour = hourOfDay;
             globalMin = minute;
+            Console.WriteLine("globalHour " + globalHour + "globalMin " + globalMin);
+            selectedDateTime = new DateTime(1,1,1, globalHour, globalMin, 0);
             setTime.Text = globalHour.ToString() + " : " + globalMin.ToString();
         }
 

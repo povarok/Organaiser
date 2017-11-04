@@ -3,35 +3,28 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="350dp">
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal">
-    <Button
-          android:id="@+id/btnAdd"
-          android:text="+"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="50dp" />
-    <Button
-        android:id="@+id/btnRefresh"
-        android:text="refresh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-  </LinearLayout>
-   
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-    
         <Button
-            android:id="@+id/btnDelete"
+            android:id="@+id/btnAdd"
+            android:text="+"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delete"
-            android:layout_weight="1" />
+            android:layout_marginLeft="50dp" />
+        <Button
+            android:id="@+id/btnRefresh"
+            android:text="refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px" />
     <ListView
         android:minWidth="25px"
         android:minHeight="25px"

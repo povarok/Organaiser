@@ -19,7 +19,7 @@ namespace AndroidSQLite.Resources.Model
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime Date { get; set; }
-        //public DateTime Time { get; set; }
+        public DateTime Time { get; set; }
         public string Description { get; set; }
         public string Priority { get; set; }
         public string Category { get; set; }
