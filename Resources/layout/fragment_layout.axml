@@ -31,6 +31,17 @@
         android:focusableInTouchMode="false"
         android:gravity="center_horizontal"
         android:id="@+id/stDate" />
+   <EditText
+        android:hint="Set Time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:gravity="center_horizontal"
+        android:id="@+id/stTime" />
+  
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

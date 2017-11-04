@@ -15,10 +15,11 @@ using AndroidSQLite.Resources.Model;
 using AndroidSQLite.Resources;
 using static Android.App.DatePickerDialog;
 using Java.Util;
+using static Android.App.TimePickerDialog;
 
 namespace AndroidSQLite
 {
-    public class DialogFragment1 : Android.Support.V4.App.DialogFragment, IDialogInterfaceOnDismissListener, IOnDateSetListener
+    public class DialogFragment1 : Android.Support.V4.App.DialogFragment, IDialogInterfaceOnDismissListener, IOnDateSetListener, IOnTimeSetListener
     {
 
 
@@ -28,8 +29,11 @@ namespace AndroidSQLite
         DataBase db;
         DateTime selectedDate;
         Calendar currentDate;
+        EditText setTime;
+        EditText setDateTime;
         // не работает 
-
+        int globalHour;
+        int globalMin;
         private MainActivity _activity;
         //public void SetActivity(MainActivity activity)
         //{
@@ -96,7 +100,9 @@ namespace AndroidSQLite
             Button buttonCl = view.FindViewById<Button>(Resource.Id.CloseButton);
             Button buttonDel = view.FindViewById<Button>(Resource.Id.DeleteButton);
 
-            EditText setDateTime = view.FindViewById<EditText>(Resource.Id.stDate);
+            setTime = view.FindViewById<EditText>(Resource.Id.stTime);
+            setDateTime = view.FindViewById<EditText>(Resource.Id.stDate);
+
             EditText editName = view.FindViewById<EditText>(Resource.Id.edtNameFr);
             EditText editDescription = view.FindViewById<EditText>(Resource.Id.edtDescription);
 
@@ -119,7 +125,8 @@ namespace AndroidSQLite
             editDescription.Text = selected_Element.Description;
             
             setDateTime.Text = selected_Element.Date.Day.ToString() + "/" + selected_Element.Date.Month.ToString() + "/" + selected_Element.Date.Year.ToString();
-
+            setTime.Text = selected_Element.Date.Hour.ToString() + " : " + selected_Element.Date.Minute.ToString();
+            
             if (selected_Element.Category == "Спорт")
             {
                 setCategory.SetSelection(0);
@@ -179,6 +186,13 @@ namespace AndroidSQLite
                 Console.WriteLine("Выбран приоритет: " + e.Parent.GetItemAtPosition(e.Position).ToString());
             };
 
+            setTime.Click += delegate
+            {
+                int Hour = currentDate.Get(CalendarField.Hour);
+                int Min = currentDate.Get(CalendarField.Minute);
+                TimePickerDialog timeDialog = new TimePickerDialog(this.Context, Android.App.AlertDialog.ThemeDeviceDefaultLight, this, Hour, Min, true);
+                timeDialog.Show();
+            };
 
             setDateTime.Click += delegate
             {
@@ -231,7 +245,9 @@ namespace AndroidSQLite
                 }
                 else
                 {
-                    selected_Element.Date = new DateTime(1, 1, 2000);
+                   // selected_Element.Date = DateTime.Now;
+                    //Было
+                    selected_Element.Date = new DateTime(1, 1, 2018, 21, 21 , 59);
                 }
 
                 if (selected_Element.Name == "Null" || selected_Element.Name == "")
@@ -288,11 +304,19 @@ namespace AndroidSQLite
         public void OnDateSet(DatePicker view, int year, int month, int dayOfMonth)
         {
             Toast.MakeText(this.Context, $"{dayOfMonth}-{month + 1}-{year}", ToastLength.Long).Show();
-            
-            //Типо собираем структуру для бд. Надо проверить
-            selectedDate = new DateTime(year, month, dayOfMonth); 
+            selectedDate = new DateTime(year, month, dayOfMonth + 1, globalHour, globalMin, 0);
+            setDateTime.Text =selectedDate.Day.ToString()  + "/" + selectedDate.Month.ToString() + "/" + selectedDate.Date.Year.ToString();
+            //setTime.Text = globalHour.ToString() + " : " + globalMin.ToString();
+
         }
-        
+
+        public void OnTimeSet(TimePicker view, int hourOfDay, int minute)
+        {
+            globalHour = hourOfDay;
+            globalMin = minute;
+            setTime.Text = globalHour.ToString() + " : " + globalMin.ToString();
+        }
+
 
 
         //Найти как обратится к майн активити
