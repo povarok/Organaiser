@@ -234,7 +234,7 @@ namespace AndroidSQLite
                 {
                     Name = "",
                     Date = DateTime.Now,
-                   // Time = , 
+                    Time = DateTime.Now, 
                     Description = "", 
                     Category = "Спорт", 
                     Priority = "0", 
@@ -322,7 +322,7 @@ namespace AndroidSQLite
                         //Получаем id выбранного в списке элемента
                         elementId = db.selectQuery(lstData.Adapter.GetItemId(e.Position));
                         Console.WriteLine("Выбран элемент с id= " + elementId);
-
+                        Console.WriteLine("Click element");
                         Android.Support.V4.App.FragmentTransaction ft = FragmentManager.BeginTransaction();
                         //Remove fragment else it will crash as it is already added to backstack
                         Android.Support.V4.App.Fragment prev = FragmentManager.FindFragmentByTag("dialog");
@@ -357,6 +357,12 @@ namespace AndroidSQLite
 
                 //Binding Data
                 var txtName = e.View.FindViewById<TextView>(Resource.Id.textView1);
+                var checkedBox = e.View.FindViewById<CheckBox>(Resource.Id.chkBox);
+                var txtDone = e.View.FindViewById<TextView>(Resource.Id.textView5);
+                checkedBox.SetOnCheckedChangeListener(null);
+
+                
+               
                 //var txtAge = e.View.FindViewById<TextView>(Resource.Id.textView2);
                 //var txtEmail = e.View.FindViewById<TextView>(Resource.Id.textView3);
 
@@ -386,11 +392,11 @@ namespace AndroidSQLite
         {
             lstSource = db.selectTablePerson();
             var adapter = new ListViewAdapter(this, lstSource);
-            Console.WriteLine("LoadData" );
-            Console.WriteLine("lstdata " + lstData);
-            Console.WriteLine("adapter "+adapter);
+            //Console.WriteLine("LoadData" );
+            //Console.WriteLine("lstdata " + lstData);
+            //Console.WriteLine("adapter "+adapter);
             
-            Console.WriteLine("массив с элементами" + db.get_Last()[0].Name);
+            //Console.WriteLine("массив с элементами" + db.get_Last()[0].Name);
 
             lstData.Adapter = adapter;
 
