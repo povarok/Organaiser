@@ -14,6 +14,8 @@ using Java.Lang;
 using SQLite;
 using Android.Support.V4.App;
 using Android.Support.V4.View;
+using AndroidSQLite.Resources.DataHelper;
+using Android.Util;
 
 namespace AndroidSQLite.Resources
 {
@@ -30,6 +32,10 @@ namespace AndroidSQLite.Resources
     }
     public class ListViewAdapter:BaseAdapter
     {
+        DataBase db;
+
+        
+
 
         private Android.Support.V4.App.Fragment activity;
         private List<Person> lstPerson;
@@ -69,6 +75,13 @@ namespace AndroidSQLite.Resources
 
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
+
+            db = new DataBase();
+            db.createDataBase();
+            string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+            Log.Info("DB_PATH", folder);
+
+
             var view = convertView ?? activity.LayoutInflater.Inflate(Resource.Layout.list_view_dataTemplate, parent, false);
 
             var txtName = view.FindViewById<TextView>(Resource.Id.textView1);
@@ -84,6 +97,25 @@ namespace AndroidSQLite.Resources
             checkBox.SetOnCheckedChangeListener(new CheckedChangeListener(this.activity));
 
 
+            var selected_Element = db.get_Element(lstPerson[position].Id)[0];
+
+            checkBox.Click += delegate 
+            {
+                if(checkBox.Checked == true)
+                {
+                    lstPerson[position].Done = true;
+                    Console.WriteLine("Name from list"+lstPerson[position].Name);
+                    selected_Element.Done = true;
+                    db.updateTablePerson(selected_Element);
+                }
+                else
+                {
+                    lstPerson[position].Done = false;
+                    selected_Element.Done = false;
+                    db.updateTablePerson(selected_Element);
+
+                }
+            };
             //Не работает
             //if(checkBox.Checked == false)
             //{
@@ -131,6 +163,10 @@ namespace AndroidSQLite.Resources
                 if (isChecked)
                 {
                     
+
+                    
+
+
                     Console.WriteLine("CheckedListiner");
                     //Toast.MakeText(this.activity, "Checked Listiner", ToastLength.Short).Show();
                 }
