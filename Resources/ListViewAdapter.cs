@@ -94,7 +94,7 @@ namespace AndroidSQLite.Resources
             //Ставим пустой слушатель на проверочнуюкоробку
             checkBox.SetOnCheckedChangeListener(null);
             checkBox.Checked = lstPerson[position].Done;
-            checkBox.SetOnCheckedChangeListener(new CheckedChangeListener(this.activity));
+            //checkBox.SetOnCheckedChangeListener(new CheckedChangeListener(this.activity));
 
 
             var selected_Element = db.get_Element(lstPerson[position].Id)[0];
@@ -147,30 +147,26 @@ namespace AndroidSQLite.Resources
             return view;
         }
 
-        public class CheckedChangeListener : Java.Lang.Object, CompoundButton.IOnCheckedChangeListener
-        {
-            //private Activity activity;
-            private Android.Support.V4.App.Fragment activity;
+        //public class CheckedChangeListener : Java.Lang.Object, CompoundButton.IOnCheckedChangeListener
+        //{
+        //    //private Activity activity;
+        //    private Android.Support.V4.App.Fragment activity;
 
-            public CheckedChangeListener(Android.Support.V4.App.Fragment activity)
-            {
-                this.activity = activity;
-            }
+        //    public CheckedChangeListener(Android.Support.V4.App.Fragment activity)
+        //    {
+        //        this.activity = activity;
+        //    }
 
-            public void OnCheckedChanged(CompoundButton buttonView, bool isChecked)
-            {
+        //    public void OnCheckedChanged(CompoundButton buttonView, bool isChecked)
+        //    {
                 
-                if (isChecked)
-                {
+        //        if (isChecked)
+        //        {
                     
-
-                    
-
-
-                    Console.WriteLine("CheckedListiner");
-                    //Toast.MakeText(this.activity, "Checked Listiner", ToastLength.Short).Show();
-                }
-            }
-        }
+        //            Console.WriteLine("CheckedListiner");
+        //            //Toast.MakeText(this.activity, "Checked Listiner", ToastLength.Short).Show();
+        //        }
+        //    }
+        //}
     }
 }

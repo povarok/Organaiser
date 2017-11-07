@@ -181,7 +181,11 @@ namespace AndroidSQLite
                 Console.WriteLine("image pressed");
             };
 
-
+            var house1 = view.FindViewById<LinearLayout>(Resource.Id.house1);
+            house1.Click += delegate
+            {
+                Console.WriteLine("Layout clicked");
+            };
 
             return view;
         }
