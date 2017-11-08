@@ -58,6 +58,7 @@ namespace AndroidSQLite.Resources.DataHelper
             {
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
+                    var a = connection.Table<Person>().ToList();
                     return connection.Table<Person>().ToList();
                    
                 }
@@ -65,9 +66,11 @@ namespace AndroidSQLite.Resources.DataHelper
             catch (SQLiteException ex)
             {
                 Log.Info("SQLiteEx", ex.Message);
+                Console.WriteLine("Ничего не найдено");
                 return null;
             }
         }
+       
 
         public bool updateTablePerson(Person person)
         {
@@ -120,6 +123,8 @@ namespace AndroidSQLite.Resources.DataHelper
                 return false;
             }
         }
+
+
         public long selectQuery(long Id)
         {
             try
@@ -129,6 +134,7 @@ namespace AndroidSQLite.Resources.DataHelper
                    var someData = connection.Query<Person>("SELECT * FROM Person Where Id=?", Id);
                     long dataId =  someData[0].Id;
 
+                    Console.WriteLine(someData[0].Date.Day + "/" + someData[0].Date.Month + "/" + someData[0].Date.Year);
                     return dataId;
                 }
             }
@@ -165,10 +171,11 @@ namespace AndroidSQLite.Resources.DataHelper
             {
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
-                    var someData = connection.Query<Person>("SELECT last_insert_rowid()");
+                    var someData = connection.Query<Person>("SELECT * FROM Person Where Name=?", "1");
+                    //var someData = connection.Query<Person>("SELECT last_insert_rowid()");
 
 
-                    return someData;
+                    return someData.ToList();
                 }
             }
             catch (SQLiteException ex)

@@ -121,10 +121,10 @@ namespace AndroidSQLite
             
             var selected_Element = db.get_Element(getID)[0];
 
-            Console.WriteLine("Выбран " + selected_Element.Id + " ый эл-т");
-            Console.WriteLine("Name - " + selected_Element.Name);
-            Console.WriteLine("Date - " + selected_Element.Date.ToLongDateString());
-            Console.WriteLine("Time - " + selected_Element.Time.ToLongTimeString());
+            //Console.WriteLine("Выбран " + selected_Element.Id + " ый эл-т");
+            //Console.WriteLine("Name - " + selected_Element.Name);
+            //Console.WriteLine("Date - " + selected_Element.Date.ToLongDateString());
+            //Console.WriteLine("Time - " + selected_Element.Time.ToLongTimeString());
 
 
             editName.Text = selected_Element.Name;
