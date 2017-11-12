@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using AndroidSQLite.Resources.Model;
 using AndroidSQLite.Resources.DataHelper;
 using AndroidSQLite.Resources;
+using AndroidSQLite.BroadCast;
 using Android.Util;
 using SQLite;
 using Android.Content;
@@ -135,7 +136,6 @@ namespace AndroidSQLite
 
             mScrollView = FindViewById<SlidingTabScrollView>(Resource.Id.sliding_tabs);
             mViewPager = FindViewById<ViewPager>(Resource.Id.viewPager);
-
             mViewPager.Adapter = new SamplePagerAdapter( SupportFragmentManager);
             mScrollView.ViewPager = mViewPager;
             
@@ -149,7 +149,30 @@ namespace AndroidSQLite
             //var imgBtn = FindViewById<ImageButton>(Resource.Id.imgBtn);
 
             var settingsBtn = FindViewById<Button>(Resource.Id.settingsBtn);
+
+            var btnNot = FindViewById<Button>(Resource.Id.btncheeee);
+            //------------------------------------------------------------------
+            // Instantiate the builder and set notification elements:
+            Notification.Builder builder = new Notification.Builder(this)
+                .SetContentTitle("Sample Notification")
+                .SetContentText("Hello World! This is my first notification!")
+                .SetSmallIcon(Resource.Drawable.ic_launcher);
+
+            builder.SetWhen(Java.Lang.JavaSystem.CurrentTimeMillis());
             
+            // Build the notification:
+            Notification notification = builder.Build();
+
+            // Get the notification manager:
+            NotificationManager notificationManager =
+                GetSystemService(Context.NotificationService) as NotificationManager;
+
+            // Publish the notification:
+            const int notificationId = 0;
+            notificationManager.Notify(notificationId, notification);
+            //------------------------------------------------------------------
+
+         
 
             //Пока что костыль
             settingsBtn.Click += delegate
@@ -168,6 +191,16 @@ namespace AndroidSQLite
 
             //};
 
+        }
+
+        private void StartAlarm()
+        {
+            AlarmManager manager = (AlarmManager)GetSystemService(Context.AlarmService);
+            Intent myIntent;
+            PendingIntent pendingIntent;
+            myIntent = new Intent(this, typeof(AlarmNotificationReceiver));
+            pendingIntent = PendingIntent.GetBroadcast(this, 0, myIntent, 0);
+            manager.Set(AlarmType.RtcWakeup, SystemClock.ElapsedRealtime() + 3000, pendingIntent);
         }
         //public void LoadData()
         //{

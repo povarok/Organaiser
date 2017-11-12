@@ -12,6 +12,8 @@ using Android.Widget;
 using Android.Support.V4.View;
 using Android.Util;
 using Android.Support.V4.App;
+using Android.Graphics;
+using Android.Content.Res;
 
 namespace AndroidSQLite
 {
@@ -47,7 +49,7 @@ namespace AndroidSQLite
         public SlidingTabScrollView(Context context, IAttributeSet attrs, int defaultStyle) : base(context, attrs, defaultStyle)
         {
             //Disable the scroll bar
-            HorizontalScrollBarEnabled = false;
+            HorizontalScrollBarEnabled = true;
 
             //Make sure the tab strips fill the view
             FillViewport = true;
@@ -84,10 +86,11 @@ namespace AndroidSQLite
             set
             {
                 mTabStrip.RemoveAllViews();
-
+                
                 mViewPager = value;
                 if (value != null)
                 {
+                    
                     value.PageSelected += value_PageSelected;
                     value.PageScrollStateChanged += value_PageScrollStateChanged;
                     value.PageScrolled += value_PageScrolled;
@@ -152,12 +155,20 @@ namespace AndroidSQLite
 
             for (int i = 0; i < adapter.Count; i++)
             {
+                var a = Resources.DisplayMetrics.WidthPixels;
                 TextView tabView = CreateDefaultTabView(Context);
                 tabView.Text = ((FragmentPagerAdapter)adapter).GetItem(i).ToString();
                 tabView.SetTextColor(Android.Graphics.Color.Black);
                 tabView.Tag = i;
                 tabView.Click += tabView_Click;
+                tabView.SetWidth(a / 3);
                 mTabStrip.AddView(tabView);
+
+                //-----------------------------------
+
+               
+
+
             }
 
         }
