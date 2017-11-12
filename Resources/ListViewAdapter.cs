@@ -107,6 +107,7 @@ namespace AndroidSQLite.Resources
                     Console.WriteLine("Name from list"+lstPerson[position].Name);
                     selected_Element.Done = true;
                     db.updateTablePerson(selected_Element);
+                    lstPerson[position].Category
                 }
                 else
                 {

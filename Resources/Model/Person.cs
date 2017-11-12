@@ -25,4 +25,6 @@ namespace AndroidSQLite.Resources.Model
         public string Category { get; set; }
         public bool Done { get; set; }
     }
+
+   
 }
