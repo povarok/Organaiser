@@ -100,6 +100,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BroadCast\AlarmNotificationReceiver.cs" />
     <Compile Include="DialogWindow.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\DataHelper\DataBase.cs" />
