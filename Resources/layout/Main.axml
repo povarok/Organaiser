@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E2E2E2"
+    android:background="#F5F2F2"
     android:id="@+id/sample_main_layout">
     <AndroidSQLite.SlidingTabScrollView
         android:id="@+id/sliding_tabs"
@@ -23,7 +23,6 @@
             android:layout_height="wrap_content"
             android:text="Ok"
             android:id="@+id/settingsBtn" />
-      
         <ImageView
             android:id="@+id/imageGen"
             android:layout_width="match_parent"

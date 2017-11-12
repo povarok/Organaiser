@@ -78,6 +78,7 @@ namespace AndroidSQLite.Resources
 
             db = new DataBase();
             db.createDataBase();
+            db.createDataBaseAchivments();
             string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             Log.Info("DB_PATH", folder);
 
@@ -107,7 +108,46 @@ namespace AndroidSQLite.Resources
                     Console.WriteLine("Name from list"+lstPerson[position].Name);
                     selected_Element.Done = true;
                     db.updateTablePerson(selected_Element);
-                    lstPerson[position].Category
+
+                    
+
+                    //--------------------------
+                    var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db"));
+
+                    var someData = connection.Query<Achievement>("SELECT * FROM Achievement");
+                    Console.WriteLine("SOMEDATA = " + someData);
+
+                    if (someData.Count() == 0)
+                    {
+                        Achievement achievement = new Achievement()
+                        {
+                            Name = "Достижения",
+                            EducationExp = 0,
+                            MainExp = 0,
+                            FinansiExp = 0,
+                            OtherExp = 0
+                        };
+                        connection.Insert(achievement);
+                        db.updateTableAchievements(lstPerson[position].Category);
+                        someData = connection.Query<Achievement>("SELECT * FROM Achievement");
+                        Console.WriteLine("MAIN EXP " + someData[0].MainExp);
+
+                    }
+
+                    else
+                    {
+
+                        
+                        db.updateTableAchievements(lstPerson[position].Category);
+                        Console.WriteLine("MAIN EXP " + someData[0].MainExp);
+                    }
+
+
+                    
+
+                    
+                    
+                    
                 }
                 else
                 {

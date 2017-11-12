@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using AndroidSQLite.Resources.Model;
 using AndroidSQLite.Resources.DataHelper;
 using AndroidSQLite.Resources;
-using AndroidSQLite.BroadCast;
+//using AndroidSQLite.BroadCast;
 using Android.Util;
 using SQLite;
 using Android.Content;
@@ -193,15 +193,20 @@ namespace AndroidSQLite
 
         }
 
-        private void StartAlarm()
-        {
-            AlarmManager manager = (AlarmManager)GetSystemService(Context.AlarmService);
-            Intent myIntent;
-            PendingIntent pendingIntent;
-            myIntent = new Intent(this, typeof(AlarmNotificationReceiver));
-            pendingIntent = PendingIntent.GetBroadcast(this, 0, myIntent, 0);
-            manager.Set(AlarmType.RtcWakeup, SystemClock.ElapsedRealtime() + 3000, pendingIntent);
-        }
+
+        // БУДИЛЬНИК
+        //private void StartAlarm()
+        //{
+        //    AlarmManager manager = (AlarmManager)GetSystemService(Context.AlarmService);
+        //    Intent myIntent;
+        //    PendingIntent pendingIntent;
+        //    myIntent = new Intent(this, typeof(AlarmNotificationReceiver));
+        //    pendingIntent = PendingIntent.GetBroadcast(this, 0, myIntent, 0);
+        //    manager.Set(AlarmType.RtcWakeup, SystemClock.ElapsedRealtime() + 3000, pendingIntent);
+        //}
+
+
+
         //public void LoadData()
         //{
         //    lstSource = db.selectTablePerson();
@@ -465,7 +470,7 @@ namespace AndroidSQLite
         {
             var view = inflater.Inflate(Resource.Layout.ThirdFragmentLaout, container, false);
 
-            //mButton = view.FindViewById<Button>(Resource.Id.button1);
+            //mButton = view.FindViewById<Button>(Resource.Id.btncheeee);
             //mButton.Click += delegate
             //{
 

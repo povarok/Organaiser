@@ -12,8 +12,9 @@ using Android.Widget;
 
 namespace AndroidSQLite.Resources.Model
 {
-    public class Achivments
+    public class Achievement
     {
+        public string Name { get; set; }
         public int MainExp { get; set; }
         public int SportExp { get; set; }
         public int OtherExp { get; set; }
