@@ -9,13 +9,18 @@
         android:orientation="horizontal">
         <Button
             android:id="@+id/btnAdd"
-            android:text="+"
+            android:text="новая задача"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp" />
         <Button
             android:id="@+id/btnRefresh"
-            android:text="refresh"
+            android:text="сбросить"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+      <Button
+            android:id="@+id/btnLoadDataByDateByLast"
+            android:text="get last"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

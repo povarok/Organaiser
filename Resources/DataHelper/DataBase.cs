@@ -55,6 +55,9 @@ namespace AndroidSQLite.Resources.DataHelper
 
         public List<Person> selectTablePerson()
         {
+
+            Console.WriteLine("db.selectTablePerson STARTED");
+
             try
             {
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
@@ -166,17 +169,22 @@ namespace AndroidSQLite.Resources.DataHelper
         }
 
 
-        public List<Person> get_Last()
+        public Person get_Last()
         {
             try
             {
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
-                    var someData = connection.Query<Person>("SELECT * FROM Person Where Name=?", "1");
-                    //var someData = connection.Query<Person>("SELECT last_insert_rowid()");
+                    //var someData = connection.Query<Person>("SELECT * FROM Person Where Name=?", "1");
+                    //SQLiteCommand command = new SQLiteCommand(this.connection);
+                    //var command = new SQLiteCommand();
+                    //var someData = connection.Query<Person>("SELECT * FROM Person Where Id=?", someData1);
+                    //var someData = connection.Query<Person>("SELECT LAST_INSERT_ID()");
 
 
-                    return someData.ToList();
+                    var someData = connection.Query<Person>("SELECT * FROM Person ORDER BY Id");
+                    Console.WriteLine("Id найденное функцией get_Last - " + someData[someData.Count-1].Id);
+                    return someData[someData.Count - 1];
                 }
             }
             catch (SQLiteException ex)

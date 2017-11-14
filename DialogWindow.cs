@@ -22,8 +22,7 @@ namespace AndroidSQLite
     public class DialogFragment1 : Android.Support.V4.App.DialogFragment, IDialogInterfaceOnDismissListener, IOnDateSetListener, IOnTimeSetListener
     {
 
-
-        MainActivity ma = new MainActivity();
+        
 
         List<Person> lstSource = new List<Person>();
         DataBase db;
@@ -35,11 +34,12 @@ namespace AndroidSQLite
         // не работает 
         int globalHour = 21;
         int globalMin = 44;
-        private MainActivity _activity;
-        //public void SetActivity(MainActivity activity)
-        //{
-        //    //_activity = activity;
-        //}
+        public MainActivity _activityByDialogWindow;
+
+        public void SetActivity(MainActivity activity)
+        {
+            _activityByDialogWindow = activity;
+        }
         //Fragment2 ma = new Fragment2();
         //List<Person> lstSource = new List<Person>();
         //DataBase db;
@@ -49,6 +49,8 @@ namespace AndroidSQLite
             //SetActivity(ma);
             //_activity.OnDismiss();
             Console.WriteLine("ONDISMIS from Dialog Window");
+            //SetActivity(_activity);
+            
         }
 
         //private sealed class OnDismissListener : Java.Lang.Object, IDialogInterfaceOnDismissListener
@@ -85,6 +87,7 @@ namespace AndroidSQLite
             lstSource = new List<Person>();
             currentDate = Calendar.Instance;
 
+            //SetActivity()
             //ma.lstData = View.FindViewById<ListView>(Resource.Id.listView);
 
 
@@ -121,7 +124,7 @@ namespace AndroidSQLite
             
             var selected_Element = db.get_Element(getID)[0];
 
-            //Console.WriteLine("Выбран " + selected_Element.Id + " ый эл-т");
+            Console.WriteLine("Выбран " + selected_Element.Id + " ый эл-т");
             //Console.WriteLine("Name - " + selected_Element.Name);
             //Console.WriteLine("Date - " + selected_Element.Date.ToLongDateString());
             //Console.WriteLine("Time - " + selected_Element.Time.ToLongTimeString());
@@ -191,6 +194,7 @@ namespace AndroidSQLite
             {
                 //Пока что вывод в консоль
                 Console.WriteLine("Выбран приоритет: " + e.Parent.GetItemAtPosition(e.Position).ToString());
+
             };
 
             setTime.Click += delegate
@@ -223,6 +227,7 @@ namespace AndroidSQLite
                     Priority = selected_Element.Priority  
                };
                 db.deleteTablePerson(person);
+                _activityByDialogWindow._fragment2.LoadData();
                 Dismiss();
 
 
@@ -288,6 +293,7 @@ namespace AndroidSQLite
                 else
                 {
                     db.updateTablePerson(selected_Element);
+                    _activityByDialogWindow._fragment2.LoadData();
                     Dismiss();
 
                 }
@@ -300,7 +306,7 @@ namespace AndroidSQLite
                 Console.WriteLine("Date - " + selected_Element.Date.ToLongDateString());
                 Console.WriteLine("Time - " + selected_Element.Time.ToLongTimeString());
 
-
+                
 
             };
 

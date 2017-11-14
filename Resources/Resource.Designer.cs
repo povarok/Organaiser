@@ -1949,14 +1949,17 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f0a0090
 			public const int btnAdd = 2131361936;
 			
+			// aapt resource value: 0x7f0a0092
+			public const int btnLoadDataByDateByLast = 2131361938;
+			
 			// aapt resource value: 0x7f0a0091
 			public const int btnRefresh = 2131361937;
 			
 			// aapt resource value: 0x7f0a0070
 			public const int btnSaveFr = 2131361904;
 			
-			// aapt resource value: 0x7f0a0093
-			public const int btncheeee = 2131361939;
+			// aapt resource value: 0x7f0a0094
+			public const int btncheeee = 2131361940;
 			
 			// aapt resource value: 0x7f0a003d
 			public const int buttonPanel = 2131361853;
@@ -2060,8 +2063,8 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f0a000e
 			public const int listMode = 2131361806;
 			
-			// aapt resource value: 0x7f0a0092
-			public const int listView = 2131361938;
+			// aapt resource value: 0x7f0a0093
+			public const int listView = 2131361939;
 			
 			// aapt resource value: 0x7f0a003b
 			public const int list_item = 2131361851;
@@ -2069,8 +2072,8 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f0a0083
 			public const int media_actions = 2131361923;
 			
-			// aapt resource value: 0x7f0a0094
-			public const int message = 2131361940;
+			// aapt resource value: 0x7f0a0095
+			public const int message = 2131361941;
 			
 			// aapt resource value: 0x7f0a0022
 			public const int middle = 2131361826;

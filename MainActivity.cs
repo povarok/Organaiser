@@ -28,73 +28,70 @@ namespace AndroidSQLite
     [Activity(Label = "AndroidSQLite", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : FragmentActivity, IOnDateSetListener
     {
+
+
+        
+
+
+        public  Fragment1 _fragment1 = new Fragment1();
+        public  Fragment2 _fragment2 = new Fragment2();
+        public  Fragment3 _fragment3 = new Fragment3();
+
+        public DialogFragment1 _dialogFragment1 = new DialogFragment1();
+
         Java.Util.Calendar mCurrentDate;
         Bitmap mGenerateDateIcon;
         ImageGenerator mGeneratorImage;
         ImageView mDisplayGeneratedImage;
-        //ListView lstData ;
-        //List<Person> lstSource = new List<Person>();
         DataBase db;
         private ViewPager mViewPager;
         private SlidingTabScrollView mScrollView;
         DateTime calendarDate;
-        //Выбор сортировки ниже
-        enum SortType {SortById, SortByDate, SortByCategory};
-        //Изначально задана стандартная сортировка из бд
-        SortType sortType = SortType.SortById;
+       
 
-        ListView lstDataMain;
-        List<Person> lstSourceMain = new List<Person>();
-        public void LoadDataByDateMain(DateTime date)
-        {
-            Fragment2 fr2 = new Fragment2();
-
-            lstSourceMain = db.selectTablePerson();
-
-            var lstSource2 = new List<Person>();
-            foreach (var value in lstSourceMain)
-            {
-                if (value.Date == date)
-                {
-                    lstSource2.Add(value);
-                }
-            }
-
-            lstSourceMain = lstSource2;
-            var adapter = new ListViewAdapter(fr2, lstSourceMain);
-            lstDataMain.Adapter = adapter;
-        }
+        
         public void OnDateSet(DatePicker view, int year, int month, int dayOfMonth)
         {
+
+            //DialogFragment1
             //Передаем выбранную дату куда нибудь
             Toast.MakeText(this, $"{dayOfMonth}-{month + 1}-{year}", ToastLength.Long).Show();
             mCurrentDate.Set(year, month, dayOfMonth);
             mGenerateDateIcon = mGeneratorImage.GenerateDateImage(mCurrentDate, Resource.Drawable.EmptyCalendar);
             mDisplayGeneratedImage.SetImageBitmap(mGenerateDateIcon);
             //Это нужно отдать методу LoadDataByDate()
-            calendarDate = new DateTime(year, month, dayOfMonth, 1, 1, 1);
+
+            // ВОПРОС СЕМЕНОВУ: почему в datePicker месяц съехал на 1 ? ? ?
+
+            calendarDate = new DateTime(year, month+1, dayOfMonth, 1, 1, 1);
             Console.WriteLine(calendarDate);
-            sortType = SortType.SortByDate;
             mViewPager.SetCurrentItem(1, true);
-            //LoadDataByDateMain(calendarDate);
-          // var Pa = new SamplePagerAdapter(Android.Support.V4.App.FragmentManager fragManager);
+           
+
+
+            // Как было
             //Fragment2 fragment2 = new Fragment2();
-            
             //fragment2.LoadDataByDate(calendarDate);
+
+            // Семенов
+            _fragment2.LoadDataByDate(calendarDate);
+
         }
 
 
         public void OnDismiss()
         {
-            Fragment2 fragment2 = new Fragment2();
-            fragment2.LoadData();
-            Console.WriteLine("ONDISMIS from MA");
+            //Fragment2 fragment2 = new Fragment2();
+            //fragment2.LoadData();
+            //Console.WriteLine("ONDISMIS from MA");
         }
 
         protected override void OnCreate(Bundle bundle)
         {
+            _fragment2.SetActivity(this);
             base.OnCreate(bundle);
-            
+            //dialogwindow.SetActivity(
+
             SetContentView(Resource.Layout.Main);
             mGeneratorImage = new ImageGenerator(this);
             mDisplayGeneratedImage = FindViewById<ImageView>(Resource.Id.imageGen);
@@ -136,7 +133,10 @@ namespace AndroidSQLite
 
             mScrollView = FindViewById<SlidingTabScrollView>(Resource.Id.sliding_tabs);
             mViewPager = FindViewById<ViewPager>(Resource.Id.viewPager);
-            mViewPager.Adapter = new SamplePagerAdapter( SupportFragmentManager);
+            // Семенов
+            mViewPager.Adapter = new SamplePagerAdapter(this, SupportFragmentManager);
+            // Как было
+            //mViewPager.Adapter = new SamplePagerAdapter( SupportFragmentManager);
             mScrollView.ViewPager = mViewPager;
             
             //Create DataBase
@@ -204,29 +204,32 @@ namespace AndroidSQLite
         //    pendingIntent = PendingIntent.GetBroadcast(this, 0, myIntent, 0);
         //    manager.Set(AlarmType.RtcWakeup, SystemClock.ElapsedRealtime() + 3000, pendingIntent);
         //}
-
-
-
-        //public void LoadData()
-        //{
-        //    lstSource = db.selectTablePerson();
-        //    var adapter = new ListViewAdapter(this, lstSource);
-        //    lstData.Adapter = adapter;
-        //}
     }
 
     public class SamplePagerAdapter : FragmentPagerAdapter
     {
         private List<Android.Support.V4.App.Fragment> mFragmentHolder;
-
-        public SamplePagerAdapter(Android.Support.V4.App.FragmentManager fragManager) : base(fragManager)
+        // Семенов
+        public SamplePagerAdapter(MainActivity activity, Android.Support.V4.App.FragmentManager fragManager) : base(fragManager)
         {
-            
-            mFragmentHolder = new List<Android.Support.V4.App.Fragment>();
-            mFragmentHolder.Add(new Fragment1());
-            mFragmentHolder.Add(new Fragment2());
-            mFragmentHolder.Add(new Fragment3());
+
+            mFragmentHolder = new List<Android.Support.V4.App.Fragment>
+            {
+                activity._fragment1,
+                activity._fragment2,
+                activity._fragment3
+            };
         }
+        // Как было
+        //public SamplePagerAdapter(Android.Support.V4.App.FragmentManager fragManager) : base(fragManager)
+        //{
+
+
+        //    mFragmentHolder = new List<Android.Support.V4.App.Fragment>();
+        //    mFragmentHolder.Add(new Fragment1());
+        //    mFragmentHolder.Add(new Fragment2());
+        //    mFragmentHolder.Add(new Fragment3());
+        //}
 
         public override int Count
         {
@@ -275,16 +278,27 @@ namespace AndroidSQLite
     public class Fragment2 : Android.Support.V4.App.Fragment
     {
         ListView lstData;
-        List<Person> lstSource = new List<Person>();
+        public List<Person> lstSource = new List<Person>();
         DataBase db;
         private EditText mTxt;
-        
+        public MainActivity _activity;
+
+        public void SetActivity(MainActivity activity)
+        {
+            _activity = activity;
+        }
+
+
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-               
-            // MainActivity ma = (MainActivity)this.Activity;
+
+
+            
+            //MainActivity ma = (MainActivity)this.Activity;
             db = new DataBase();
             db.createDataBase();
+
+
             string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             Log.Info("DB_PATH", folder);
 
@@ -294,14 +308,14 @@ namespace AndroidSQLite
 
             var btnAdd = view.FindViewById<Button>(Resource.Id.btnAdd);
             var btnRefresh = view.FindViewById<Button>(Resource.Id.btnRefresh);
+            var btnLoadDataByDateByLast = view.FindViewById<Button>(Resource.Id.btnLoadDataByDateByLast);
 
-            //Проверяем какая сортировка выбрана. Пытаемся. . .
-            //LoadData
-            //switch (sortType)
-            //{
-            
-            //}
+           
             LoadData();
+
+
+            
+            
 
             //Event
             btnAdd.Click += delegate
@@ -319,38 +333,44 @@ namespace AndroidSQLite
                     Done = false
                 }; 
                 db.insertIntoTablePerson(person);
-                //LoadData();
+                
 
                 Android.Support.V4.App.FragmentTransaction ft = FragmentManager.BeginTransaction();
                 Android.Support.V4.App.Fragment prev = FragmentManager.FindFragmentByTag("dialog");
                 Bundle frag_bundle = new Bundle();
                 frag_bundle.PutLong("Id", person.Id);
-
+                //frag_bundle.
 
                 if (prev != null)
                 {
                     ft.Remove(prev);
                 }
                 ft.AddToBackStack(null);
-                DialogFragment1 newFr = DialogFragment1.NewInstance(frag_bundle);
+
+                _activity._dialogFragment1 = DialogFragment1.NewInstance(frag_bundle);
                 //newFr.Arguments.PutLong("Id", elementId);
+                var act = _activity._dialogFragment1.Activity;
 
-
-                newFr.Show(ft, "dialog");
+                _activity._dialogFragment1.SetActivity(_activity);
+                _activity._dialogFragment1.Show(ft, "dialog");
                 
             };
 
             btnRefresh.Click += delegate
             {
-                //lstData = view.FindViewById<ListView>(Resource.Id.listView);
-                
+                LoadData();
+            };
+
+            // Эта кнопка берет последний элемент из БД и выводит на экран
+            btnLoadDataByDateByLast.Click += delegate
+            {
+
                 var Last = db.get_Last();
-                Console.WriteLine("Last = " + Last[0].Name + "Date = "+ Last[0].Date);
-                //DateTime dt = new DateTime(2017, 11, 7);
-                LoadDataByDate(Last[0].Date);
-                //LoadData();
+                Console.WriteLine("Last = " + Last.Id);
+                LoadDataByDate(Last.Date);
 
             };
+
             //Эдик разбирайся
             //Хрень для свайпа10!)
             //lstData.Touch += (s, e) =>
@@ -391,10 +411,15 @@ namespace AndroidSQLite
                             ft.Remove(prev);
                         }
                         ft.AddToBackStack(null);
-                        DialogFragment1 newFr = DialogFragment1.NewInstance(frag_bundle);
+
+                        
+
+                       
+                        _activity._dialogFragment1 = DialogFragment1.NewInstance(frag_bundle);
+                        _activity._dialogFragment1.SetActivity(_activity);
                         //newFr.Arguments.PutLong("Id", elementId);
 
-                        newFr.Show(ft, "dialog");
+                        _activity._dialogFragment1.Show(ft, "dialog");
                         //Toast.MakeText(this, db.get_Element(elementId)[0].Name, ToastLength.Long).Show();
                     }
                     //else
@@ -432,30 +457,35 @@ namespace AndroidSQLite
         public void LoadData()
         {
             lstSource = db.selectTablePerson();
-           
+
             var adapter = new ListViewAdapter(this, lstSource);
             lstData.Adapter = adapter;
         }
         //Сортировка по дате
         //Наверное так
         public void LoadDataByDate(DateTime date)
-        {
+        {     
+            //Console.WriteLine("LoadDataByDate started");
             lstSource = db.selectTablePerson();
-            
+            Console.WriteLine("LoadDataByDate started LstSource length - "+ lstSource.Count);
             var lstSource2 = new List<Person>();
             foreach (var value in lstSource)
             {
-                if (value.Date == date)
+                Console.WriteLine("from DB - " + value.Date.Date + "заданная дата - " + date.Date);
+                if (value.Date.Date == date.Date)
                 {
                     lstSource2.Add(value);
+                    Console.WriteLine("длина lstSource2 - " + lstSource2.Count);
+
                 }
             }
 
-            lstSource = lstSource2;
+            this.lstSource = lstSource2;
 
            // lstSource.Find(person);
             var adapter = new ListViewAdapter(this, lstSource);
-            lstData.Adapter = adapter;
+            this.lstData.Adapter = adapter;
+            Console.WriteLine("loadDataByDate completed " + lstSource2.Count);
         }
 
 
