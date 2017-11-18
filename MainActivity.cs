@@ -29,13 +29,16 @@ namespace AndroidSQLite
     public class MainActivity : FragmentActivity, IOnDateSetListener
     {
 
-
         
+
 
 
         public  Fragment1 _fragment1 = new Fragment1();
         public  Fragment2 _fragment2 = new Fragment2();
         public  Fragment3 _fragment3 = new Fragment3();
+
+
+        public ListViewAdapter adapter = new ListViewAdapter();
 
         public DialogFragment1 _dialogFragment1 = new DialogFragment1();
 
@@ -387,6 +390,7 @@ namespace AndroidSQLite
             //    e.Handled = handled;
             //};
             lstData.ItemClick += (s, e) => {
+                Console.WriteLine("ГАЛОЧКА");
                 //lstData
                 //Set background for selected item
                 for (int i = 0; i < lstData.Count; i++)
@@ -458,8 +462,10 @@ namespace AndroidSQLite
         {
             lstSource = db.selectTablePerson();
 
-            var adapter = new ListViewAdapter(this, lstSource);
-            lstData.Adapter = adapter;
+            _activity.adapter.SetFrActivity(this);
+            _activity.adapter.SetList(lstSource);
+           _activity.adapter.SetActivity(_activity);
+            lstData.Adapter = _activity.adapter;
         }
         //Сортировка по дате
         //Наверное так
@@ -482,9 +488,10 @@ namespace AndroidSQLite
 
             this.lstSource = lstSource2;
 
-           // lstSource.Find(person);
-            var adapter = new ListViewAdapter(this, lstSource);
-            this.lstData.Adapter = adapter;
+            // lstSource.Find(person);
+            _activity.adapter.SetFrActivity(this);
+            _activity.adapter.SetList(lstSource);
+            this.lstData.Adapter = _activity.adapter;
             Console.WriteLine("loadDataByDate completed " + lstSource2.Count);
         }
 

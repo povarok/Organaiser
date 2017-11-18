@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace AndroidSQLite.Resources.Model
 {
-    public class Achievement
+    public class Achievement1
     {
         public string Name { get; set; }
         public int MainExp { get; set; }
@@ -20,5 +20,7 @@ namespace AndroidSQLite.Resources.Model
         public int OtherExp { get; set; }
         public int EducationExp { get; set; }
         public int FinansiExp { get; set; }
+        //public List<long> BannedId { get; set; }
+        //public Array BannedId { get; set; }
     }
 }

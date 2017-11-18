@@ -32,18 +32,40 @@ namespace AndroidSQLite.Resources
     }
     public class ListViewAdapter:BaseAdapter
     {
+
+        public MainActivity _activityByListViewAdapter;
+
+        public void SetActivity(MainActivity activity)
+        {
+            _activityByListViewAdapter = activity;
+        }
+
+
+
+
         DataBase db;
 
-        
+        public void SetFrActivity(Android.Support.V4.App.Fragment FrActivity)
+        {
+            this.activity = FrActivity;
+        }
+
+        public void SetList(List<Person> lstPerson)
+        {
+            this.lstPerson = lstPerson;
+        }
+
 
 
         private Android.Support.V4.App.Fragment activity;
         private List<Person> lstPerson;
-        public ListViewAdapter(Android.Support.V4.App.Fragment activity, List<Person> lstPerson)
-        {
-            this.activity = activity;
-            this.lstPerson = lstPerson;
-        }
+
+
+        //public ListViewAdapter(Android.Support.V4.App.Fragment activity, List<Person> lstPerson)
+        //{
+        //    this.activity = activity;
+        //    this.lstPerson = lstPerson;
+        //}
 
         public override int Count
         {
@@ -109,27 +131,29 @@ namespace AndroidSQLite.Resources
                     selected_Element.Done = true;
                     db.updateTablePerson(selected_Element);
 
-                    
+                    _activityByListViewAdapter._fragment2.LoadData();
 
                     //--------------------------
                     var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db"));
 
-                    var someData = connection.Query<Achievement>("SELECT * FROM Achievement");
+                    var someData = connection.Query<Achievement1>("SELECT * FROM Achievement1");
                     Console.WriteLine("SOMEDATA = " + someData);
 
                     if (someData.Count() == 0)
                     {
-                        Achievement achievement = new Achievement()
+                        Achievement1 achievement = new Achievement1()
                         {
                             Name = "Достижения",
                             EducationExp = 0,
                             MainExp = 0,
                             FinansiExp = 0,
-                            OtherExp = 0
+                            OtherExp = 0,
+                            //BannedId = {}
+                            
                         };
                         connection.Insert(achievement);
-                        db.updateTableAchievements(lstPerson[position].Category);
-                        someData = connection.Query<Achievement>("SELECT * FROM Achievement");
+                        db.updateTableAchievements(lstPerson[position].Category, lstPerson[position].Id);
+                        someData = connection.Query<Achievement1>("SELECT * FROM Achievement1");
                         Console.WriteLine("MAIN EXP " + someData[0].MainExp);
 
                     }
@@ -137,23 +161,18 @@ namespace AndroidSQLite.Resources
                     else
                     {
 
-                        
-                        db.updateTableAchievements(lstPerson[position].Category);
+
+                        db.updateTableAchievements(lstPerson[position].Category, lstPerson[position].Id);
                         Console.WriteLine("MAIN EXP " + someData[0].MainExp);
                     }
-
-
-                    
-
-                    
-                    
-                    
+   
                 }
                 else
                 {
                     lstPerson[position].Done = false;
                     selected_Element.Done = false;
                     db.updateTablePerson(selected_Element);
+                    _activityByListViewAdapter._fragment2.LoadData();
 
                 }
             };
@@ -183,6 +202,8 @@ namespace AndroidSQLite.Resources
             txtCategory.Text = "Категория: " + lstPerson[position].Category;
             txtDateTime.Text = lstPerson[position].Time.ToShortTimeString() + ", " + lstPerson[position].Date.ToLongDateString();
             txtDone.Text = "Статус: " + getStatus;
+
+            //_activityByListViewAdapter._fragment2.LoadData();
 
 
             return view;

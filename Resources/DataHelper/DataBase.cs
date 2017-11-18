@@ -201,7 +201,7 @@ namespace AndroidSQLite.Resources.DataHelper
             {
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
-                    connection.CreateTable<Achievement>();
+                    connection.CreateTable<Achievement1>();
                     return true;
                 }
             }
@@ -212,40 +212,52 @@ namespace AndroidSQLite.Resources.DataHelper
             }
         }
 
-        public void updateTableAchievements(string Category)
+        public void updateTableAchievements(string Category, long Id)
         {
             try
             {
+                
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
-                    
-                    Achievement achivments = new Achievement();
-                    if (Category == "Спорт")
-                    {
-                        connection.Query<Achievement>("UPDATE Achievement set SportExp = SportExp + 1 Where Name=?","Достижения");
-                        connection.Query<Achievement>("UPDATE Achievement set MainExp = MainExp + 1 Where Name=?", "Достижения");
-                    }
-                    if (Category == "Образоване")
-                    {
-                        connection.Query<Achievement>("UPDATE Achievement set EducationExp = EducationExp + 1 Where Name=?", "Достижения");
-                        connection.Query<Achievement>("UPDATE Achievement set MainExp = MainExp + 1 Where Name=?", "Достижения");
-                    }
-                    if (Category == "Спорт")
-                    { 
-                        connection.Query<Achievement>("UPDATE Achievement set SportExp = SportExp + 1 Where Name=?", "Достижения");
-                        connection.Query<Achievement>("UPDATE Achievement set MainExp = MainExp + 1 Where Name=?", "Достижения");
-                    }
-                    if (Category == "Финансы")
-                    {
-                        connection.Query<Achievement>("UPDATE Achievement set FinansiExp = FinansiExp + 1 Where Name=?", "Достижения");
-                        connection.Query<Achievement>("UPDATE Achievement set MainExp = MainExp + 1 Where Name=?", "Достижения");
-                    }
-                    if(Category == "Прочее")
-                    {
-                        connection.Query<Achievement>("UPDATE Achievement set OtherExp = OtherExp + 1 Where Name=?", "Достижения");
-                        connection.Query<Achievement>("UPDATE Achievement set MainExp = MainExp + 1 Where Name=?", "Достижения");
+                    var Achiev = connection.Query<Achievement1>("SELECT * FROM Achievement1");
+                    //if (Achiev[0].BannedId.IndexOf(Id) == -1)
+                    //{
 
-                    }
+                        Console.WriteLine("ЭТТО НОВЫЙ ЭЛЕМЕНТ");
+                        //Achievement achivments = new Achievement();
+                        if (Category == "Спорт")
+                        {
+                            connection.Query<Achievement1>("UPDATE Achievement1 set SportExp = SportExp + 1 Where Name=?", "Достижения");
+                            connection.Query<Achievement1>("UPDATE Achievement1 set MainExp = MainExp + 1 Where Name=?", "Достижения");
+                        }
+                        if (Category == "Образоване")
+                        {
+                            connection.Query<Achievement1>("UPDATE Achievement1 set EducationExp = EducationExp + 1 Where Name=?", "Достижения");
+                            connection.Query<Achievement1>("UPDATE Achievement1 set MainExp = MainExp + 1 Where Name=?", "Достижения");
+                        }
+                        if (Category == "Спорт")
+                        {
+                            connection.Query<Achievement1>("UPDATE Achievement1 set SportExp = SportExp + 1 Where Name=?", "Достижения");
+                            connection.Query<Achievement1>("UPDATE Achievement1 set MainExp = MainExp + 1 Where Name=?", "Достижения");
+                        }
+                        if (Category == "Финансы")
+                        {
+                            connection.Query<Achievement1>("UPDATE Achievement1 set FinansiExp = FinansiExp + 1 Where Name=?", "Достижения");
+                            connection.Query<Achievement1>("UPDATE Achievement1 set MainExp = MainExp + 1 Where Name=?", "Достижения");
+                        }
+                        if (Category == "Прочее")
+                        {
+                            connection.Query<Achievement1>("UPDATE Achievement1 set OtherExp = OtherExp + 1 Where Name=?", "Достижения");
+                            connection.Query<Achievement1>("UPDATE Achievement1 set MainExp = MainExp + 1 Where Name=?", "Достижения");
+
+                        }
+                        //Achiev[0].BannedId.Add(Id);
+                    //}
+                    //else
+                    //{
+                    //    Console.WriteLine("ТАКОЙ ЭЛЕМЕНТ УЖЕ СУЩЕСТВУЕТ");
+                    //}
+
                 }
             }
             catch (SQLiteException ex)
