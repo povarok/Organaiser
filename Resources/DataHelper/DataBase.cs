@@ -219,7 +219,7 @@ namespace AndroidSQLite.Resources.DataHelper
                 
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
-                    var Achiev = connection.Query<Achievement1>("SELECT * FROM Achievement1");
+                    //var Achiev = connection.Query<Achievement1>("SELECT * FROM Achievement1");
                     //if (Achiev[0].BannedId.IndexOf(Id) == -1)
                     //{
 
@@ -249,7 +249,6 @@ namespace AndroidSQLite.Resources.DataHelper
                         {
                             connection.Query<Achievement1>("UPDATE Achievement1 set OtherExp = OtherExp + 1 Where Name=?", "Достижения");
                             connection.Query<Achievement1>("UPDATE Achievement1 set MainExp = MainExp + 1 Where Name=?", "Достижения");
-
                         }
                         //Achiev[0].BannedId.Add(Id);
                     //}

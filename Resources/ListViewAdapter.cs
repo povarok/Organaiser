@@ -131,7 +131,7 @@ namespace AndroidSQLite.Resources
                     selected_Element.Done = true;
                     db.updateTablePerson(selected_Element);
 
-                    _activityByListViewAdapter._fragment2.LoadData();
+                    //_activityByListViewAdapter._fragment2.LoadData();
 
                     //--------------------------
                     var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db"));
@@ -160,8 +160,6 @@ namespace AndroidSQLite.Resources
 
                     else
                     {
-
-
                         db.updateTableAchievements(lstPerson[position].Category, lstPerson[position].Id);
                         Console.WriteLine("MAIN EXP " + someData[0].MainExp);
                     }
@@ -172,7 +170,7 @@ namespace AndroidSQLite.Resources
                     lstPerson[position].Done = false;
                     selected_Element.Done = false;
                     db.updateTablePerson(selected_Element);
-                    _activityByListViewAdapter._fragment2.LoadData();
+                    //_activityByListViewAdapter._fragment2.LoadData();
 
                 }
             };
