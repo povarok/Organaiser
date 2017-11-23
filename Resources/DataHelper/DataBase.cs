@@ -222,7 +222,13 @@ namespace AndroidSQLite.Resources.DataHelper
             //    return false;
             //}
         }
-
+        public List<Achievement1> getAchievments()
+        {
+            using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
+            {
+                return connection.Table<Achievement1>().ToList();
+            }
+        }
         public void updateTableAchievements(string Category, long Id)
         {
             //try

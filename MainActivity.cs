@@ -160,7 +160,7 @@ namespace AndroidSQLite
 
             var settingsBtn = FindViewById<Button>(Resource.Id.settingsBtn);
 
-            var btnNot = FindViewById<Button>(Resource.Id.btncheeee);
+            //var btnNot = FindViewById<Button>(Resource.Id.btncheeee);
             //------------------------------------------------------------------
             // Instantiate the builder and set notification elements:
             //Notification.Builder builder = new Notification.Builder(this)
@@ -560,11 +560,29 @@ namespace AndroidSQLite
     public class Fragment3 : Android.Support.V4.App.Fragment
     {
         private Button mButton;
-
+        //--------------------------------------------------------
+        //Почему то добавляется по 2 очка опыта во все строчки...
+        //--------------------------------------------------------
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
+            int i = 0;
+            DataBase.db = DataBase.getDataBase();
+            var ach = DataBase.db.getAchievments();
+            
+            //Console.WriteLine("Ach name = "+ach[0].Name + " Exp = " + ach[0].MainExp);
             var view = inflater.Inflate(Resource.Layout.ThirdFragmentLaout, container, false);
+            Button refreshBtn = view.FindViewById<Button>(Resource.Id.refresh);
+            TextView consos = view.FindViewById<TextView>(Resource.Id.consos);
+            consos.Text = ach[0].Name + "\n MainExp = " + ach[0].MainExp + "\n OtherExp = " + ach[0].OtherExp +
+                "\n SportExp = " + ach[0].SportExp + "\n Finansi Exp = " + ach[0].FinansiExp + "\n EducationExp = " + ach[0].EducationExp;
 
+            refreshBtn.Click += delegate
+            {
+                ach = DataBase.db.getAchievments();
+                i++;
+                consos.Text ="Обновлено " + i + "раз\n" + ach[0].Name + "\n MainExp = " + ach[0].MainExp + "\n OtherExp = " + ach[0].OtherExp +
+                    "\n SportExp = " + ach[0].SportExp + "\n Finansi Exp = " + ach[0].FinansiExp + "\n EducationExp = " + ach[0].EducationExp;
+            };
             //mButton = view.FindViewById<Button>(Resource.Id.btncheeee);
             //mButton.Click += delegate
             //{
