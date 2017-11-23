@@ -535,7 +535,7 @@ namespace AndroidSQLite
         //Передать категорию
         public void SortCategory(string _category)
         {
-            lstSource = db.selectTablePerson();
+            lstSource = DataBase.db.selectTablePerson();
             var lstSource2 = new List<Person>();
 
             foreach(var value in lstSource)
