@@ -46,7 +46,7 @@ namespace AndroidSQLite
         Bitmap mGenerateDateIcon;
         ImageGenerator mGeneratorImage;
         ImageView mDisplayGeneratedImage;
-        DataBase db;
+        
         //-------------------------------
         //Изменил на public, Было private
         public ViewPager mViewPager;   
