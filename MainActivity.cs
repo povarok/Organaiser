@@ -46,7 +46,7 @@ namespace AndroidSQLite
         Bitmap mGenerateDateIcon;
         ImageGenerator mGeneratorImage;
         ImageView mDisplayGeneratedImage;
-        DataBase db;
+        //DataBase db;
         private ViewPager mViewPager;
         private SlidingTabScrollView mScrollView;
         DateTime calendarDate;
@@ -55,7 +55,7 @@ namespace AndroidSQLite
         
         public void OnDateSet(DatePicker view, int year, int month, int dayOfMonth)
         {
-
+            
             //DialogFragment1
             //Передаем выбранную дату куда нибудь
             Toast.MakeText(this, $"{dayOfMonth}-{month + 1}-{year}", ToastLength.Long).Show();
@@ -141,10 +141,12 @@ namespace AndroidSQLite
             // Как было
             //mViewPager.Adapter = new SamplePagerAdapter( SupportFragmentManager);
             mScrollView.ViewPager = mViewPager;
-            
+
             //Create DataBase
-            db = new DataBase();
-            db.createDataBase();
+            DataBase.db = DataBase.getDataBase();
+
+            //db = new DataBase();
+            DataBase.db.createDataBase();
             string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             Log.Info("DB_PATH", folder);
 
@@ -282,7 +284,7 @@ namespace AndroidSQLite
     {
         ListView lstData;
         public List<Person> lstSource = new List<Person>();
-        DataBase db;
+        //DataBase db;
         private EditText mTxt;
         public MainActivity _activity;
 
@@ -296,10 +298,10 @@ namespace AndroidSQLite
         {
 
 
-            
+
             //MainActivity ma = (MainActivity)this.Activity;
-            db = new DataBase();
-            db.createDataBase();
+            DataBase.db = DataBase.getDataBase();
+            DataBase.db.createDataBase();
 
 
             string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
@@ -335,7 +337,7 @@ namespace AndroidSQLite
                     Priority = "0", 
                     Done = false
                 }; 
-                db.insertIntoTablePerson(person);
+                DataBase.db.insertIntoTablePerson(person);
                 
 
                 Android.Support.V4.App.FragmentTransaction ft = FragmentManager.BeginTransaction();
@@ -368,7 +370,7 @@ namespace AndroidSQLite
             btnLoadDataByDateByLast.Click += delegate
             {
 
-                var Last = db.get_Last();
+                var Last = DataBase.db.get_Last();
                 Console.WriteLine("Last = " + Last.Id);
                 LoadDataByDate(Last.Date);
 
@@ -401,7 +403,7 @@ namespace AndroidSQLite
                         //  Intent intent = new Intent(this,  )
                         // lstData.GetChildAt(i).SetBackgroundColor(Android.Graphics.Color.DarkGray);
                         //Получаем id выбранного в списке элемента
-                        elementId = db.selectQuery(lstData.Adapter.GetItemId(e.Position));
+                        elementId = DataBase.db.selectQuery(lstData.Adapter.GetItemId(e.Position));
                         
                         Android.Support.V4.App.FragmentTransaction ft = FragmentManager.BeginTransaction();
                         //Remove fragment else it will crash as it is already added to backstack
@@ -460,7 +462,7 @@ namespace AndroidSQLite
         //Сортировка по id
         public void LoadData()
         {
-            lstSource = db.selectTablePerson();
+            lstSource = DataBase.db.selectTablePerson();
 
             _activity.adapter.SetFrActivity(this);
             _activity.adapter.SetList(lstSource);
@@ -472,7 +474,7 @@ namespace AndroidSQLite
         public void LoadDataByDate(DateTime date)
         {     
             //Console.WriteLine("LoadDataByDate started");
-            lstSource = db.selectTablePerson();
+            lstSource = DataBase.db.selectTablePerson();
             Console.WriteLine("LoadDataByDate started LstSource length - "+ lstSource.Count);
             var lstSource2 = new List<Person>();
             foreach (var value in lstSource)

@@ -25,7 +25,7 @@ namespace AndroidSQLite
         
 
         List<Person> lstSource = new List<Person>();
-        DataBase db;
+        //DataBase db;
         DateTime selectedDateDate;
         DateTime selectedDateTime;
         Calendar currentDate;
@@ -81,9 +81,9 @@ namespace AndroidSQLite
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
 
-            db = new DataBase();
+            DataBase.db = DataBase.getDataBase();
 
-            db.createDataBase();
+            DataBase.db.createDataBase();
             lstSource = new List<Person>();
             currentDate = Calendar.Instance;
 
@@ -122,7 +122,7 @@ namespace AndroidSQLite
             //if (getID != ((long)0))
             //{
             
-            var selected_Element = db.get_Element(getID)[0];
+            var selected_Element = DataBase.db.get_Element(getID)[0];
 
             Console.WriteLine("Выбран " + selected_Element.Id + " ый эл-т");
             //Console.WriteLine("Name - " + selected_Element.Name);
@@ -226,7 +226,7 @@ namespace AndroidSQLite
                     Name = selected_Element.Name,
                     Priority = selected_Element.Priority  
                };
-                db.deleteTablePerson(person);
+                DataBase.db.deleteTablePerson(person);
                 _activityByDialogWindow._fragment2.LoadData();
                 Dismiss();
 
@@ -292,7 +292,7 @@ namespace AndroidSQLite
                 }
                 else
                 {
-                    db.updateTablePerson(selected_Element);
+                    DataBase.db.updateTablePerson(selected_Element);
                     _activityByDialogWindow._fragment2.LoadData();
                     Dismiss();
 
@@ -316,7 +316,7 @@ namespace AndroidSQLite
                 if (selected_Element.Name == "" || selected_Element.Name == "Null")
                 {
                     Toast.MakeText(Activity, "Отмена создания", ToastLength.Short).Show();
-                    db.deleteTablePerson(selected_Element);
+                    DataBase.db.deleteTablePerson(selected_Element);
                     Dismiss();
 
                 }

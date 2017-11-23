@@ -43,7 +43,7 @@ namespace AndroidSQLite.Resources
 
 
 
-        DataBase db;
+        //DataBase db;
 
         public void SetFrActivity(Android.Support.V4.App.Fragment FrActivity)
         {
@@ -98,9 +98,9 @@ namespace AndroidSQLite.Resources
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
 
-            db = new DataBase();
-            db.createDataBase();
-            db.createDataBaseAchivments();
+            DataBase.db = DataBase.getDataBase();//new DataBase();
+            DataBase.db.createDataBase();
+            DataBase.db.createDataBaseAchivments();
             string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             Log.Info("DB_PATH", folder);
 
@@ -120,7 +120,7 @@ namespace AndroidSQLite.Resources
             //checkBox.SetOnCheckedChangeListener(new CheckedChangeListener(this.activity));
 
 
-            var selected_Element = db.get_Element(lstPerson[position].Id)[0];
+            var selected_Element = DataBase.db.get_Element(lstPerson[position].Id)[0];
 
             checkBox.Click += delegate 
             {
@@ -129,7 +129,7 @@ namespace AndroidSQLite.Resources
                     lstPerson[position].Done = true;
                     Console.WriteLine("Name from list"+lstPerson[position].Name);
                     selected_Element.Done = true;
-                    db.updateTablePerson(selected_Element);
+                    DataBase.db.updateTablePerson(selected_Element);
 
                     _activityByListViewAdapter._fragment2.LoadData();
 
@@ -152,7 +152,7 @@ namespace AndroidSQLite.Resources
                             
                         };
                         connection.Insert(achievement);
-                        db.updateTableAchievements(lstPerson[position].Category, lstPerson[position].Id);
+                        DataBase.db.updateTableAchievements(lstPerson[position].Category, lstPerson[position].Id);
                         someData = connection.Query<Achievement1>("SELECT * FROM Achievement1");
                         Console.WriteLine("MAIN EXP " + someData[0].MainExp);
 
@@ -162,7 +162,7 @@ namespace AndroidSQLite.Resources
                     {
 
 
-                        db.updateTableAchievements(lstPerson[position].Category, lstPerson[position].Id);
+                        DataBase.db.updateTableAchievements(lstPerson[position].Category, lstPerson[position].Id);
                         Console.WriteLine("MAIN EXP " + someData[0].MainExp);
                     }
    
@@ -171,7 +171,7 @@ namespace AndroidSQLite.Resources
                 {
                     lstPerson[position].Done = false;
                     selected_Element.Done = false;
-                    db.updateTablePerson(selected_Element);
+                    DataBase.db.updateTablePerson(selected_Element);
                     _activityByListViewAdapter._fragment2.LoadData();
 
                 }

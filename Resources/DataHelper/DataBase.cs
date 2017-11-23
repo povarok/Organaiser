@@ -15,42 +15,53 @@ using AndroidSQLite.Resources.Model;
 
 namespace AndroidSQLite.Resources.DataHelper
 {
+   
     public class DataBase
     {
+        public static DataBase db = null;
+        public static DataBase getDataBase()
+        {
+            if(DataBase.db == null)
+            {
+                db = new DataBase();
+            }
+            return db;
+        }
+
         string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
         public bool createDataBase()
         {
-            try
-            {
+            //try
+            //{
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
                     connection.CreateTable<Person>();
                     return true;
                 }
-            }
-            catch(SQLiteException ex)
-            {
-                Log.Info("SQLiteEx", ex.Message);
-                return false;
-            }
+            //}
+            //catch(SQLiteException ex)
+            //{
+            //    Log.Info("SQLiteEx", ex.Message);
+            //    return false;
+            //}
         }
 
 
         public bool insertIntoTablePerson(Person person)
         {
-            try
-            {
+            //try
+            //{
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
                     connection.Insert(person);
                     return true;
                 }
-            }
-            catch(SQLiteException ex)
-            {
-                Log.Info("SQLiteEx", ex.Message);
-                return false;
-            }
+            //}
+            //catch(SQLiteException ex)
+            //{
+            //    Log.Info("SQLiteEx", ex.Message);
+            //    return false;
+            //}
         }
 
         public List<Person> selectTablePerson()
@@ -58,81 +69,81 @@ namespace AndroidSQLite.Resources.DataHelper
 
             Console.WriteLine("db.selectTablePerson STARTED");
 
-            try
-            {
+            //try
+            //{
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
                     var a = connection.Table<Person>().ToList();
                     return connection.Table<Person>().ToList();
                    
                 }
-            }
-            catch (SQLiteException ex)
-            {
-                Log.Info("SQLiteEx", ex.Message);
-                Console.WriteLine("Ничего не найдено");
-                return null;
-            }
+            //}
+            //catch (SQLiteException ex)
+            //{
+            //    Log.Info("SQLiteEx", ex.Message);
+            //    Console.WriteLine("Ничего не найдено");
+            //    return null;
+            //}
         }
        
 
         public bool updateTablePerson(Person person)
         {
-            try
-            {
+            //try
+            //{
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
                     connection.Query<Person>("UPDATE Person set Name=?,Date=?,Time=?,Description=?,Priority=?,Category=?,Done=? Where Id=?",
                         person.Name,person.Date,person.Time,person.Description,person.Priority,person.Category,person.Done,person.Id);
                     return true;
                 }
-            }
-            catch (SQLiteException ex)
-            {
-                Log.Info("SQLiteEx", ex.Message);
-                return false;
-            }
+            //}
+            //catch (SQLiteException ex)
+            //{
+            //    Log.Info("SQLiteEx", ex.Message);
+            //    return false;
+            //}
         }
 
         public bool deleteTablePerson(Person person)
         {
-            try
-            {
+            //try
+            //{
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
                     connection.Delete(person);
                     return true;
                 }
-            }
-            catch (SQLiteException ex)
-            {
-                Log.Info("SQLiteEx", ex.Message);
-                return false;
-            }
+            //}
+            //catch (SQLiteException ex)
+            //{
+            //    Log.Info("SQLiteEx", ex.Message);
+            //    return false;
+            //}
         }
 
         public bool selectQueryTablePerson(int Id)
         {
-            try
-            {
+            //try
+            //{
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
                     connection.Query<Person>("SELECT * FROM Person Where Id=?", Id);
                     return true;
                 }
-            }
-            catch (SQLiteException ex)
-            {
-                Log.Info("SQLiteEx", ex.Message);
-                return false;
-            }
+            //}
+            //catch (SQLiteException ex)
+            //{
+            //    Log.Info("SQLiteEx", ex.Message);
+            //    return false;
+            //}
         }
 
 
         public long selectQuery(long Id)
         {
-            try
-            {
+            //try
+            //{
                 using(var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
                    var someData = connection.Query<Person>("SELECT * FROM Person Where Id=?", Id);
@@ -141,18 +152,18 @@ namespace AndroidSQLite.Resources.DataHelper
                     Console.WriteLine(someData[0].Date.Day + "/" + someData[0].Date.Month + "/" + someData[0].Date.Year);
                     return dataId;
                 }
-            }
-            catch(SQLiteException ex)
-            {
-                Log.Info("SQLiteEx", ex.Message);
-                return 0;
-            }
+            //}
+            //catch(SQLiteException ex)
+            //{
+            //    Log.Info("SQLiteEx", ex.Message);
+            //    return 0;
+            //}
         }
         //Отдает поля из БД
         public List<Person> get_Element(long Id)
         {
-            try
-            {
+            //try
+            //{
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
                     var someData = connection.Query<Person>("SELECT * FROM Person Where Id=?", Id);
@@ -160,19 +171,19 @@ namespace AndroidSQLite.Resources.DataHelper
 
                     return someData;
                 }
-            }
-            catch (SQLiteException ex)
-            {
-                Log.Info("SQLiteEx", ex.Message);
-                return null;
-            }
+           // }
+            //catch (SQLiteException ex)
+            //{
+            //    Log.Info("SQLiteEx", ex.Message);
+            //    return null;
+            //}
         }
 
 
         public Person get_Last()
         {
-            try
-            {
+            //try
+            //{
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
                     //var someData = connection.Query<Person>("SELECT * FROM Person Where Name=?", "1");
@@ -186,36 +197,36 @@ namespace AndroidSQLite.Resources.DataHelper
                     Console.WriteLine("Id найденное функцией get_Last - " + someData[someData.Count-1].Id);
                     return someData[someData.Count - 1];
                 }
-            }
-            catch (SQLiteException ex)
-            {
-                Log.Info("SQLiteEx", ex.Message);
-                return null;
-            }
+           // }
+            //catch (SQLiteException ex)
+            //{
+            //    Log.Info("SQLiteEx", ex.Message);
+            //    return null;
+            //}
         }
         //---------------------------------------------------------------------------------------------------
         //Достижения
         public bool createDataBaseAchivments()
         {
-            try
-            {
+            //try
+            //{
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
                     connection.CreateTable<Achievement1>();
                     return true;
                 }
-            }
-            catch (SQLiteException ex)
-            {
-                Log.Info("SQLiteEx", ex.Message);
-                return false;
-            }
+           // }
+            //catch (SQLiteException ex)
+            //{
+            //    Log.Info("SQLiteEx", ex.Message);
+            //    return false;
+            //}
         }
 
         public void updateTableAchievements(string Category, long Id)
         {
-            try
-            {
+            //try
+            //{
                 
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
@@ -259,12 +270,12 @@ namespace AndroidSQLite.Resources.DataHelper
                     //}
 
                 }
-            }
-            catch (SQLiteException ex)
-            {
-                Log.Info("SQLiteEx", ex.Message);
+            //}
+            //catch (SQLiteException ex)
+            //{
+            //    Log.Info("SQLiteEx", ex.Message);
                 
-            }
+            //}
         }
     }
 }
