@@ -46,9 +46,12 @@ namespace AndroidSQLite
         Bitmap mGenerateDateIcon;
         ImageGenerator mGeneratorImage;
         ImageView mDisplayGeneratedImage;
-        //DataBase db;
-        private ViewPager mViewPager;
-        private SlidingTabScrollView mScrollView;
+        DataBase db;
+        //-------------------------------
+        //Изменил на public, Было private
+        public ViewPager mViewPager;   
+        public SlidingTabScrollView mScrollView;
+        //-------------------------------
         DateTime calendarDate;
        
 
@@ -92,6 +95,8 @@ namespace AndroidSQLite
         protected override void OnCreate(Bundle bundle)
         {
             _fragment2.SetActivity(this);
+            _fragment1.SetActivity(this);
+
             base.OnCreate(bundle);
             //dialogwindow.SetActivity(
 
@@ -158,23 +163,23 @@ namespace AndroidSQLite
             var btnNot = FindViewById<Button>(Resource.Id.btncheeee);
             //------------------------------------------------------------------
             // Instantiate the builder and set notification elements:
-            Notification.Builder builder = new Notification.Builder(this)
-                .SetContentTitle("Sample Notification")
-                .SetContentText("Hello World! This is my first notification!")
-                .SetSmallIcon(Resource.Drawable.ic_launcher);
+            //Notification.Builder builder = new Notification.Builder(this)
+            //    .SetContentTitle("Sample Notification")
+            //    .SetContentText("Hello World! This is my first notification!")
+            //    .SetSmallIcon(Resource.Drawable.ic_launcher);
 
-            builder.SetWhen(Java.Lang.JavaSystem.CurrentTimeMillis());
+            //builder.SetWhen(Java.Lang.JavaSystem.CurrentTimeMillis());
             
-            // Build the notification:
-            Notification notification = builder.Build();
+            //// Build the notification:
+            //Notification notification = builder.Build();
 
-            // Get the notification manager:
-            NotificationManager notificationManager =
-                GetSystemService(Context.NotificationService) as NotificationManager;
+            //// Get the notification manager:
+            //NotificationManager notificationManager =
+            //    GetSystemService(Context.NotificationService) as NotificationManager;
 
-            // Publish the notification:
-            const int notificationId = 0;
-            notificationManager.Notify(notificationId, notification);
+            //// Publish the notification:
+            //const int notificationId = 0;
+            //notificationManager.Notify(notificationId, notification);
             //------------------------------------------------------------------
 
          
@@ -250,23 +255,54 @@ namespace AndroidSQLite
     public class Fragment1 : Android.Support.V4.App.Fragment
     {
         private TextView mTextView;
+        public MainActivity _activity;
+
+        public void SetActivity(MainActivity activity)
+        {
+            _activity = activity;
+        }
+
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
+            
             var view = inflater.Inflate(Resource.Layout.FirstFragmentLayout, container, false);
             
             var img = view.FindViewById<ImageView>(Resource.Id.imageClick);
 
-            img.Clickable = true;
+            //img.Clickable = true;
 
-            img.Click += delegate
-            {
-                Console.WriteLine("image pressed");
-            };
-
+            //img.Click += delegate
+            //{
+            //    Console.WriteLine("image pressed");
+            //};
+           
             var house1 = view.FindViewById<LinearLayout>(Resource.Id.house1);
+            var house2 = view.FindViewById<LinearLayout>(Resource.Id.house2);
+            var house3 = view.FindViewById<LinearLayout>(Resource.Id.house3);
+            var house4 = view.FindViewById<LinearLayout>(Resource.Id.house4);
             house1.Click += delegate
             {
-                Console.WriteLine("Layout clicked");
+                Console.WriteLine("H1 clicked");
+                _activity.mViewPager.SetCurrentItem(1, true);
+                _activity._fragment2.SortCategory("Спорт");
+            };
+            house2.Click += delegate
+            {
+                Console.WriteLine("H2 clicked");
+                _activity.mViewPager.SetCurrentItem(1, true);
+                _activity._fragment2.SortCategory("Прочее");
+            };
+            house3.Click += delegate
+            {
+                Console.WriteLine("H3 clicked");
+                _activity.mViewPager.SetCurrentItem(1, true);
+                _activity._fragment2.SortCategory("Образоване");
+            };
+            house4.Click += delegate
+            {
+                Console.WriteLine("H4 clicked");
+                _activity.mViewPager.SetCurrentItem(1, true);
+                _activity._fragment2.SortCategory("Финансы");
             };
 
             return view;
@@ -351,7 +387,7 @@ namespace AndroidSQLite
                     ft.Remove(prev);
                 }
                 ft.AddToBackStack(null);
-
+                
                 _activity._dialogFragment1 = DialogFragment1.NewInstance(frag_bundle);
                 //newFr.Arguments.PutLong("Id", elementId);
                 var act = _activity._dialogFragment1.Activity;
@@ -495,6 +531,26 @@ namespace AndroidSQLite
             _activity.adapter.SetList(lstSource);
             this.lstData.Adapter = _activity.adapter;
             Console.WriteLine("loadDataByDate completed " + lstSource2.Count);
+        }
+        //Передать категорию
+        public void SortCategory(string _category)
+        {
+            lstSource = db.selectTablePerson();
+            var lstSource2 = new List<Person>();
+
+            foreach(var value in lstSource)
+            {
+                if(value.Category == _category)
+                {
+                    lstSource2.Add(value);
+                }
+            }
+
+            this.lstSource = lstSource2;
+            _activity.adapter.SetFrActivity(this);
+            _activity.adapter.SetList(lstSource);
+            this.lstData.Adapter = _activity.adapter;
+
         }
 
 

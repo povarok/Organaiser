@@ -131,7 +131,7 @@ namespace AndroidSQLite.Resources
                     selected_Element.Done = true;
                     DataBase.db.updateTablePerson(selected_Element);
 
-                    _activityByListViewAdapter._fragment2.LoadData();
+                    //_activityByListViewAdapter._fragment2.LoadData();
 
                     //--------------------------
                     var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db"));
