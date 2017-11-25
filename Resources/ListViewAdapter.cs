@@ -101,6 +101,7 @@ namespace AndroidSQLite.Resources
             DataBase.db = DataBase.getDataBase();//new DataBase();
             DataBase.db.createDataBase();
             DataBase.db.createDataBaseAchivments();
+            DataBase.db.createDataBaseBannedId();
             string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             Log.Info("DB_PATH", folder);
 
@@ -138,8 +139,15 @@ namespace AndroidSQLite.Resources
 
                     var someData = connection.Query<Achievement1>("SELECT * FROM Achievement1");
                     Console.WriteLine("SOMEDATA = " + someData);
+                    BannedId bannedId = new BannedId()
+                    {
+                        Id = lstPerson[position].Id
+                    };
+                    var checkId = DataBase.db.findBannedId(lstPerson[position].Id);
+                    Console.WriteLine("checkId = " + checkId.Count());
 
-                    if (someData.Count() == 0)
+
+                    if (someData.Count() == 0 )
                     {
                         Achievement1 achievement = new Achievement1()
                         {
@@ -148,13 +156,21 @@ namespace AndroidSQLite.Resources
                             MainExp = 0,
                             FinansiExp = 0,
                             OtherExp = 0,
-                            //BannedId = {}
+                            
                             
                         };
                         connection.Insert(achievement);
-                        DataBase.db.updateTableAchievements(lstPerson[position].Category, lstPerson[position].Id);
+                        
                         someData = connection.Query<Achievement1>("SELECT * FROM Achievement1");
                         Console.WriteLine("MAIN EXP " + someData[0].MainExp);
+
+                        if (checkId.Count() == 0)
+                        {
+                            DataBase.db.insertIntoTableBannedId(bannedId);
+                            DataBase.db.updateTableAchievements(lstPerson[position].Category, lstPerson[position].Id);
+                            Console.WriteLine("¡¿Õ»Ã ID");
+
+                        }
 
                     }
 
@@ -162,7 +178,14 @@ namespace AndroidSQLite.Resources
                     {
 
 
-                        DataBase.db.updateTableAchievements(lstPerson[position].Category, lstPerson[position].Id);
+                        
+                        if (checkId.Count() == 0)
+                        {
+                            DataBase.db.insertIntoTableBannedId(bannedId);
+                            DataBase.db.updateTableAchievements(lstPerson[position].Category, lstPerson[position].Id);
+                            Console.WriteLine("¡¿Õ»Ã ID");
+                            
+                        }
                         Console.WriteLine("MAIN EXP " + someData[0].MainExp);
                     }
    

@@ -244,23 +244,23 @@ namespace AndroidSQLite.Resources.DataHelper
                         //Achievement achivments = new Achievement();
                         if (Category == "Спорт")
                         {
-                            connection.Query<Achievement1>("UPDATE Achievement1 set SportExp = SportExp + 1 Where Name=?", "Достижения");
-                            connection.Query<Achievement1>("UPDATE Achievement1 set MainExp = MainExp + 1 Where Name=?", "Достижения");
+                            connection.Query<Achievement1>("UPDATE Achievement1 set SportExp = SportExp + 1  Where Name=?", "Достижения");
+                            connection.Query<Achievement1>("UPDATE Achievement1 set MainExp = MainExp + 1  Where Name=?", "Достижения");
                         }
                         if (Category == "Образоване")
                         {
                             connection.Query<Achievement1>("UPDATE Achievement1 set EducationExp = EducationExp + 1 Where Name=?", "Достижения");
-                            connection.Query<Achievement1>("UPDATE Achievement1 set MainExp = MainExp + 1 Where Name=?", "Достижения");
+                            connection.Query<Achievement1>("UPDATE Achievement1 set MainExp = MainExp + 1  Where Name=?", "Достижения");
                         }
                         if (Category == "Спорт")
                         {
-                            connection.Query<Achievement1>("UPDATE Achievement1 set SportExp = SportExp + 1 Where Name=?", "Достижения");
-                            connection.Query<Achievement1>("UPDATE Achievement1 set MainExp = MainExp + 1 Where Name=?", "Достижения");
+                            connection.Query<Achievement1>("UPDATE Achievement1 set SportExp = SportExp + 1  Where Name=?", "Достижения");
+                            connection.Query<Achievement1>("UPDATE Achievement1 set MainExp = MainExp + 1  Where Name=?", "Достижения");
                         }
                         if (Category == "Финансы")
                         {
-                            connection.Query<Achievement1>("UPDATE Achievement1 set FinansiExp = FinansiExp + 1 Where Name=?", "Достижения");
-                            connection.Query<Achievement1>("UPDATE Achievement1 set MainExp = MainExp + 1 Where Name=?", "Достижения");
+                            connection.Query<Achievement1>("UPDATE Achievement1 set FinansiExp = FinansiExp  + 1 Where Name=?", "Достижения");
+                            connection.Query<Achievement1>("UPDATE Achievement1 set MainExp = MainExp + 1  Where Name=?", "Достижения");
                         }
                         if (Category == "Прочее")
                         {
@@ -281,6 +281,64 @@ namespace AndroidSQLite.Resources.DataHelper
             //    Log.Info("SQLiteEx", ex.Message);
                 
             //}
+
+
         }
+
+        // BannedId
+        public bool createDataBaseBannedId()
+        {
+            //try
+            //{
+            using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
+            {
+                connection.CreateTable<BannedId>();
+                return true;
+            }
+            // }
+            //catch (SQLiteException ex)
+            //{
+            //    Log.Info("SQLiteEx", ex.Message);
+            //    return false;
+            //}
+        }
+
+        public List<BannedId> getBannedId()
+        {
+            using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
+            {
+                return connection.Table<BannedId>().ToList();
+            }
+        }
+
+        public List<BannedId> findBannedId(int Id)
+        {
+            using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
+            {
+                return connection.Query<BannedId>("SELECT * FROM BannedId where Id = ?",Id).ToList();
+                
+            }
+        }
+
+
+        public bool insertIntoTableBannedId(BannedId bannedId)
+        {
+            //try
+            //{
+            using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
+            {
+                connection.Insert(bannedId);
+                return true;
+            }
+            //}
+            //catch(SQLiteException ex)
+            //{
+            //    Log.Info("SQLiteEx", ex.Message);
+            //    return false;
+            //}
+        }
+
+
+
     }
-}
+    }
