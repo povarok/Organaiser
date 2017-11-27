@@ -22,6 +22,7 @@ using Com.KD.Dynamic.Calendar.Generator;
 using Java.Util;
 using static Android.App.DatePickerDialog;
 using Java.Lang;
+using AndroidSQLite.BroadCast;
 
 namespace AndroidSQLite
 {
@@ -575,9 +576,25 @@ namespace AndroidSQLite
             TextView consos = view.FindViewById<TextView>(Resource.Id.consos);
             consos.Text = ach[0].Name + "\n MainExp = " + ach[0].MainExp + "\n OtherExp = " + ach[0].OtherExp +
                 "\n SportExp = " + ach[0].SportExp + "\n Finansi Exp = " + ach[0].FinansiExp + "\n EducationExp = " + ach[0].EducationExp;
+            
+            ProgressBar progressMain = view.FindViewById<ProgressBar>(Resource.Id.progressBar1);
+            ProgressBar progressSport = view.FindViewById<ProgressBar>(Resource.Id.progressBar2);
+            ProgressBar progressEducation = view.FindViewById<ProgressBar>(Resource.Id.progressBar3);
+            ProgressBar progressFinance = view.FindViewById<ProgressBar>(Resource.Id.progressBar4);
+            ProgressBar progressOther = view.FindViewById<ProgressBar>(Resource.Id.progressBar5);
 
+            //progressBar.Progress = 1;
+            //int _progress = 0;
+            progressMain.Progress = 0; //_progress;
+            
             refreshBtn.Click += delegate
             {
+                if(progressMain.Progress == 100)
+                {
+                    progressMain.Progress = 0;
+                }
+                progressMain.Progress += 5;
+                //_progress++;
                 ach = DataBase.db.getAchievments();
                 i++;
                 consos.Text ="Обновлено " + i + "раз\n" + ach[0].Name + "\n MainExp = " + ach[0].MainExp + "\n OtherExp = " + ach[0].OtherExp +
