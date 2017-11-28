@@ -23,6 +23,7 @@ using Java.Util;
 using static Android.App.DatePickerDialog;
 using Java.Lang;
 using AndroidSQLite.BroadCast;
+using System.Threading.Tasks;
 
 namespace AndroidSQLite
 {
@@ -95,8 +96,9 @@ namespace AndroidSQLite
 
         protected override void OnCreate(Bundle bundle)
         {
-            _fragment2.SetActivity(this);
             _fragment1.SetActivity(this);
+            _fragment2.SetActivity(this);
+            _fragment3.SetActivity(this);
 
             base.OnCreate(bundle);
             //dialogwindow.SetActivity(
@@ -373,8 +375,14 @@ namespace AndroidSQLite
                     Category = "Спорт", 
                     Priority = "0", 
                     Done = false
-                }; 
-                DataBase.db.insertIntoTablePerson(person);
+                };
+                var t = Task.Factory.StartNew(() =>
+                {
+                    DataBase.db.insertIntoTablePerson(person);
+                });
+                t.Wait();
+                t.Dispose();
+               
                 
 
                 Android.Support.V4.App.FragmentTransaction ft = FragmentManager.BeginTransaction();
@@ -440,14 +448,22 @@ namespace AndroidSQLite
                         //  Intent intent = new Intent(this,  )
                         // lstData.GetChildAt(i).SetBackgroundColor(Android.Graphics.Color.DarkGray);
                         //Получаем id выбранного в списке элемента
-                        elementId = DataBase.db.selectQuery(lstData.Adapter.GetItemId(e.Position));
+                        var t = Task.Factory.StartNew(() =>
+                        {
+                            elementId = DataBase.db.selectQuery(lstData.Adapter.GetItemId(e.Position));
+                            return elementId;
+                        });
+                        t.Wait();
+                        
+                        
+                        //elementId = DataBase.db.selectQuery(lstData.Adapter.GetItemId(e.Position));
                         
                         Android.Support.V4.App.FragmentTransaction ft = FragmentManager.BeginTransaction();
                         //Remove fragment else it will crash as it is already added to backstack
                         Android.Support.V4.App.Fragment prev = FragmentManager.FindFragmentByTag("dialog");
                         Bundle frag_bundle = new Bundle();
-                        frag_bundle.PutLong("Id", elementId);
-
+                        frag_bundle.PutLong("Id", t.Result);
+                        t.Dispose();
 
                         if (prev != null)
                         {
@@ -560,7 +576,30 @@ namespace AndroidSQLite
 
     public class Fragment3 : Android.Support.V4.App.Fragment
     {
+        ProgressBar progressMain;
+        ProgressBar progressSport;
+        ProgressBar progressEducation;
+        ProgressBar progressFinance;
+        ProgressBar progressOther;
+
+        int progressMainByString;
+        int progressSportByString;
+        int progressEducationByString;
+        int progressFinanceByString;
+        int progressOtherByString;
+
         private Button mButton;
+
+        MainActivity _activity;
+
+
+        public void SetActivity(MainActivity activity)
+        {
+            _activity = activity;
+        }
+
+
+        
         //--------------------------------------------------------
         //Почему то добавляется по 2 очка опыта во все строчки...
         //--------------------------------------------------------
@@ -577,28 +616,47 @@ namespace AndroidSQLite
             consos.Text = ach[0].Name + "\n MainExp = " + ach[0].MainExp + "\n OtherExp = " + ach[0].OtherExp +
                 "\n SportExp = " + ach[0].SportExp + "\n Finansi Exp = " + ach[0].FinansiExp + "\n EducationExp = " + ach[0].EducationExp;
             
-            ProgressBar progressMain = view.FindViewById<ProgressBar>(Resource.Id.progressBar1);
-            ProgressBar progressSport = view.FindViewById<ProgressBar>(Resource.Id.progressBar2);
-            ProgressBar progressEducation = view.FindViewById<ProgressBar>(Resource.Id.progressBar3);
-            ProgressBar progressFinance = view.FindViewById<ProgressBar>(Resource.Id.progressBar4);
-            ProgressBar progressOther = view.FindViewById<ProgressBar>(Resource.Id.progressBar5);
+            progressMain = view.FindViewById<ProgressBar>(Resource.Id.progressBar1);
+            progressSport = view.FindViewById<ProgressBar>(Resource.Id.progressBar2);
+            progressEducation = view.FindViewById<ProgressBar>(Resource.Id.progressBar3);
+            progressFinance = view.FindViewById<ProgressBar>(Resource.Id.progressBar4);
+            progressOther = view.FindViewById<ProgressBar>(Resource.Id.progressBar5);
 
             //progressBar.Progress = 1;
             //int _progress = 0;
-            progressMain.Progress = 0; //_progress;
-            
+            progressMainByString = ach[0].MainExp / 100;
+            progressSportByString = ach[0].MainExp / 100;
+            progressEducationByString = ach[0].MainExp / 100;
+            progressFinanceByString = ach[0].MainExp / 100;
+            progressOtherByString = ach[0].MainExp / 100;
+
+
+            progressMain.Progress = ach[0].MainExp % 100; 
+            progressSport.Progress = ach[0].SportExp % 100;
+            progressEducation.Progress = ach[0].EducationExp % 100;
+            progressFinance.Progress = ach[0].FinansiExp % 100;
+            progressOther.Progress = ach[0].OtherExp % 100;
+
+
             refreshBtn.Click += delegate
             {
-                if(progressMain.Progress == 100)
-                {
-                    progressMain.Progress = 0;
-                }
-                progressMain.Progress += 5;
-                //_progress++;
+
                 ach = DataBase.db.getAchievments();
                 i++;
                 consos.Text ="Обновлено " + i + "раз\n" + ach[0].Name + "\n MainExp = " + ach[0].MainExp + "\n OtherExp = " + ach[0].OtherExp +
                     "\n SportExp = " + ach[0].SportExp + "\n Finansi Exp = " + ach[0].FinansiExp + "\n EducationExp = " + ach[0].EducationExp;
+                progressMainByString = ach[0].MainExp / 100;
+                progressSportByString = ach[0].MainExp / 100;
+                progressEducationByString = ach[0].MainExp / 100;
+                progressFinanceByString = ach[0].MainExp / 100;
+                progressOtherByString = ach[0].MainExp / 100;
+
+
+                progressMain.Progress = ach[0].MainExp % 100;
+                progressSport.Progress = ach[0].SportExp % 100;
+                progressEducation.Progress = ach[0].EducationExp % 100;
+                progressFinance.Progress = ach[0].FinansiExp % 100;
+                progressOther.Progress = ach[0].OtherExp % 100;
             };
             //mButton = view.FindViewById<Button>(Resource.Id.btncheeee);
             //mButton.Click += delegate
@@ -624,6 +682,30 @@ namespace AndroidSQLite
         public override string ToString() //Called on line 156 in SlidingTabScrollView
         {
             return "Fragment 3";
+        }
+
+        public void LoadDataByDateByFragment3()
+        {
+            var ach = DataBase.db.getAchievments();
+
+            progressMainByString = ach[0].MainExp / 100;
+            progressSportByString = ach[0].MainExp / 100;
+            progressEducationByString = ach[0].MainExp / 100;
+            progressFinanceByString = ach[0].MainExp / 100;
+            progressOtherByString = ach[0].MainExp / 100;
+
+
+            progressMain.Progress = ach[0].MainExp % 100;
+            progressSport.Progress = ach[0].SportExp % 100;
+            progressEducation.Progress = ach[0].EducationExp % 100;
+            progressFinance.Progress = ach[0].FinansiExp % 100;
+            progressOther.Progress = ach[0].OtherExp % 100;
+
+
+            
+            
+            
+            
         }
     }
 }

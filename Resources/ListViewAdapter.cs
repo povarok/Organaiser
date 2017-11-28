@@ -16,6 +16,7 @@ using Android.Support.V4.App;
 using Android.Support.V4.View;
 using AndroidSQLite.Resources.DataHelper;
 using Android.Util;
+using System.Threading.Tasks;
 
 namespace AndroidSQLite.Resources
 {
@@ -125,6 +126,9 @@ namespace AndroidSQLite.Resources
 
             checkBox.Click += delegate 
             {
+
+
+
                 if(checkBox.Checked == true)
                 {
                     lstPerson[position].Done = true;
@@ -146,7 +150,7 @@ namespace AndroidSQLite.Resources
                     var checkId = DataBase.db.findBannedId(lstPerson[position].Id);
                     Console.WriteLine("checkId = " + checkId.Count());
 
-
+                    // ветка если БД еще не создана
                     if (someData.Count() == 0 )
                     {
                         Achievement1 achievement = new Achievement1()
@@ -166,6 +170,11 @@ namespace AndroidSQLite.Resources
 
                         if (checkId.Count() == 0)
                         {
+                            Console.WriteLine("начинаем таск");
+                            var t = Task.Factory.StartNew(() => Console.WriteLine("ну таск))"));
+                            t.Wait();
+                            t.Dispose();
+                            Console.WriteLine("заканчиваем таск");
                             DataBase.db.insertIntoTableBannedId(bannedId);
                             DataBase.db.updateTableAchievements(lstPerson[position].Category, lstPerson[position].Id);
                             Console.WriteLine("БАНИМ ID");
@@ -173,17 +182,29 @@ namespace AndroidSQLite.Resources
                         }
 
                     }
-
+                    // ветка если БД уже существует
                     else
                     {
 
 
-                        
+
                         if (checkId.Count() == 0)
                         {
-                            DataBase.db.insertIntoTableBannedId(bannedId);
-                            DataBase.db.updateTableAchievements(lstPerson[position].Category, lstPerson[position].Id);
-                            Console.WriteLine("БАНИМ ID");
+
+                            Console.WriteLine("начинаем таск");
+                            var t = Task.Factory.StartNew(() => {
+                                Console.WriteLine("ну таск))");
+                                DataBase.db.insertIntoTableBannedId(bannedId);
+                                DataBase.db.updateTableAchievements(lstPerson[position].Category, lstPerson[position].Id);
+                                Console.WriteLine("БАНИМ ID");
+
+
+                            });
+                            t.Wait();
+                            t.Dispose();
+                            Console.WriteLine("заканчиваем таск");
+
+                            
                             
                         }
                         Console.WriteLine("MAIN EXP " + someData[0].MainExp);
@@ -194,10 +215,19 @@ namespace AndroidSQLite.Resources
                 {
                     lstPerson[position].Done = false;
                     selected_Element.Done = false;
-                    DataBase.db.updateTablePerson(selected_Element);
-                    _activityByListViewAdapter._fragment2.LoadData();
-
+                    var t = Task.Factory.StartNew(() =>
+                    {
+                        DataBase.db.updateTablePerson(selected_Element);
+                    });
+                    t.Wait();
+                    t.Dispose();
+                    
+                        _activityByListViewAdapter._fragment2.LoadData();
+                   
                 }
+                _activityByListViewAdapter._fragment3.LoadDataByDateByFragment3();
+
+
             };
             //Не работает
             //if(checkBox.Checked == false)
