@@ -582,11 +582,11 @@ namespace AndroidSQLite
         ProgressBar progressFinance;
         ProgressBar progressOther;
 
-        int progressMainByString;
-        int progressSportByString;
-        int progressEducationByString;
-        int progressFinanceByString;
-        int progressOtherByString;
+        TextView txtMain;
+        TextView txtSport;
+        TextView txtEducation;
+        TextView txtFinance;
+        TextView txtOther;
 
         private Button mButton;
 
@@ -598,23 +598,19 @@ namespace AndroidSQLite
             _activity = activity;
         }
 
-
-        
-        //--------------------------------------------------------
-        //Почему то добавляется по 2 очка опыта во все строчки...
-        //--------------------------------------------------------
+              
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            int i = 0;
+                      
             DataBase.db = DataBase.getDataBase();
             var ach = DataBase.db.getAchievments();
             
             //Console.WriteLine("Ach name = "+ach[0].Name + " Exp = " + ach[0].MainExp);
             var view = inflater.Inflate(Resource.Layout.ThirdFragmentLaout, container, false);
-            Button refreshBtn = view.FindViewById<Button>(Resource.Id.refresh);
-            TextView consos = view.FindViewById<TextView>(Resource.Id.consos);
-            consos.Text = ach[0].Name + "\n MainExp = " + ach[0].MainExp + "\n OtherExp = " + ach[0].OtherExp +
-                "\n SportExp = " + ach[0].SportExp + "\n Finansi Exp = " + ach[0].FinansiExp + "\n EducationExp = " + ach[0].EducationExp;
+            //Button refreshBtn = view.FindViewById<Button>(Resource.Id.refresh);
+            //TextView consos = view.FindViewById<TextView>(Resource.Id.consos);
+            //consos.Text = ach[0].Name + "\n MainExp = " + ach[0].MainExp + "\n OtherExp = " + ach[0].OtherExp +
+              //  "\n SportExp = " + ach[0].SportExp + "\n Finansi Exp = " + ach[0].FinansiExp + "\n EducationExp = " + ach[0].EducationExp;
             
             progressMain = view.FindViewById<ProgressBar>(Resource.Id.progressBar1);
             progressSport = view.FindViewById<ProgressBar>(Resource.Id.progressBar2);
@@ -622,42 +618,62 @@ namespace AndroidSQLite
             progressFinance = view.FindViewById<ProgressBar>(Resource.Id.progressBar4);
             progressOther = view.FindViewById<ProgressBar>(Resource.Id.progressBar5);
 
+            txtMain = view.FindViewById<TextView>(Resource.Id.txtMain); 
+            txtSport = view.FindViewById<TextView>(Resource.Id.txtSport);
+            txtEducation = view.FindViewById<TextView>(Resource.Id.txtEducation);
+            txtFinance = view.FindViewById<TextView>(Resource.Id.txtFinace);
+            txtOther = view.FindViewById<TextView>(Resource.Id.txtOther);
             //progressBar.Progress = 1;
             //int _progress = 0;
-            progressMainByString = ach[0].MainExp / 100;
-            progressSportByString = ach[0].MainExp / 100;
-            progressEducationByString = ach[0].MainExp / 100;
-            progressFinanceByString = ach[0].MainExp / 100;
-            progressOtherByString = ach[0].MainExp / 100;
+
+            //Первичное заполнение опыта
+            if (ach[0].MainExp <= 100) txtMain.Text = (ach[0].MainExp % 100).ToString() + " / 100";
+            else txtMain.Text = (ach[0].MainExp).ToString() + " / " + ((1 + ach[0].MainExp / 100 )* 100).ToString();
+
+            if (ach[0].SportExp <= 100) txtSport.Text = (ach[0].SportExp % 100).ToString() + " / 100";
+            else txtSport.Text = (ach[0].SportExp).ToString() + " / " + ((1 + ach[0].SportExp / 100) * 100).ToString();
+
+            if (ach[0].EducationExp <= 100)  txtEducation.Text = (ach[0].EducationExp % 100).ToString() + " / 100";    
+            else txtEducation.Text = (ach[0].EducationExp).ToString() + " / " + ((1 + ach[0].EducationExp / 100) * 100).ToString();
+            
+            if (ach[0].FinansiExp <= 100) txtFinance.Text = (ach[0].FinansiExp % 100).ToString() + " / 100";
+            else txtFinance.Text = (ach[0].FinansiExp).ToString() + " / " + ((1 + ach[0].FinansiExp / 100) * 100).ToString();
+            
+            if (ach[0].OtherExp <= 100) txtOther.Text = (ach[0].OtherExp % 100).ToString() + " / 100";
+            else txtOther.Text = (ach[0].OtherExp).ToString() + " / " + ((1 + ach[0].OtherExp / 100) * 100).ToString();
+
+            //txtSport.Text = (ach[0].MainExp / 100).ToString() ;
+            //txtEducation.Text = (ach[0].MainExp / 100).ToString();
+            //txtFinance.Text = (ach[0].MainExp / 100).ToString();
+            //txtOther.Text = (ach[0].MainExp / 100).ToString();
+
+            progressMain.Progress = (ach[0].MainExp % 100);
+            progressSport.Progress = (ach[0].SportExp % 100);
+            progressEducation.Progress = (ach[0].EducationExp % 100);
+            progressFinance.Progress = (ach[0].FinansiExp % 100);
+            progressOther.Progress = (ach[0].OtherExp % 100);
 
 
-            progressMain.Progress = ach[0].MainExp % 100; 
-            progressSport.Progress = ach[0].SportExp % 100;
-            progressEducation.Progress = ach[0].EducationExp % 100;
-            progressFinance.Progress = ach[0].FinansiExp % 100;
-            progressOther.Progress = ach[0].OtherExp % 100;
+            //refreshBtn.Click += delegate
+            //{
+
+            //    ach = DataBase.db.getAchievments();
+            //    i++;
+            //    consos.Text ="Обновлено " + i + "раз\n" + ach[0].Name + "\n MainExp = " + ach[0].MainExp + "\n OtherExp = " + ach[0].OtherExp +
+            //        "\n SportExp = " + ach[0].SportExp + "\n Finansi Exp = " + ach[0].FinansiExp + "\n EducationExp = " + ach[0].EducationExp;
+            //    progressMainByString = ach[0].MainExp / 100;
+            //    progressSportByString = ach[0].MainExp / 100;
+            //    progressEducationByString = ach[0].MainExp / 100;
+            //    progressFinanceByString = ach[0].MainExp / 100;
+            //    progressOtherByString = ach[0].MainExp / 100;
 
 
-            refreshBtn.Click += delegate
-            {
-
-                ach = DataBase.db.getAchievments();
-                i++;
-                consos.Text ="Обновлено " + i + "раз\n" + ach[0].Name + "\n MainExp = " + ach[0].MainExp + "\n OtherExp = " + ach[0].OtherExp +
-                    "\n SportExp = " + ach[0].SportExp + "\n Finansi Exp = " + ach[0].FinansiExp + "\n EducationExp = " + ach[0].EducationExp;
-                progressMainByString = ach[0].MainExp / 100;
-                progressSportByString = ach[0].MainExp / 100;
-                progressEducationByString = ach[0].MainExp / 100;
-                progressFinanceByString = ach[0].MainExp / 100;
-                progressOtherByString = ach[0].MainExp / 100;
-
-
-                progressMain.Progress = ach[0].MainExp % 100;
-                progressSport.Progress = ach[0].SportExp % 100;
-                progressEducation.Progress = ach[0].EducationExp % 100;
-                progressFinance.Progress = ach[0].FinansiExp % 100;
-                progressOther.Progress = ach[0].OtherExp % 100;
-            };
+            //    progressMain.Progress = ach[0].MainExp % 100;
+            //    progressSport.Progress = ach[0].SportExp % 100;
+            //    progressEducation.Progress = ach[0].EducationExp % 100;
+            //    progressFinance.Progress = ach[0].FinansiExp % 100;
+            //    progressOther.Progress = ach[0].OtherExp % 100;
+            //};
             //mButton = view.FindViewById<Button>(Resource.Id.btncheeee);
             //mButton.Click += delegate
             //{
@@ -688,24 +704,26 @@ namespace AndroidSQLite
         {
             var ach = DataBase.db.getAchievments();
 
-            progressMainByString = ach[0].MainExp / 100;
-            progressSportByString = ach[0].MainExp / 100;
-            progressEducationByString = ach[0].MainExp / 100;
-            progressFinanceByString = ach[0].MainExp / 100;
-            progressOtherByString = ach[0].MainExp / 100;
+            if (ach[0].MainExp <= 100) txtMain.Text = (ach[0].MainExp % 100).ToString() + " / 100";
+            else txtMain.Text = (ach[0].MainExp).ToString() + " / " + ((1 + ach[0].MainExp / 100) * 100).ToString();
 
+            if (ach[0].SportExp <= 100) txtSport.Text = (ach[0].SportExp % 100).ToString() + " / 100";
+            else txtSport.Text = (ach[0].SportExp).ToString() + " / " + ((1 + ach[0].SportExp / 100) * 100).ToString();
+
+            if (ach[0].EducationExp <= 100) txtEducation.Text = (ach[0].EducationExp % 100).ToString() + " / 100";
+            else txtEducation.Text = (ach[0].EducationExp).ToString() + " / " + ((1 + ach[0].EducationExp / 100) * 100).ToString();
+
+            if (ach[0].FinansiExp <= 100) txtFinance.Text = (ach[0].FinansiExp % 100).ToString() + " / 100";
+            else txtFinance.Text = (ach[0].FinansiExp).ToString() + " / " + ((1 + ach[0].FinansiExp / 100) * 100).ToString();
+
+            if (ach[0].OtherExp <= 100) txtOther.Text = (ach[0].OtherExp % 100).ToString() + " / 100";
+            else txtOther.Text = (ach[0].OtherExp).ToString() + " / " + ((1 + ach[0].OtherExp / 100) * 100).ToString();
 
             progressMain.Progress = ach[0].MainExp % 100;
             progressSport.Progress = ach[0].SportExp % 100;
             progressEducation.Progress = ach[0].EducationExp % 100;
             progressFinance.Progress = ach[0].FinansiExp % 100;
-            progressOther.Progress = ach[0].OtherExp % 100;
-
-
-            
-            
-            
-            
+            progressOther.Progress = ach[0].OtherExp % 100; 
         }
     }
 }
