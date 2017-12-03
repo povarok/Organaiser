@@ -155,6 +155,7 @@ namespace AndroidSQLite
 
             //db = new DataBase();
             DataBase.db.createDataBase();
+            DataBase.db.createDataBaseAchivments();
             string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             Log.Info("DB_PATH", folder);
 
@@ -206,7 +207,7 @@ namespace AndroidSQLite
 
         }
 
-
+        
         // БУДИЛЬНИК
         //private void StartAlarm()
         //{
@@ -511,7 +512,30 @@ namespace AndroidSQLite
         {
             return "Fragment 2";
         }
+        public void StartAlarm(int Year, int Month, int Day, int Hour, int Minute)
+        {
+            var Current = Java.Lang.JavaSystem.CurrentTimeMillis();
 
+            AlarmManager manager = (AlarmManager)_activity.GetSystemService(Context.AlarmService);
+            Intent myIntent;
+            PendingIntent pendingIntent;
+            myIntent = new Intent(_activity, typeof(AlarmNotificationReceiver));
+            pendingIntent = PendingIntent.GetBroadcast(_activity, 0, myIntent, 0);
+
+            var unixTime = new DateTime(Year, Month, Day, Hour+12, Minute, 1);
+            var CurrentTime = DateTime.Now;
+            var AlarmTime = unixTime - CurrentTime;
+            long ATMillis = (long)AlarmTime.TotalMilliseconds;
+            Console.WriteLine("Debug Clock" + (JavaSystem.CurrentTimeMillis()));
+            Console.WriteLine("Debug ClockUNIX" + (unixTime));
+            Console.WriteLine("Debug ClockYear " + Year + " Debug ClockMonth " + Month + " Debug ClockDay " + Day + " Debug ClockHour " + Hour + " Debug ClockMin " + Minute);
+            //Console.WriteLine("Debug ClockYear" + (lYear  + Month + Day * 24 * 3600 * 1000 + Hour * 3600 * 1000 + Minute * 60000));
+            Console.WriteLine("Debug ClockCurr" + (CurrentTime));
+            Console.WriteLine("Debug ClockDiff" + (ATMillis));
+            
+            manager.Set(AlarmType.RtcWakeup, JavaSystem.CurrentTimeMillis()+ATMillis, pendingIntent);
+
+        }
         //Сортировка по id
         public void LoadData()
         {
@@ -627,32 +651,35 @@ namespace AndroidSQLite
             //int _progress = 0;
 
             //Первичное заполнение опыта
-            if (ach[0].MainExp <= 100) txtMain.Text = (ach[0].MainExp % 100).ToString() + " / 100";
-            else txtMain.Text = (ach[0].MainExp).ToString() + " / " + ((1 + ach[0].MainExp / 100 )* 100).ToString();
+            if (ach.Count != 0)
+            {
+                if (ach[0].MainExp <= 100) txtMain.Text = (ach[0].MainExp % 100).ToString() + " / 100";
+                else txtMain.Text = (ach[0].MainExp).ToString() + " / " + ((1 + ach[0].MainExp / 100) * 100).ToString();
 
-            if (ach[0].SportExp <= 100) txtSport.Text = (ach[0].SportExp % 100).ToString() + " / 100";
-            else txtSport.Text = (ach[0].SportExp).ToString() + " / " + ((1 + ach[0].SportExp / 100) * 100).ToString();
+                if (ach[0].SportExp <= 100) txtSport.Text = (ach[0].SportExp % 100).ToString() + " / 100";
+                else txtSport.Text = (ach[0].SportExp).ToString() + " / " + ((1 + ach[0].SportExp / 100) * 100).ToString();
 
-            if (ach[0].EducationExp <= 100)  txtEducation.Text = (ach[0].EducationExp % 100).ToString() + " / 100";    
-            else txtEducation.Text = (ach[0].EducationExp).ToString() + " / " + ((1 + ach[0].EducationExp / 100) * 100).ToString();
-            
-            if (ach[0].FinansiExp <= 100) txtFinance.Text = (ach[0].FinansiExp % 100).ToString() + " / 100";
-            else txtFinance.Text = (ach[0].FinansiExp).ToString() + " / " + ((1 + ach[0].FinansiExp / 100) * 100).ToString();
-            
-            if (ach[0].OtherExp <= 100) txtOther.Text = (ach[0].OtherExp % 100).ToString() + " / 100";
-            else txtOther.Text = (ach[0].OtherExp).ToString() + " / " + ((1 + ach[0].OtherExp / 100) * 100).ToString();
+                if (ach[0].EducationExp <= 100) txtEducation.Text = (ach[0].EducationExp % 100).ToString() + " / 100";
+                else txtEducation.Text = (ach[0].EducationExp).ToString() + " / " + ((1 + ach[0].EducationExp / 100) * 100).ToString();
 
-            //txtSport.Text = (ach[0].MainExp / 100).ToString() ;
-            //txtEducation.Text = (ach[0].MainExp / 100).ToString();
-            //txtFinance.Text = (ach[0].MainExp / 100).ToString();
-            //txtOther.Text = (ach[0].MainExp / 100).ToString();
+                if (ach[0].FinansiExp <= 100) txtFinance.Text = (ach[0].FinansiExp % 100).ToString() + " / 100";
+                else txtFinance.Text = (ach[0].FinansiExp).ToString() + " / " + ((1 + ach[0].FinansiExp / 100) * 100).ToString();
 
-            progressMain.Progress = (ach[0].MainExp % 100);
-            progressSport.Progress = (ach[0].SportExp % 100);
-            progressEducation.Progress = (ach[0].EducationExp % 100);
-            progressFinance.Progress = (ach[0].FinansiExp % 100);
-            progressOther.Progress = (ach[0].OtherExp % 100);
+                if (ach[0].OtherExp <= 100) txtOther.Text = (ach[0].OtherExp % 100).ToString() + " / 100";
+                else txtOther.Text = (ach[0].OtherExp).ToString() + " / " + ((1 + ach[0].OtherExp / 100) * 100).ToString();
 
+                //txtSport.Text = (ach[0].MainExp / 100).ToString() ;
+                //txtEducation.Text = (ach[0].MainExp / 100).ToString();
+                //txtFinance.Text = (ach[0].MainExp / 100).ToString();
+                //txtOther.Text = (ach[0].MainExp / 100).ToString();
+
+                progressMain.Progress = (ach[0].MainExp % 100);
+                progressSport.Progress = (ach[0].SportExp % 100);
+                progressEducation.Progress = (ach[0].EducationExp % 100);
+                progressFinance.Progress = (ach[0].FinansiExp % 100);
+                progressOther.Progress = (ach[0].OtherExp % 100);
+
+            }
 
             //refreshBtn.Click += delegate
             //{
@@ -692,6 +719,7 @@ namespace AndroidSQLite
             //    newFragment.Show(ft, "dialog");
 
             //};
+           
             return view;
         }
 
@@ -703,27 +731,30 @@ namespace AndroidSQLite
         public void LoadDataByDateByFragment3()
         {
             var ach = DataBase.db.getAchievments();
+            if (ach.Count != 0)
+            {
+                if (ach[0].MainExp <= 100) txtMain.Text = (ach[0].MainExp % 100).ToString() + " / 100";
+                else txtMain.Text = (ach[0].MainExp).ToString() + " / " + ((1 + ach[0].MainExp / 100) * 100).ToString();
 
-            if (ach[0].MainExp <= 100) txtMain.Text = (ach[0].MainExp % 100).ToString() + " / 100";
-            else txtMain.Text = (ach[0].MainExp).ToString() + " / " + ((1 + ach[0].MainExp / 100) * 100).ToString();
+                if (ach[0].SportExp <= 100) txtSport.Text = (ach[0].SportExp % 100).ToString() + " / 100";
+                else txtSport.Text = (ach[0].SportExp).ToString() + " / " + ((1 + ach[0].SportExp / 100) * 100).ToString();
 
-            if (ach[0].SportExp <= 100) txtSport.Text = (ach[0].SportExp % 100).ToString() + " / 100";
-            else txtSport.Text = (ach[0].SportExp).ToString() + " / " + ((1 + ach[0].SportExp / 100) * 100).ToString();
+                if (ach[0].EducationExp <= 100) txtEducation.Text = (ach[0].EducationExp % 100).ToString() + " / 100";
+                else txtEducation.Text = (ach[0].EducationExp).ToString() + " / " + ((1 + ach[0].EducationExp / 100) * 100).ToString();
 
-            if (ach[0].EducationExp <= 100) txtEducation.Text = (ach[0].EducationExp % 100).ToString() + " / 100";
-            else txtEducation.Text = (ach[0].EducationExp).ToString() + " / " + ((1 + ach[0].EducationExp / 100) * 100).ToString();
+                if (ach[0].FinansiExp <= 100) txtFinance.Text = (ach[0].FinansiExp % 100).ToString() + " / 100";
+                else txtFinance.Text = (ach[0].FinansiExp).ToString() + " / " + ((1 + ach[0].FinansiExp / 100) * 100).ToString();
 
-            if (ach[0].FinansiExp <= 100) txtFinance.Text = (ach[0].FinansiExp % 100).ToString() + " / 100";
-            else txtFinance.Text = (ach[0].FinansiExp).ToString() + " / " + ((1 + ach[0].FinansiExp / 100) * 100).ToString();
+                if (ach[0].OtherExp <= 100) txtOther.Text = (ach[0].OtherExp % 100).ToString() + " / 100";
+                else txtOther.Text = (ach[0].OtherExp).ToString() + " / " + ((1 + ach[0].OtherExp / 100) * 100).ToString();
 
-            if (ach[0].OtherExp <= 100) txtOther.Text = (ach[0].OtherExp % 100).ToString() + " / 100";
-            else txtOther.Text = (ach[0].OtherExp).ToString() + " / " + ((1 + ach[0].OtherExp / 100) * 100).ToString();
-
-            progressMain.Progress = ach[0].MainExp % 100;
-            progressSport.Progress = ach[0].SportExp % 100;
-            progressEducation.Progress = ach[0].EducationExp % 100;
-            progressFinance.Progress = ach[0].FinansiExp % 100;
-            progressOther.Progress = ach[0].OtherExp % 100; 
+                progressMain.Progress = ach[0].MainExp % 100;
+                progressSport.Progress = ach[0].SportExp % 100;
+                progressEducation.Progress = ach[0].EducationExp % 100;
+                progressFinance.Progress = ach[0].FinansiExp % 100;
+                progressOther.Progress = ach[0].OtherExp % 100;
+            }
+            Console.WriteLine("Ach count = "+ach.Count);
         }
     }
 }

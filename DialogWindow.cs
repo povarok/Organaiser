@@ -22,8 +22,18 @@ namespace AndroidSQLite
     public class DialogFragment1 : Android.Support.V4.App.DialogFragment, IDialogInterfaceOnDismissListener, IOnDateSetListener, IOnTimeSetListener
     {
 
-        
+        public long id;
 
+        public void setId(long id)
+        {
+            this.id = id;
+        }
+
+        public long getId()
+        {
+            return this.id;
+        }
+        
         List<Person> lstSource = new List<Person>();
         //DataBase db;
         DateTime selectedDateDate;
@@ -114,6 +124,7 @@ namespace AndroidSQLite
             Spinner setPriority = view.FindViewById<Spinner>(Resource.Id.stPriority);
             //var getID = savedInstanceState.GetLong("Id",1288);
             var getID = Arguments.GetLong("Id", 0);
+            setId(getID);
             //Console.Write("asd");
             //Bundle new_bundle = this.Arguments.GetBundle("ID");
 
@@ -294,6 +305,8 @@ namespace AndroidSQLite
                 {
                     DataBase.db.updateTablePerson(selected_Element);
                     _activityByDialogWindow._fragment2.LoadData();
+                    _activityByDialogWindow._fragment2.StartAlarm(selectedDateDate.Year, selectedDateDate.Month, selectedDateDate.Day,
+                        selectedDateTime.Hour, selectedDateTime.Minute);
                     Dismiss();
 
                 }
