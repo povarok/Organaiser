@@ -522,15 +522,16 @@ namespace AndroidSQLite
             myIntent = new Intent(_activity, typeof(AlarmNotificationReceiver));
             pendingIntent = PendingIntent.GetBroadcast(_activity, 0, myIntent, 0);
 
-            var unixTime = new DateTime(Year, Month, Day, Hour+12, Minute, 1);
+            var unixTime = new DateTime(Year, Month, Day, Hour, Minute, 1);
             var CurrentTime = DateTime.Now;
             var AlarmTime = unixTime - CurrentTime;
             long ATMillis = (long)AlarmTime.TotalMilliseconds;
-            Console.WriteLine("Debug Clock" + (JavaSystem.CurrentTimeMillis()));
-            Console.WriteLine("Debug ClockUNIX" + (unixTime));
-            Console.WriteLine("Debug ClockYear " + Year + " Debug ClockMonth " + Month + " Debug ClockDay " + Day + " Debug ClockHour " + Hour + " Debug ClockMin " + Minute);
+            Console.WriteLine("hours - " + Hour);
+           // Console.WriteLine("Debug Clock" + (JavaSystem.CurrentTimeMillis()));
+          //  Console.WriteLine("Debug ClockUNIX" + (unixTime));
+//Console.WriteLine("Debug ClockYear " + Year + " Debug ClockMonth " + Month + " Debug ClockDay " + Day + " Debug ClockHour " + Hour + " Debug ClockMin " + Minute);
             //Console.WriteLine("Debug ClockYear" + (lYear  + Month + Day * 24 * 3600 * 1000 + Hour * 3600 * 1000 + Minute * 60000));
-            Console.WriteLine("Debug ClockCurr" + (CurrentTime));
+           // Console.WriteLine("Debug ClockCurr" + (CurrentTime));
             Console.WriteLine("Debug ClockDiff" + (ATMillis));
             
             manager.Set(AlarmType.RtcWakeup, JavaSystem.CurrentTimeMillis()+ATMillis, pendingIntent);
