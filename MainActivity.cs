@@ -24,6 +24,7 @@ using static Android.App.DatePickerDialog;
 using Java.Lang;
 using AndroidSQLite.BroadCast;
 using System.Threading.Tasks;
+using Refractored.Fab;
 
 namespace AndroidSQLite
 {
@@ -161,7 +162,7 @@ namespace AndroidSQLite
 
             //var imgBtn = new ImageButton
             //var imgBtn = FindViewById<ImageButton>(Resource.Id.imgBtn);
-
+            
             var settingsBtn = FindViewById<Button>(Resource.Id.settingsBtn);
 
             //var btnNot = FindViewById<Button>(Resource.Id.btncheeee);
@@ -351,7 +352,7 @@ namespace AndroidSQLite
             var view = inflater.Inflate(Resource.Layout.SecondFragmentLayout, container, false);
             lstData = view.FindViewById<ListView>(Resource.Id.listView);
 
-            var btnAdd = view.FindViewById<Button>(Resource.Id.btnAdd);
+            var btnAdd = view.FindViewById<FloatingActionButton>(Resource.Id.btnAdd);
             var btnRefresh = view.FindViewById<Button>(Resource.Id.btnRefresh);
             var btnLoadDataByDateByLast = view.FindViewById<Button>(Resource.Id.btnLoadDataByDateByLast);
 
