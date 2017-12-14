@@ -106,7 +106,7 @@ namespace AndroidSQLite
 
             SetContentView(Resource.Layout.Main);
             mGeneratorImage = new ImageGenerator(this);
-            mDisplayGeneratedImage = FindViewById<ImageView>(Resource.Id.imageGen);
+            //mDisplayGeneratedImage = FindViewById<ImageView>(Resource.Id.imageGen);
             mCurrentDate = Java.Util.Calendar.Instance;
 
             mGeneratorImage.SetIconSize(50, 50);
@@ -122,12 +122,14 @@ namespace AndroidSQLite
             int primaryYear = mCurrentDate.Get(CalendarField.Year);
             int primaryMonth = mCurrentDate.Get(CalendarField.Month);
             int primaryDay = mCurrentDate.Get(CalendarField.DayOfMonth);
-
+            //REPAIR PLEASE
             mCurrentDate.Set(primaryYear, primaryMonth, primaryDay);
             mGenerateDateIcon = mGeneratorImage.GenerateDateImage(mCurrentDate, Resource.Drawable.EmptyCalendar);
-            mDisplayGeneratedImage.SetImageBitmap(mGenerateDateIcon);
-
-            mDisplayGeneratedImage.Click += delegate
+            //mDisplayGeneratedImage.SetImageBitmap(mGenerateDateIcon);
+            //var drawCalendar = mDisplayGeneratedImage.Background;
+            FloatingActionButton btnCalendar = FindViewById<FloatingActionButton>(Resource.Id.btnCalendar);
+            //btnCalendar.SetBackgroundDrawable(drawCalendar);
+            btnCalendar.Click += delegate
             {
 
                 //mCurrentDate = Java.Util.Calendar.Instance;
@@ -163,8 +165,7 @@ namespace AndroidSQLite
             //var imgBtn = new ImageButton
             //var imgBtn = FindViewById<ImageButton>(Resource.Id.imgBtn);
             
-            var settingsBtn = FindViewById<Button>(Resource.Id.settingsBtn);
-
+            FloatingActionButton settingsBtn = FindViewById<FloatingActionButton>(Resource.Id.settingsBtn);
             //var btnNot = FindViewById<Button>(Resource.Id.btncheeee);
             //------------------------------------------------------------------
             // Instantiate the builder and set notification elements:
@@ -174,7 +175,7 @@ namespace AndroidSQLite
             //    .SetSmallIcon(Resource.Drawable.ic_launcher);
 
             //builder.SetWhen(Java.Lang.JavaSystem.CurrentTimeMillis());
-            
+
             //// Build the notification:
             //Notification notification = builder.Build();
 
@@ -187,7 +188,7 @@ namespace AndroidSQLite
             //notificationManager.Notify(notificationId, notification);
             //------------------------------------------------------------------
 
-         
+
 
             //Пока что костыль
             settingsBtn.Click += delegate
@@ -317,7 +318,7 @@ namespace AndroidSQLite
 
         public override string ToString() //Called on line 156 in SlidingTabScrollView
         {
-            return "Fragment 1";
+            return "CityName";
         }
     }
 
@@ -511,7 +512,7 @@ namespace AndroidSQLite
 
         public override string ToString() //Called on line 156 in SlidingTabScrollView
         {
-            return "Fragment 2";
+            return "To Do List";
         }
         public void StartAlarm(int Year, int Month, int Day, int Hour, int Minute)
         {
@@ -632,7 +633,7 @@ namespace AndroidSQLite
             var ach = DataBase.db.getAchievments();
             
             //Console.WriteLine("Ach name = "+ach[0].Name + " Exp = " + ach[0].MainExp);
-            var view = inflater.Inflate(Resource.Layout.ThirdFragmentLaout, container, false);
+            var view = inflater.Inflate(Resource.Layout.ThirdFragmentLayout, container, false);
             //Button refreshBtn = view.FindViewById<Button>(Resource.Id.refresh);
             //TextView consos = view.FindViewById<TextView>(Resource.Id.consos);
             //consos.Text = ach[0].Name + "\n MainExp = " + ach[0].MainExp + "\n OtherExp = " + ach[0].OtherExp +
@@ -727,7 +728,7 @@ namespace AndroidSQLite
 
         public override string ToString() //Called on line 156 in SlidingTabScrollView
         {
-            return "Fragment 3";
+            return "Achievements";
         }
 
         public void LoadDataByDateByFragment3()
