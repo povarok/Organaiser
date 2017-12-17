@@ -6,7 +6,7 @@
        android:id="@+id/widget"
        android:layout_marginTop="60sp"
        android:layout_width="fill_parent"
-       android:layout_height="fill_parent"
+       android:layout_height="wrap_content"
        android:orientation="vertical">
     <!--<Button
         android:id="@+id/refresh"
@@ -139,4 +139,12 @@
           android:layout_height="wrap_content" />
     </LinearLayout>
   </LinearLayout>
+  <ListView
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:paddingTop="75dp"
+        
+        android:id="@+id/listViewAch" />
 </RelativeLayout>

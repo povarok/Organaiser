@@ -122,9 +122,11 @@
     <Compile Include="DialogWindow.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\DataHelper\DataBase.cs" />
+    <Compile Include="Resources\ListViewAdapterAchievements.cs" />
     <Compile Include="Resources\ListViewAdapter.cs" />
     <Compile Include="Resources\Model\Achievement1.cs" />
     <Compile Include="Resources\Model\BannedId.cs" />
+    <Compile Include="Resources\Model\Achievement3.cs" />
     <Compile Include="Resources\Model\Person.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -152,6 +154,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\values\themes.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\list_view_achTemplate.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -201,6 +206,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_add24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\star.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="packages\Xamarin.Android.Support.Annotations.26.0.2\build\MonoAndroid80\Xamarin.Android.Support.Annotations.targets" Condition="Exists('packages\Xamarin.Android.Support.Annotations.26.0.2\build\MonoAndroid80\Xamarin.Android.Support.Annotations.targets')" />

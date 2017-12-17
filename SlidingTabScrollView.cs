@@ -50,6 +50,7 @@ namespace AndroidSQLite
         {
             //Disable the scroll bar
             HorizontalScrollBarEnabled = true;
+            ///HorizontalScrollbarHeight = 0;
 
             //Make sure the tab strips fill the view
             FillViewport = true;
@@ -63,7 +64,7 @@ namespace AndroidSQLite
 
         public TabColorizer CustomTabColorizer
         {
-            set { mTabStrip.CustomTabColorizer = value; }
+            set { mTabStrip.CustomTabColorizer = value;  }
         }
 
         public int[] SelectedIndicatorColor
@@ -160,9 +161,11 @@ namespace AndroidSQLite
                 tabView.Text = ((FragmentPagerAdapter)adapter).GetItem(i).ToString();
                 tabView.SetTextColor(Android.Graphics.Color.Black);
                 tabView.Tag = i;
+               
                 tabView.Click += tabView_Click;
                 tabView.SetWidth(a / 3);
                 mTabStrip.AddView(tabView);
+                
 
                 //-----------------------------------
 
@@ -178,6 +181,10 @@ namespace AndroidSQLite
             TextView clickTab = (TextView)sender;
             int pageToScrollTo = (int)clickTab.Tag;
             mViewPager.CurrentItem = pageToScrollTo;
+            //Console.WriteLine('')
+            Console.WriteLine("Tabs Clicked");
+            Console.WriteLine(" & & & " + mTabStrip.Width);
+            
         }
 
         private TextView CreateDefaultTabView(Android.Content.Context context)

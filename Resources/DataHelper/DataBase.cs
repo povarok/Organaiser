@@ -285,6 +285,54 @@ namespace AndroidSQLite.Resources.DataHelper
 
         }
 
+        // ---------------------------------------------------------------------------------------------
+        // Достижения3
+        public bool createDataBaseAchivments3()
+        {   
+            using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
+            {
+                connection.CreateTable<Achievement3>();
+                return true;
+            }
+        }
+
+        public bool insertIntoTableAchievement3(Achievement3 achievement3)
+        { 
+            using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
+            {
+                connection.Insert(achievement3);
+                return true;
+            }
+        }
+
+        public List<Achievement3> selectTableAchievement3()
+        {
+
+            Console.WriteLine("db.selectTablePerson STARTED");
+
+            //try
+            //{
+            using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
+            {
+                var a = connection.Table<Achievement3>().ToList();
+                return connection.Table<Achievement3>().ToList();
+
+            }
+            //}
+            //catch (SQLiteException ex)
+            //{
+            //    Log.Info("SQLiteEx", ex.Message);
+            //    Console.WriteLine("Ничего не найдено");
+            //    return null;
+            //}
+        }
+
+
+
+
+
+
+        // -------------------------------------------------------------------------------------
         // BannedId
         public bool createDataBaseBannedId()
         {

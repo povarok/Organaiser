@@ -32,8 +32,8 @@ namespace AndroidSQLite
         private int mDefaultBottomBorderColor;
 
         //Indicator
-        private int mSelectedIndicatorThickness;
-        private Paint mSelectedIndicatorPaint;
+        //private int mSelectedIndicatorThickness;
+        //private Paint mSelectedIndicatorPaint;
 
         //Divider
         private Paint mDividerPaint;
@@ -72,8 +72,8 @@ namespace AndroidSQLite
             mBottomBorderPaint = new Paint();
             mBottomBorderPaint.Color = GetColorFromInteger(0xC5C5C5); //Gray
 
-            mSelectedIndicatorThickness = (int)(SELECTED_INDICATOR_THICKNESS_DIPS * density);
-            mSelectedIndicatorPaint = new Paint();
+           // mSelectedIndicatorThickness = (int)(SELECTED_INDICATOR_THICKNESS_DIPS * density);
+            //mSelectedIndicatorPaint = new Paint();
 
             mDividerHeight = DEFAULT_DIVIDER_HEIGHT;
             mDividerPaint = new Paint();
@@ -154,9 +154,9 @@ namespace AndroidSQLite
                     right = (int)(mSelectionOffset * nextTitle.Right + (1.0f - mSelectionOffset) * right);
                 }
 
-                mSelectedIndicatorPaint.Color = GetColorFromInteger(color);
+              //  mSelectedIndicatorPaint.Color = GetColorFromInteger(color);
 
-                canvas.DrawRect(left, height - mSelectedIndicatorThickness, right, height, mSelectedIndicatorPaint);
+                //canvas.DrawRect(left, height - mSelectedIndicatorThickness, right, height, mSelectedIndicatorPaint);
 
                 //Creat vertical dividers between tabs
                 int separatorTop = (height - dividerHeightPx) / 2;

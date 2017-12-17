@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+  android:background="#F5F2F2">
+
+        <TextView
+            android:text="Name"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tName" />
+        <TextView
+            android:text="Описание"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/tDescription" />
+
+        <ImageView
+           android:id="@+id/Star"
+           android:layout_height="wrap_content"
+           android:layout_width="wrap_content"
+           android:src="@drawable/star"/>
+</LinearLayout>

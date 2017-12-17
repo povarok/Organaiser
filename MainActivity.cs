@@ -42,6 +42,7 @@ namespace AndroidSQLite
 
 
         public ListViewAdapter adapter = new ListViewAdapter();
+        public ListViewAdapterAchievements achievments_adapter = new ListViewAdapterAchievements();
 
         public DialogFragment1 _dialogFragment1 = new DialogFragment1();
 
@@ -67,7 +68,7 @@ namespace AndroidSQLite
             Toast.MakeText(this, $"{dayOfMonth}-{month + 1}-{year}", ToastLength.Long).Show();
             mCurrentDate.Set(year, month, dayOfMonth);
             mGenerateDateIcon = mGeneratorImage.GenerateDateImage(mCurrentDate, Resource.Drawable.EmptyCalendar);
-            mDisplayGeneratedImage.SetImageBitmap(mGenerateDateIcon);
+            //mDisplayGeneratedImage.SetImageBitmap(mGenerateDateIcon);
             //Это нужно отдать методу LoadDataByDate()
 
             // ВОПРОС СЕМЕНОВУ: почему в datePicker месяц съехал на 1 ? ? ?
@@ -603,6 +604,10 @@ namespace AndroidSQLite
 
     public class Fragment3 : Android.Support.V4.App.Fragment
     {
+        ListView lstDataAch;
+        public List<Achievement3> lstAch = new List<Achievement3>();
+        //DataBase db;
+
         ProgressBar progressMain;
         ProgressBar progressSport;
         ProgressBar progressEducation;
@@ -630,6 +635,7 @@ namespace AndroidSQLite
         {
                       
             DataBase.db = DataBase.getDataBase();
+            DataBase.db.createDataBaseAchivments3();
             var ach = DataBase.db.getAchievments();
             
             //Console.WriteLine("Ach name = "+ach[0].Name + " Exp = " + ach[0].MainExp);
@@ -637,8 +643,24 @@ namespace AndroidSQLite
             //Button refreshBtn = view.FindViewById<Button>(Resource.Id.refresh);
             //TextView consos = view.FindViewById<TextView>(Resource.Id.consos);
             //consos.Text = ach[0].Name + "\n MainExp = " + ach[0].MainExp + "\n OtherExp = " + ach[0].OtherExp +
-              //  "\n SportExp = " + ach[0].SportExp + "\n Finansi Exp = " + ach[0].FinansiExp + "\n EducationExp = " + ach[0].EducationExp;
+            //  "\n SportExp = " + ach[0].SportExp + "\n Finansi Exp = " + ach[0].FinansiExp + "\n EducationExp = " + ach[0].EducationExp;
+
+            //------------------------------------
             
+            //Achievement3 test_achevement = new Achievement3()
+            //{
+            //    Name = "TEST",
+            //    Description = "TEST",
+            //    Type = "SPORT",
+            //    Stars = 1
+            //};
+
+            //DataBase.db.insertIntoTableAchievement3(test_achevement);
+
+            
+
+
+            lstDataAch = view.FindViewById < ListView >(Resource.Id.listViewAch);
             progressMain = view.FindViewById<ProgressBar>(Resource.Id.progressBar1);
             progressSport = view.FindViewById<ProgressBar>(Resource.Id.progressBar2);
             progressEducation = view.FindViewById<ProgressBar>(Resource.Id.progressBar3);
@@ -654,6 +676,7 @@ namespace AndroidSQLite
             //int _progress = 0;
 
             //Первичное заполнение опыта
+
             if (ach.Count != 0)
             {
                 if (ach[0].MainExp <= 100) txtMain.Text = (ach[0].MainExp % 100).ToString() + " / 100";
@@ -722,7 +745,7 @@ namespace AndroidSQLite
             //    newFragment.Show(ft, "dialog");
 
             //};
-           
+            LoadDataByAchevements();
             return view;
         }
 
@@ -758,6 +781,16 @@ namespace AndroidSQLite
                 progressOther.Progress = ach[0].OtherExp % 100;
             }
             Console.WriteLine("Ach count = "+ach.Count);
+        }
+
+        public void LoadDataByAchevements()
+        {
+            lstAch = DataBase.db.selectTableAchievement3();
+            Console.WriteLine("Lstach - " + lstAch.Count);
+            _activity.achievments_adapter.SetFrActivity(this);
+            _activity.achievments_adapter.SetList(lstAch);
+            _activity.achievments_adapter.SetActivity(_activity);
+            lstDataAch.Adapter = _activity.achievments_adapter;
         }
     }
 }
