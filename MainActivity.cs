@@ -646,18 +646,18 @@ namespace AndroidSQLite
             //  "\n SportExp = " + ach[0].SportExp + "\n Finansi Exp = " + ach[0].FinansiExp + "\n EducationExp = " + ach[0].EducationExp;
 
             //------------------------------------
-            
-            //Achievement3 test_achevement = new Achievement3()
+
+            //achievement3 test_achevement = new achievement3()
             //{
-            //    Name = "TEST",
-            //    Description = "TEST",
-            //    Type = "SPORT",
-            //    Stars = 1
+            //    name = "test",
+            //    //description = "test",
+            //    type = "sport",
+            //    stars = 1
             //};
 
             //DataBase.db.insertIntoTableAchievement3(test_achevement);
 
-            
+
 
 
             lstDataAch = view.FindViewById < ListView >(Resource.Id.listViewAch);
@@ -785,8 +785,44 @@ namespace AndroidSQLite
 
         public void LoadDataByAchevements()
         {
-            lstAch = DataBase.db.selectTableAchievement3();
-            Console.WriteLine("Lstach - " + lstAch.Count);
+            var ach = DataBase.db.getAchievments();
+            int newVal = 0;
+            if(ach[0].SportExp > 100)
+            {
+                 newVal = 1;
+            }else if(ach[0].SportExp > 200)
+            {
+                 newVal = 2;
+            }else if(ach[0].SportExp > 300)
+            {
+                 newVal = 3;
+            }
+            Achievement3 test_achevement1 = new Achievement3()
+            {
+                Name = "Спорт",
+                Description = "test",
+                Type = "sport",
+                Stars = newVal
+            };
+
+
+
+            //lstAch = DataBase.db.selectTableAchievement3();
+            lstAch.Add(test_achevement1);
+            Achievement3 test_achevement2 = new Achievement3()
+            {
+                Name = "test2",
+                Description = "test",
+                Type = "sport",
+                Stars = 1
+            };
+
+
+
+            //lstAch = DataBase.db.selectTableAchievement3();
+            lstAch.Add(test_achevement2);
+
+            //Console.WriteLine("Lstach - " + lstAch.Count);
             _activity.achievments_adapter.SetFrActivity(this);
             _activity.achievments_adapter.SetList(lstAch);
             _activity.achievments_adapter.SetActivity(_activity);

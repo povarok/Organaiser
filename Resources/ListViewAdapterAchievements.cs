@@ -74,10 +74,10 @@ namespace AndroidSQLite.Resources
             return null;
         }
         //Возможно удалить
-        public override long GetItemId(int position)
-        {
-            return lstAch[position].Id;
-        }
+        //public override long GetItemId(int position)
+        //{
+        //    return lstAch[position].Id;
+        //}
         //public bool OnTouch(View view, MotionEvent motionEvent)
         //{
         //    if (motionEvent.Action == MotionEventActions.Down)
@@ -108,12 +108,37 @@ namespace AndroidSQLite.Resources
 
             var Name = view.FindViewById<TextView>(Resource.Id.tName);
             var Description = view.FindViewById<TextView>(Resource.Id.tDescription);
-            //if 
             var Star = view.FindViewById<ImageView>(Resource.Id.Star);
+            if (lstAch[position].Stars == 0)
+            {
+                Star.SetImageResource(Resource.Drawable.star0);
+            }
+            else if (lstAch[position].Stars == 1)
+            {
+                Star.SetImageResource(Resource.Drawable.star1);
+            }
+            else if (lstAch[position].Stars == 2)
+            {
+                Star.SetImageResource(Resource.Drawable.star2);
+
+            }
+            else
+            {
+                Star.SetImageResource(Resource.Drawable.star3);
+            }
+
+            Name.Text = lstAch[position].Name;
+            Description.Text = lstAch[position].Description;
+            
             
 
 
             return view;
+        }
+
+        public override long GetItemId(int position)
+        {
+            throw new NotImplementedException();
         }
 
         //public class CheckedChangeListener : Java.Lang.Object, CompoundButton.IOnCheckedChangeListener
@@ -128,10 +153,10 @@ namespace AndroidSQLite.Resources
 
         //    public void OnCheckedChanged(CompoundButton buttonView, bool isChecked)
         //    {
-                
+
         //        if (isChecked)
         //        {
-                    
+
         //            Console.WriteLine("CheckedListiner");
         //            //Toast.MakeText(this.activity, "Checked Listiner", ToastLength.Short).Show();
         //        }

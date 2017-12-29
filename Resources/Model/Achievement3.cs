@@ -15,8 +15,8 @@ namespace AndroidSQLite.Resources.Model
 {
     public class Achievement3
     {
-        [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
+        //[PrimaryKey, AutoIncrement]
+        //public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Type { get; set; }
