@@ -31,11 +31,6 @@ namespace AndroidSQLite
     [Activity(Label = "AndroidSQLite", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : FragmentActivity, IOnDateSetListener
     {
-
-        
-
-
-
         public  Fragment1 _fragment1 = new Fragment1();
         public  Fragment2 _fragment2 = new Fragment2();
         public  Fragment3 _fragment3 = new Fragment3();
@@ -50,50 +45,23 @@ namespace AndroidSQLite
         Bitmap mGenerateDateIcon;
         ImageGenerator mGeneratorImage;
         ImageView mDisplayGeneratedImage;
-        
-        //-------------------------------
-        //Изменил на public, Было private
+
         public ViewPager mViewPager;   
         public SlidingTabScrollView mScrollView;
-        //-------------------------------
         DateTime calendarDate;
        
 
         
         public void OnDateSet(DatePicker view, int year, int month, int dayOfMonth)
         {
-            
-            //DialogFragment1
-            //Передаем выбранную дату куда нибудь
+            //Передаем выбранную дату
             Toast.MakeText(this, $"{dayOfMonth}-{month + 1}-{year}", ToastLength.Long).Show();
             mCurrentDate.Set(year, month, dayOfMonth);
             mGenerateDateIcon = mGeneratorImage.GenerateDateImage(mCurrentDate, Resource.Drawable.EmptyCalendar);
-            //mDisplayGeneratedImage.SetImageBitmap(mGenerateDateIcon);
-            //Это нужно отдать методу LoadDataByDate()
-
-            // ВОПРОС СЕМЕНОВУ: почему в datePicker месяц съехал на 1 ? ? ?
-
             calendarDate = new DateTime(year, month+1, dayOfMonth, 1, 1, 1);
-            Console.WriteLine(calendarDate);
             mViewPager.SetCurrentItem(1, true);
-           
-
-
-            // Как было
-            //Fragment2 fragment2 = new Fragment2();
-            //fragment2.LoadDataByDate(calendarDate);
-
-            // Семенов
             _fragment2.LoadDataByDate(calendarDate);
 
-        }
-
-
-        public void OnDismiss()
-        {
-            //Fragment2 fragment2 = new Fragment2();
-            //fragment2.LoadData();
-            //Console.WriteLine("ONDISMIS from MA");
         }
 
         protected override void OnCreate(Bundle bundle)
@@ -130,6 +98,7 @@ namespace AndroidSQLite
             //var drawCalendar = mDisplayGeneratedImage.Background;
             FloatingActionButton btnCalendar = FindViewById<FloatingActionButton>(Resource.Id.btnCalendar);
             //btnCalendar.SetBackgroundDrawable(drawCalendar);
+            //Кнопка для сортировки задач по дате
             btnCalendar.Click += delegate
             {
 
@@ -138,26 +107,20 @@ namespace AndroidSQLite
                 int mYear = mCurrentDate.Get(CalendarField.Year);
                 int mMonth = mCurrentDate.Get(CalendarField.Month);
                 int mDay = mCurrentDate.Get(CalendarField.DayOfMonth);
-                //Android.App.AlertDialog.ThemeDeviceDefaultDark
                 DatePickerDialog datePickerDialog = new DatePickerDialog(this, Android.App.AlertDialog.ThemeDeviceDefaultDark, this, mYear, mMonth, mDay);
                 datePickerDialog.Show();
 
 
 
             };
-
+            
             mScrollView = FindViewById<SlidingTabScrollView>(Resource.Id.sliding_tabs);
             mViewPager = FindViewById<ViewPager>(Resource.Id.viewPager);
-            // Семенов
             mViewPager.Adapter = new SamplePagerAdapter(this, SupportFragmentManager);
-            // Как было
-            //mViewPager.Adapter = new SamplePagerAdapter( SupportFragmentManager);
             mScrollView.ViewPager = mViewPager;
 
-            //Create DataBase
+            //Получаем экземпляр бд
             DataBase.db = DataBase.getDataBase();
-
-            //db = new DataBase();
             DataBase.db.createDataBase();
             DataBase.db.createDataBaseAchivments();
             string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
@@ -193,43 +156,18 @@ namespace AndroidSQLite
 
             //Пока что костыль
             settingsBtn.Click += delegate
-            {
-                Console.WriteLine("calendarDate= " + calendarDate.ToLongDateString());
-                Console.WriteLine("SETTINGS BUTTON PRESSED");
-                //Fragment2 fr2 = new Fragment2();
-                //fr2.LoadDataByDate(calendarDate);
-                
+            {               
+                Console.WriteLine("SETTINGS BUTTON PRESSED");                
             };
-
-            //imgBtn.Click += delegate
-            //{
-
-            //    Console.WriteLine("IMAGE BUTTON PRESSED");
-
-            //};
-
         }
-
-        
-        // БУДИЛЬНИК
-        //private void StartAlarm()
-        //{
-        //    AlarmManager manager = (AlarmManager)GetSystemService(Context.AlarmService);
-        //    Intent myIntent;
-        //    PendingIntent pendingIntent;
-        //    myIntent = new Intent(this, typeof(AlarmNotificationReceiver));
-        //    pendingIntent = PendingIntent.GetBroadcast(this, 0, myIntent, 0);
-        //    manager.Set(AlarmType.RtcWakeup, SystemClock.ElapsedRealtime() + 3000, pendingIntent);
-        //}
     }
 
     public class SamplePagerAdapter : FragmentPagerAdapter
     {
         private List<Android.Support.V4.App.Fragment> mFragmentHolder;
-        // Семенов
         public SamplePagerAdapter(MainActivity activity, Android.Support.V4.App.FragmentManager fragManager) : base(fragManager)
         {
-
+            //Добавляем фрагменты массив
             mFragmentHolder = new List<Android.Support.V4.App.Fragment>
             {
                 activity._fragment1,
@@ -237,16 +175,6 @@ namespace AndroidSQLite
                 activity._fragment3
             };
         }
-        // Как было
-        //public SamplePagerAdapter(Android.Support.V4.App.FragmentManager fragManager) : base(fragManager)
-        //{
-
-
-        //    mFragmentHolder = new List<Android.Support.V4.App.Fragment>();
-        //    mFragmentHolder.Add(new Fragment1());
-        //    mFragmentHolder.Add(new Fragment2());
-        //    mFragmentHolder.Add(new Fragment3());
-        //}
 
         public override int Count
         {
@@ -258,7 +186,7 @@ namespace AndroidSQLite
             return mFragmentHolder[position];
         }
     }
-
+    
     public class Fragment1 : Android.Support.V4.App.Fragment
     {
         private TextView mTextView;
@@ -276,13 +204,6 @@ namespace AndroidSQLite
             
             var img = view.FindViewById<ImageView>(Resource.Id.imageClick);
 
-            //img.Clickable = true;
-
-            //img.Click += delegate
-            //{
-            //    Console.WriteLine("image pressed");
-            //};
-           
             var house1 = view.FindViewById<LinearLayout>(Resource.Id.house1);
             var house2 = view.FindViewById<LinearLayout>(Resource.Id.house2);
             var house3 = view.FindViewById<LinearLayout>(Resource.Id.house3);
@@ -315,19 +236,17 @@ namespace AndroidSQLite
             return view;
         }
 
-        
-
         public override string ToString() //Called on line 156 in SlidingTabScrollView
         {
             return "CityName";
         }
     }
-
+    //Основной экран
+    //Создание, удалени и отображение заметок
     public class Fragment2 : Android.Support.V4.App.Fragment
     {
         ListView lstData;
         public List<Person> lstSource = new List<Person>();
-        //DataBase db;
         private EditText mTxt;
         public MainActivity _activity;
 
@@ -335,17 +254,11 @@ namespace AndroidSQLite
         {
             _activity = activity;
         }
-
-
+        
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-
-
-
-            //MainActivity ma = (MainActivity)this.Activity;
             DataBase.db = DataBase.getDataBase();
             DataBase.db.createDataBase();
-
 
             string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             Log.Info("DB_PATH", folder);
@@ -357,19 +270,12 @@ namespace AndroidSQLite
             var btnAdd = view.FindViewById<FloatingActionButton>(Resource.Id.btnAdd);
             var btnRefresh = view.FindViewById<Button>(Resource.Id.btnRefresh);
             var btnLoadDataByDateByLast = view.FindViewById<Button>(Resource.Id.btnLoadDataByDateByLast);
-
-           
+            //Загружаем данные из бд и обновляем список задач
             LoadData();
-
-
-            
-            
-
-            //Event
+            //Добавить новую задачу
             btnAdd.Click += delegate
             {
                 //Создаем пустую запись в бд
-
                 Person person = new Person()
                 {
                     Name = "",
@@ -386,14 +292,12 @@ namespace AndroidSQLite
                 });
                 t.Wait();
                 t.Dispose();
-               
-                
-
+                //Создаем окно для добавления новой задачи
                 Android.Support.V4.App.FragmentTransaction ft = FragmentManager.BeginTransaction();
                 Android.Support.V4.App.Fragment prev = FragmentManager.FindFragmentByTag("dialog");
+                //Передаем id новой заметки для корректной записи в бд
                 Bundle frag_bundle = new Bundle();
                 frag_bundle.PutLong("Id", person.Id);
-                //frag_bundle.
 
                 if (prev != null)
                 {
@@ -402,9 +306,8 @@ namespace AndroidSQLite
                 ft.AddToBackStack(null);
                 
                 _activity._dialogFragment1 = DialogFragment1.NewInstance(frag_bundle);
-                //newFr.Arguments.PutLong("Id", elementId);
                 var act = _activity._dialogFragment1.Activity;
-
+                //Показываем окно
                 _activity._dialogFragment1.SetActivity(_activity);
                 _activity._dialogFragment1.Show(ft, "dialog");
                 
@@ -418,39 +321,18 @@ namespace AndroidSQLite
             // Эта кнопка берет последний элемент из БД и выводит на экран
             btnLoadDataByDateByLast.Click += delegate
             {
-
                 var Last = DataBase.db.get_Last();
                 Console.WriteLine("Last = " + Last.Id);
                 LoadDataByDate(Last.Date);
 
             };
-
-            //Эдик разбирайся
-            //Хрень для свайпа10!)
-            //lstData.Touch += (s, e) =>
-            //{
-            //    var handled = false;
-            //    if (e.Event.Action == OverScroll)//MotionEventActions.Down)
-            //    {
-            //        // do stuff
-            //        Console.WriteLine("Doim stuff");
-            //        handled = true;
-            //    }
-
-
-            //    e.Handled = handled;
-            //};
+            //Просмотр/ редактирование существующей задачи
             lstData.ItemClick += (s, e) => {
-                Console.WriteLine("ГАЛОЧКА");
-                //lstData
-                //Set background for selected item
+
                 for (int i = 0; i < lstData.Count; i++)
                 {
                     if (e.Position == i)
-                    {
-                        //спросить про Intent
-                        //  Intent intent = new Intent(this,  )
-                        // lstData.GetChildAt(i).SetBackgroundColor(Android.Graphics.Color.DarkGray);
+                    {                       
                         //Получаем id выбранного в списке элемента
                         var t = Task.Factory.StartNew(() =>
                         {
@@ -458,10 +340,7 @@ namespace AndroidSQLite
                             return elementId;
                         });
                         t.Wait();
-                        
-                        
-                        //elementId = DataBase.db.selectQuery(lstData.Adapter.GetItemId(e.Position));
-                        
+
                         Android.Support.V4.App.FragmentTransaction ft = FragmentManager.BeginTransaction();
                         //Remove fragment else it will crash as it is already added to backstack
                         Android.Support.V4.App.Fragment prev = FragmentManager.FindFragmentByTag("dialog");
@@ -473,38 +352,19 @@ namespace AndroidSQLite
                         {
                             ft.Remove(prev);
                         }
-                        ft.AddToBackStack(null);
-
-                        
-
-                       
+                        ft.AddToBackStack(null);                
                         _activity._dialogFragment1 = DialogFragment1.NewInstance(frag_bundle);
                         _activity._dialogFragment1.SetActivity(_activity);
-                        //newFr.Arguments.PutLong("Id", elementId);
-
                         _activity._dialogFragment1.Show(ft, "dialog");
-                        //Toast.MakeText(this, db.get_Element(elementId)[0].Name, ToastLength.Long).Show();
-                    }
-                    //else
-                    //    lstData.GetChildAt(i).SetBackgroundColor(Android.Graphics.Color.Transparent);
-
+                       
+                    }                
                 }
 
-                //Binding Data
+                //Заполняем поля данными
                 var txtName = e.View.FindViewById<TextView>(Resource.Id.textView1);
                 var checkedBox = e.View.FindViewById<CheckBox>(Resource.Id.chkBox);
                 var txtDone = e.View.FindViewById<TextView>(Resource.Id.textView5);
                 checkedBox.SetOnCheckedChangeListener(null);
-
-                //var txtAge = e.View.FindViewById<TextView>(Resource.Id.textView2);
-                //var txtEmail = e.View.FindViewById<TextView>(Resource.Id.textView3);
-
-                //edtName.Text = txtName.Text;
-                //edtName.Tag = e.Id;
-
-                //edtAge.Text = txtAge.Text;
-
-                //edtEmail.Text = txtEmail.Text;
 
             };
 
@@ -515,6 +375,7 @@ namespace AndroidSQLite
         {
             return "To Do List";
         }
+        //Устанавливаем напоминание о задаче
         public void StartAlarm(int Year, int Month, int Day, int Hour, int Minute)
         {
             var Current = Java.Lang.JavaSystem.CurrentTimeMillis();
@@ -529,43 +390,30 @@ namespace AndroidSQLite
             var CurrentTime = DateTime.Now;
             var AlarmTime = unixTime - CurrentTime;
             long ATMillis = (long)AlarmTime.TotalMilliseconds;
-            Console.WriteLine("hours - " + Hour);
-           // Console.WriteLine("Debug Clock" + (JavaSystem.CurrentTimeMillis()));
-          //  Console.WriteLine("Debug ClockUNIX" + (unixTime));
-//Console.WriteLine("Debug ClockYear " + Year + " Debug ClockMonth " + Month + " Debug ClockDay " + Day + " Debug ClockHour " + Hour + " Debug ClockMin " + Minute);
-            //Console.WriteLine("Debug ClockYear" + (lYear  + Month + Day * 24 * 3600 * 1000 + Hour * 3600 * 1000 + Minute * 60000));
-           // Console.WriteLine("Debug ClockCurr" + (CurrentTime));
-            Console.WriteLine("Debug ClockDiff" + (ATMillis));
-            
             manager.Set(AlarmType.RtcWakeup, JavaSystem.CurrentTimeMillis()+ATMillis, pendingIntent);
 
         }
+
         //Сортировка по id
         public void LoadData()
         {
             lstSource = DataBase.db.selectTablePerson();
-
             _activity.adapter.SetFrActivity(this);
             _activity.adapter.SetList(lstSource);
-           _activity.adapter.SetActivity(_activity);
+            _activity.adapter.SetActivity(_activity);
             lstData.Adapter = _activity.adapter;
         }
+
         //Сортировка по дате
-        //Наверное так
         public void LoadDataByDate(DateTime date)
         {     
-            //Console.WriteLine("LoadDataByDate started");
-            lstSource = DataBase.db.selectTablePerson();
-            Console.WriteLine("LoadDataByDate started LstSource length - "+ lstSource.Count);
+            lstSource = DataBase.db.selectTablePerson();          
             var lstSource2 = new List<Person>();
             foreach (var value in lstSource)
             {
-                Console.WriteLine("from DB - " + value.Date.Date + "заданная дата - " + date.Date);
                 if (value.Date.Date == date.Date)
                 {
                     lstSource2.Add(value);
-                    Console.WriteLine("длина lstSource2 - " + lstSource2.Count);
-
                 }
             }
 
@@ -575,9 +423,9 @@ namespace AndroidSQLite
             _activity.adapter.SetFrActivity(this);
             _activity.adapter.SetList(lstSource);
             this.lstData.Adapter = _activity.adapter;
-            Console.WriteLine("loadDataByDate completed " + lstSource2.Count);
         }
-        //Передать категорию
+
+        //Передать по категории
         public void SortCategory(string _category)
         {
             lstSource = DataBase.db.selectTablePerson();
@@ -596,12 +444,9 @@ namespace AndroidSQLite
             _activity.adapter.SetList(lstSource);
             this.lstData.Adapter = _activity.adapter;
 
-        }
-
-
-
+        }        
     }
-
+    //Достижения пользователя
     public class Fragment3 : Android.Support.V4.App.Fragment
     {
         ListView lstDataAch;
@@ -804,9 +649,7 @@ namespace AndroidSQLite
                 Type = "sport",
                 Stars = newVal
             };
-
-
-
+            
             //lstAch = DataBase.db.selectTableAchievement3();
             lstAch.Add(test_achevement1);
             Achievement3 test_achevement2 = new Achievement3()
@@ -817,12 +660,7 @@ namespace AndroidSQLite
                 Stars = 1
             };
 
-
-
-            //lstAch = DataBase.db.selectTableAchievement3();
             lstAch.Add(test_achevement2);
-
-            //Console.WriteLine("Lstach - " + lstAch.Count);
             _activity.achievments_adapter.SetFrActivity(this);
             _activity.achievments_adapter.SetList(lstAch);
             _activity.achievments_adapter.SetActivity(_activity);
