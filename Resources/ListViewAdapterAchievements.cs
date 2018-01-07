@@ -138,7 +138,7 @@ namespace AndroidSQLite.Resources
 
         public override long GetItemId(int position)
         {
-            throw new NotImplementedException();
+            return 0;
         }
 
         //public class CheckedChangeListener : Java.Lang.Object, CompoundButton.IOnCheckedChangeListener

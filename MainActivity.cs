@@ -376,14 +376,16 @@ namespace AndroidSQLite
             return "To Do List";
         }
         //Устанавливаем напоминание о задаче
-        public void StartAlarm(int Year, int Month, int Day, int Hour, int Minute)
+        public void StartAlarm(int Year, int Month, int Day, int Hour, int Minute, long id)
         {
             var Current = Java.Lang.JavaSystem.CurrentTimeMillis();
-
+            
             AlarmManager manager = (AlarmManager)_activity.GetSystemService(Context.AlarmService);
             Intent myIntent;
             PendingIntent pendingIntent;
             myIntent = new Intent(_activity, typeof(AlarmNotificationReceiver));
+            myIntent.PutExtra("id", id);
+
             pendingIntent = PendingIntent.GetBroadcast(_activity, 0, myIntent, 0);
 
             var unixTime = new DateTime(Year, Month, Day, Hour, Minute, 1);

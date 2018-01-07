@@ -306,7 +306,7 @@ namespace AndroidSQLite
                     DataBase.db.updateTablePerson(selected_Element);
                     _activityByDialogWindow._fragment2.LoadData();
                     _activityByDialogWindow._fragment2.StartAlarm(selectedDateDate.Year, selectedDateDate.Month, selectedDateDate.Day,
-                        selectedDateTime.Hour, selectedDateTime.Minute);
+                        selectedDateTime.Hour, selectedDateTime.Minute, getID);
                     Dismiss();
 
                 }
@@ -314,10 +314,10 @@ namespace AndroidSQLite
                 //fragment2.LoadData();
                 //ma.LoadData(lstData);
 
-                Console.WriteLine("Сохраняю " + selected_Element.Id + " ый эл-т");
-                Console.WriteLine("Name - " + selected_Element.Name);
-                Console.WriteLine("Date - " + selected_Element.Date.ToLongDateString());
-                Console.WriteLine("Time - " + selected_Element.Time.ToLongTimeString());
+                //Console.WriteLine("Сохраняю " + selected_Element.Id + " ый эл-т");
+                //Console.WriteLine("Name - " + selected_Element.Name);
+                //Console.WriteLine("Date - " + selected_Element.Date.ToLongDateString());
+                //Console.WriteLine("Time - " + selected_Element.Time.ToLongTimeString());
 
                 
 
@@ -370,7 +370,7 @@ namespace AndroidSQLite
         {
             globalHour = hourOfDay;
             globalMin = minute;
-            Console.WriteLine("globalHour " + globalHour + "globalMin " + globalMin);
+            //Console.WriteLine("globalHour " + globalHour + "globalMin " + globalMin);
             selectedDateTime = new DateTime(1,1,1, globalHour, globalMin, 0);
             setTime.Text = globalHour.ToString() + " : " + globalMin.ToString();
         }

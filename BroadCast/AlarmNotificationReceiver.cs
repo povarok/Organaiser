@@ -12,6 +12,7 @@ using Android.Widget;
 using Android.Support.V7.App;
 using AndroidSQLite;
 using AndroidSQLite.Resources.DataHelper;
+using AndroidSQLite.Resources.Model;
 
 namespace AndroidSQLite.BroadCast
 {
@@ -29,26 +30,48 @@ namespace AndroidSQLite.BroadCast
         public override void OnReceive(Context context, Intent intent)
         {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-            //DataBase.db = DataBase.getDataBase();
+            DataBase.db = DataBase.getDataBase();
+            var person = DataBase.db.get_Element(intent.GetLongExtra("id", 0));
 
+            //Console.WriteLine(intent.GetLongExtra("id", 228));
 
             //NullRefEx тут
             //SetActivity(main);
 
             //var id = main._dialogFragment1.getId();
-             
+
             //Console.WriteLine("Полученный ID = " + id);
+            string icon;
+            if (person[0].Category == "Образоване")
+            {
+                builder.SetSmallIcon(Resource.Drawable.education);
+            }
+            if (person[0].Category == "Финансы")
+            {
+                builder.SetSmallIcon(Resource.Drawable.finance);
+            }
+            if (person[0].Category == "Прочее")
+            {
+                builder.SetSmallIcon(Resource.Drawable.other);
+            }
+            if (person[0].Category == "Спорт")
+            {
+                builder.SetSmallIcon(Resource.Drawable.sport);
+            }
+
 
             builder.SetAutoCancel(true)
                 .SetDefaults((int)NotificationDefaults.All)
-                .SetSmallIcon(Resource.Drawable.Icon)
-                .SetContentTitle("Alarm Actived!")
-                .SetContentText("Название")
+                
+                .SetContentTitle(person[0].Name)
+                .SetContentText(person[0].Description)
                 .SetContentInfo("Info");
+            
 
 
             NotificationManager manager = (NotificationManager)context.GetSystemService(Context.NotificationService);
             manager.Notify(1, builder.Build());
         }
+        
     }
 }
