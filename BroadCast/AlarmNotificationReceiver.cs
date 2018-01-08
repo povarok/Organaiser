@@ -21,10 +21,10 @@ namespace AndroidSQLite.BroadCast
     [BroadcastReceiver(Enabled = true)]
     public class AlarmNotificationReceiver : BroadcastReceiver
     {
-        public MainActivity main;
+        public MainActivity _activity;
         public void SetActivity(MainActivity activity)
         {
-            main = activity;
+            _activity = activity;
         }
 
         public override void OnReceive(Context context, Intent intent)
