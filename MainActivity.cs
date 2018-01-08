@@ -39,7 +39,7 @@ namespace AndroidSQLite
         public ListViewAdapter adapter = new ListViewAdapter();
         public ListViewAdapterAchievements achievments_adapter = new ListViewAdapterAchievements();
 
-        public DialogFragment1 _dialogFragment1 = new DialogFragment1();
+        public DialogWindow _dialogFragment1 = new DialogWindow();
 
         Java.Util.Calendar mCurrentDate;
         Bitmap mGenerateDateIcon;
@@ -186,7 +186,8 @@ namespace AndroidSQLite
             return mFragmentHolder[position];
         }
     }
-    
+   
+    //Сортировка по типу задачи
     public class Fragment1 : Android.Support.V4.App.Fragment
     {
         private TextView mTextView;
@@ -241,12 +242,13 @@ namespace AndroidSQLite
             return "CityName";
         }
     }
+    
     //Основной экран
     //Создание, удалени и отображение заметок
     public class Fragment2 : Android.Support.V4.App.Fragment
     {
         ListView lstData;
-        public List<Person> lstSource = new List<Person>();
+        public List<Resources.Model.Task> lstSource = new List<Resources.Model.Task>();
         private EditText mTxt;
         public MainActivity _activity;
 
@@ -276,7 +278,7 @@ namespace AndroidSQLite
             btnAdd.Click += delegate
             {
                 //Создаем пустую запись в бд
-                Person person = new Person()
+                Resources.Model.Task task = new Resources.Model.Task()
                 {
                     Name = "",
                     Date = DateTime.Now,
@@ -286,9 +288,9 @@ namespace AndroidSQLite
                     Priority = "0", 
                     Done = false
                 };
-                var t = Task.Factory.StartNew(() =>
+                var t = System.Threading.Tasks.Task.Factory.StartNew(() =>
                 {
-                    DataBase.db.insertIntoTablePerson(person);
+                    DataBase.db.insertIntoTablePerson(task);
                 });
                 t.Wait();
                 t.Dispose();
@@ -297,7 +299,7 @@ namespace AndroidSQLite
                 Android.Support.V4.App.Fragment prev = FragmentManager.FindFragmentByTag("dialog");
                 //Передаем id новой заметки для корректной записи в бд
                 Bundle frag_bundle = new Bundle();
-                frag_bundle.PutLong("Id", person.Id);
+                frag_bundle.PutLong("Id", task.Id);
 
                 if (prev != null)
                 {
@@ -305,7 +307,7 @@ namespace AndroidSQLite
                 }
                 ft.AddToBackStack(null);
                 
-                _activity._dialogFragment1 = DialogFragment1.NewInstance(frag_bundle);
+                _activity._dialogFragment1 = DialogWindow.NewInstance(frag_bundle);
                 var act = _activity._dialogFragment1.Activity;
                 //Показываем окно
                 _activity._dialogFragment1.SetActivity(_activity);
@@ -334,7 +336,7 @@ namespace AndroidSQLite
                     if (e.Position == i)
                     {                       
                         //Получаем id выбранного в списке элемента
-                        var t = Task.Factory.StartNew(() =>
+                        var t = System.Threading.Tasks.Task.Factory.StartNew(() =>
                         {
                             elementId = DataBase.db.selectQuery(lstData.Adapter.GetItemId(e.Position));
                             return elementId;
@@ -353,7 +355,7 @@ namespace AndroidSQLite
                             ft.Remove(prev);
                         }
                         ft.AddToBackStack(null);                
-                        _activity._dialogFragment1 = DialogFragment1.NewInstance(frag_bundle);
+                        _activity._dialogFragment1 = DialogWindow.NewInstance(frag_bundle);
                         _activity._dialogFragment1.SetActivity(_activity);
                         _activity._dialogFragment1.Show(ft, "dialog");
                        
@@ -410,7 +412,7 @@ namespace AndroidSQLite
         public void LoadDataByDate(DateTime date)
         {     
             lstSource = DataBase.db.selectTablePerson();          
-            var lstSource2 = new List<Person>();
+            var lstSource2 = new List<Resources.Model.Task>();
             foreach (var value in lstSource)
             {
                 if (value.Date.Date == date.Date)
@@ -421,7 +423,6 @@ namespace AndroidSQLite
 
             this.lstSource = lstSource2;
 
-            // lstSource.Find(person);
             _activity.adapter.SetFrActivity(this);
             _activity.adapter.SetList(lstSource);
             this.lstData.Adapter = _activity.adapter;
@@ -431,7 +432,7 @@ namespace AndroidSQLite
         public void SortCategory(string _category)
         {
             lstSource = DataBase.db.selectTablePerson();
-            var lstSource2 = new List<Person>();
+            var lstSource2 = new List<Resources.Model.Task>();
 
             foreach(var value in lstSource)
             {
@@ -448,6 +449,7 @@ namespace AndroidSQLite
 
         }        
     }
+    
     //Достижения пользователя
     public class Fragment3 : Android.Support.V4.App.Fragment
     {
@@ -587,7 +589,7 @@ namespace AndroidSQLite
             //    }
             //    ft.AddToBackStack(null);
             //    // Create and show the dialog.
-            //    DialogFragment1 newFragment = DialogFragment1.NewInstance(null);
+            //    DialogWindow newFragment = DialogWindow.NewInstance(null);
             //    //Add fragment
             //    newFragment.Show(ft, "dialog");
 

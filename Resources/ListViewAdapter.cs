@@ -51,7 +51,7 @@ namespace AndroidSQLite.Resources
             this.activity = FrActivity;
         }
 
-        public void SetList(List<Person> lstPerson)
+        public void SetList(List<Model.Task> lstPerson)
         {
             this.lstPerson = lstPerson;
         }
@@ -59,7 +59,7 @@ namespace AndroidSQLite.Resources
 
 
         private Android.Support.V4.App.Fragment activity;
-        private List<Person> lstPerson;
+        private List<Model.Task> lstPerson;
 
 
         //public ListViewAdapter(Android.Support.V4.App.Fragment activity, List<Person> lstPerson)
@@ -171,7 +171,7 @@ namespace AndroidSQLite.Resources
                         if (checkId.Count() == 0)
                         {
                             Console.WriteLine("начинаем таск");
-                            var t = Task.Factory.StartNew(() => Console.WriteLine("ну таск))"));
+                            var t = System.Threading.Tasks.Task.Factory.StartNew(() => Console.WriteLine("ну таск))"));
                             t.Wait();
                             t.Dispose();
                             Console.WriteLine("заканчиваем таск");
@@ -192,7 +192,7 @@ namespace AndroidSQLite.Resources
                         {
 
                             Console.WriteLine("начинаем таск");
-                            var t = Task.Factory.StartNew(() => {
+                            var t = System.Threading.Tasks.Task.Factory.StartNew(() => {
                                 Console.WriteLine("ну таск))");
                                 DataBase.db.insertIntoTableBannedId(bannedId);
                                 DataBase.db.updateTableAchievements(lstPerson[position].Category, lstPerson[position].Id);
@@ -215,7 +215,7 @@ namespace AndroidSQLite.Resources
                 {
                     lstPerson[position].Done = false;
                     selected_Element.Done = false;
-                    var t = Task.Factory.StartNew(() =>
+                    var t = System.Threading.Tasks.Task.Factory.StartNew(() =>
                     {
                         DataBase.db.updateTablePerson(selected_Element);
                     });

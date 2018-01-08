@@ -21,10 +21,10 @@ namespace AndroidSQLite.BroadCast
     [BroadcastReceiver(Enabled = true)]
     public class AlarmNotificationReceiver : BroadcastReceiver
     {
-        public MainActivity main;
+        public MainActivity _activity;
         public void SetActivity(MainActivity activity)
         {
-            main = activity;
+            _activity = activity;
         }
 
         public override void OnReceive(Context context, Intent intent)
@@ -33,14 +33,7 @@ namespace AndroidSQLite.BroadCast
             DataBase.db = DataBase.getDataBase();
             var person = DataBase.db.get_Element(intent.GetLongExtra("id", 0));
 
-            //Console.WriteLine(intent.GetLongExtra("id", 228));
-
-            //NullRefEx тут
-            //SetActivity(main);
-
-            //var id = main._dialogFragment1.getId();
-
-            //Console.WriteLine("Полученный ID = " + id);
+            
             string icon;
             if (person[0].Category == "Образоване")
             {
