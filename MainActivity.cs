@@ -470,7 +470,7 @@ namespace AndroidSQLite
         private Button mButton;
 
         MainActivity _activity;
-
+        bool created = false;
 
         public void SetActivity(MainActivity activity)
         {
@@ -632,8 +632,10 @@ namespace AndroidSQLite
 
         public void LoadDataByAchevements()
         {
+            
             var ach = DataBase.db.getAchievments();
             int newVal = 0;
+            //switch??
             if(ach[0].SportExp > 100)
             {
                  newVal = 1;
@@ -644,29 +646,33 @@ namespace AndroidSQLite
             {
                  newVal = 3;
             }
-            Achievement3 test_achevement1 = new Achievement3()
+            if (created == false)
             {
-                Name = "Спорт",
-                Description = "test",
-                Type = "sport",
-                Stars = newVal
-            };
-            
-            //lstAch = DataBase.db.selectTableAchievement3();
-            lstAch.Add(test_achevement1);
-            Achievement3 test_achevement2 = new Achievement3()
-            {
-                Name = "test2",
-                Description = "test",
-                Type = "sport",
-                Stars = 1
-            };
+                Achievement3 test_achevement1 = new Achievement3()
+                {
+                    Name = "Спорт",
+                    Description = "Выполните 10 заданий в категории спорт",
+                    Type = "sport",
+                    Stars = newVal
+                };
 
-            lstAch.Add(test_achevement2);
+                //lstAch = DataBase.db.selectTableAchievement3();
+                lstAch.Add(test_achevement1);
+                Achievement3 test_achevement2 = new Achievement3()
+                {
+                    Name = "test2",
+                    Description = "test",
+                    Type = "sport",
+                    Stars = 1
+                };
+
+                lstAch.Add(test_achevement2);
+            }
             _activity.achievments_adapter.SetFrActivity(this);
             _activity.achievments_adapter.SetList(lstAch);
             _activity.achievments_adapter.SetActivity(_activity);
             lstDataAch.Adapter = _activity.achievments_adapter;
+            created = true;
         }
     }
 }

@@ -1891,100 +1891,115 @@ namespace AndroidSQLite
 			public const int abc_vector_test = 2130837586;
 			
 			// aapt resource value: 0x7f020053
-			public const int education = 2130837587;
+			public const int bank1 = 2130837587;
 			
 			// aapt resource value: 0x7f020054
-			public const int EmptyCalendar = 2130837588;
+			public const int education = 2130837588;
 			
 			// aapt resource value: 0x7f020055
-			public const int fab_shadow = 2130837589;
+			public const int education1 = 2130837589;
 			
 			// aapt resource value: 0x7f020056
-			public const int fab_shadow_mini = 2130837590;
+			public const int education11 = 2130837590;
 			
 			// aapt resource value: 0x7f020057
-			public const int finance = 2130837591;
+			public const int EmptyCalendar = 2130837591;
 			
 			// aapt resource value: 0x7f020058
-			public const int hameleon_rango_prev = 2130837592;
+			public const int fab_shadow = 2130837592;
 			
 			// aapt resource value: 0x7f020059
-			public const int ic_add24dp = 2130837593;
+			public const int fab_shadow_mini = 2130837593;
 			
 			// aapt resource value: 0x7f02005a
-			public const int ic_date18dp = 2130837594;
+			public const int finance = 2130837594;
 			
 			// aapt resource value: 0x7f02005b
-			public const int ic_launcher = 2130837595;
+			public const int hameleon_rango_prev = 2130837595;
 			
 			// aapt resource value: 0x7f02005c
-			public const int ic_settings18dp = 2130837596;
+			public const int home1 = 2130837596;
 			
 			// aapt resource value: 0x7f02005d
-			public const int Icon = 2130837597;
+			public const int ic_add24dp = 2130837597;
 			
 			// aapt resource value: 0x7f02005e
-			public const int notification_action_background = 2130837598;
+			public const int ic_date18dp = 2130837598;
 			
 			// aapt resource value: 0x7f02005f
-			public const int notification_bg = 2130837599;
+			public const int ic_launcher = 2130837599;
 			
 			// aapt resource value: 0x7f020060
-			public const int notification_bg_low = 2130837600;
+			public const int ic_settings18dp = 2130837600;
 			
 			// aapt resource value: 0x7f020061
-			public const int notification_bg_low_normal = 2130837601;
+			public const int Icon = 2130837601;
 			
 			// aapt resource value: 0x7f020062
-			public const int notification_bg_low_pressed = 2130837602;
+			public const int notification_action_background = 2130837602;
 			
 			// aapt resource value: 0x7f020063
-			public const int notification_bg_normal = 2130837603;
+			public const int notification_bg = 2130837603;
 			
 			// aapt resource value: 0x7f020064
-			public const int notification_bg_normal_pressed = 2130837604;
+			public const int notification_bg_low = 2130837604;
 			
 			// aapt resource value: 0x7f020065
-			public const int notification_icon_background = 2130837605;
-			
-			// aapt resource value: 0x7f020071
-			public const int notification_template_icon_bg = 2130837617;
-			
-			// aapt resource value: 0x7f020072
-			public const int notification_template_icon_low_bg = 2130837618;
+			public const int notification_bg_low_normal = 2130837605;
 			
 			// aapt resource value: 0x7f020066
-			public const int notification_tile_bg = 2130837606;
+			public const int notification_bg_low_pressed = 2130837606;
 			
 			// aapt resource value: 0x7f020067
-			public const int notify_panel_notification_icon_bg = 2130837607;
+			public const int notification_bg_normal = 2130837607;
 			
 			// aapt resource value: 0x7f020068
-			public const int other = 2130837608;
+			public const int notification_bg_normal_pressed = 2130837608;
 			
 			// aapt resource value: 0x7f020069
-			public const int sport = 2130837609;
+			public const int notification_icon_background = 2130837609;
+			
+			// aapt resource value: 0x7f020076
+			public const int notification_template_icon_bg = 2130837622;
+			
+			// aapt resource value: 0x7f020077
+			public const int notification_template_icon_low_bg = 2130837623;
 			
 			// aapt resource value: 0x7f02006a
-			public const int star0 = 2130837610;
+			public const int notification_tile_bg = 2130837610;
 			
 			// aapt resource value: 0x7f02006b
-			public const int star1 = 2130837611;
+			public const int notify_panel_notification_icon_bg = 2130837611;
 			
 			// aapt resource value: 0x7f02006c
-			public const int star2 = 2130837612;
+			public const int other = 2130837612;
 			
 			// aapt resource value: 0x7f02006d
-			public const int star3 = 2130837613;
+			public const int sport = 2130837613;
 			
 			// aapt resource value: 0x7f02006e
-			public const int tooltip_frame_dark = 2130837614;
+			public const int sport1 = 2130837614;
 			
 			// aapt resource value: 0x7f02006f
-			public const int tooltip_frame_light = 2130837615;
+			public const int star0 = 2130837615;
 			
 			// aapt resource value: 0x7f020070
-			public const int town = 2130837616;
+			public const int star1 = 2130837616;
+			
+			// aapt resource value: 0x7f020071
+			public const int star2 = 2130837617;
+			
+			// aapt resource value: 0x7f020072
+			public const int star3 = 2130837618;
+			
+			// aapt resource value: 0x7f020073
+			public const int tooltip_frame_dark = 2130837619;
+			
+			// aapt resource value: 0x7f020074
+			public const int tooltip_frame_light = 2130837620;
+			
+			// aapt resource value: 0x7f020075
+			public const int town = 2130837621;
 			
 			static Drawable()
 			{
@@ -2005,11 +2020,11 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f060025
 			public const int CTRL = 2131099685;
 			
-			// aapt resource value: 0x7f060077
-			public const int CloseButton = 2131099767;
+			// aapt resource value: 0x7f06007e
+			public const int CloseButton = 2131099774;
 			
-			// aapt resource value: 0x7f060076
-			public const int DeleteButton = 2131099766;
+			// aapt resource value: 0x7f06007d
+			public const int DeleteButton = 2131099773;
 			
 			// aapt resource value: 0x7f060026
 			public const int FUNCTION = 2131099686;
@@ -2023,11 +2038,11 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f060029
 			public const int SYM = 2131099689;
 			
-			// aapt resource value: 0x7f06007a
-			public const int Star = 2131099770;
+			// aapt resource value: 0x7f060081
+			public const int Star = 2131099777;
 			
-			// aapt resource value: 0x7f060088
-			public const int action0 = 2131099784;
+			// aapt resource value: 0x7f06008f
+			public const int action0 = 2131099791;
 			
 			// aapt resource value: 0x7f060058
 			public const int action_bar = 2131099736;
@@ -2050,17 +2065,17 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f060036
 			public const int action_bar_title = 2131099702;
 			
-			// aapt resource value: 0x7f060085
-			public const int action_container = 2131099781;
+			// aapt resource value: 0x7f06008c
+			public const int action_container = 2131099788;
 			
 			// aapt resource value: 0x7f060059
 			public const int action_context_bar = 2131099737;
 			
-			// aapt resource value: 0x7f06008c
-			public const int action_divider = 2131099788;
+			// aapt resource value: 0x7f060093
+			public const int action_divider = 2131099795;
 			
-			// aapt resource value: 0x7f060086
-			public const int action_image = 2131099782;
+			// aapt resource value: 0x7f06008d
+			public const int action_image = 2131099789;
 			
 			// aapt resource value: 0x7f060003
 			public const int action_menu_divider = 2131099651;
@@ -2077,11 +2092,11 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f060038
 			public const int action_mode_close_button = 2131099704;
 			
-			// aapt resource value: 0x7f060087
-			public const int action_text = 2131099783;
+			// aapt resource value: 0x7f06008e
+			public const int action_text = 2131099790;
 			
-			// aapt resource value: 0x7f060095
-			public const int actions = 2131099797;
+			// aapt resource value: 0x7f06009c
+			public const int actions = 2131099804;
 			
 			// aapt resource value: 0x7f060039
 			public const int activity_chooser_view_content = 2131099705;
@@ -2098,6 +2113,9 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f060031
 			public const int async = 2131099697;
 			
+			// aapt resource value: 0x7f06006e
+			public const int bank1 = 2131099758;
+			
 			// aapt resource value: 0x7f060021
 			public const int beginning = 2131099681;
 			
@@ -2107,35 +2125,35 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f06002f
 			public const int bottom = 2131099695;
 			
-			// aapt resource value: 0x7f06009b
-			public const int btnAdd = 2131099803;
+			// aapt resource value: 0x7f0600a2
+			public const int btnAdd = 2131099810;
 			
-			// aapt resource value: 0x7f060082
-			public const int btnCalendar = 2131099778;
+			// aapt resource value: 0x7f060089
+			public const int btnCalendar = 2131099785;
 			
-			// aapt resource value: 0x7f06009a
-			public const int btnLoadDataByDateByLast = 2131099802;
+			// aapt resource value: 0x7f0600a1
+			public const int btnLoadDataByDateByLast = 2131099809;
 			
-			// aapt resource value: 0x7f060099
-			public const int btnRefresh = 2131099801;
+			// aapt resource value: 0x7f0600a0
+			public const int btnRefresh = 2131099808;
 			
-			// aapt resource value: 0x7f060075
-			public const int btnSaveFr = 2131099765;
+			// aapt resource value: 0x7f06007c
+			public const int btnSaveFr = 2131099772;
 			
 			// aapt resource value: 0x7f06003f
 			public const int buttonPanel = 2131099711;
 			
-			// aapt resource value: 0x7f060089
-			public const int cancel_action = 2131099785;
+			// aapt resource value: 0x7f060090
+			public const int cancel_action = 2131099792;
 			
 			// aapt resource value: 0x7f06004f
 			public const int checkbox = 2131099727;
 			
-			// aapt resource value: 0x7f06007f
-			public const int chkBox = 2131099775;
+			// aapt resource value: 0x7f060086
+			public const int chkBox = 2131099782;
 			
-			// aapt resource value: 0x7f060091
-			public const int chronometer = 2131099793;
+			// aapt resource value: 0x7f060098
+			public const int chronometer = 2131099800;
 			
 			// aapt resource value: 0x7f06002b
 			public const int collapseActionView = 2131099691;
@@ -2161,17 +2179,20 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f06005a
 			public const int edit_query = 2131099738;
 			
-			// aapt resource value: 0x7f06006e
-			public const int edtDescription = 2131099758;
+			// aapt resource value: 0x7f060075
+			public const int edtDescription = 2131099765;
 			
-			// aapt resource value: 0x7f06006d
-			public const int edtNameFr = 2131099757;
+			// aapt resource value: 0x7f060074
+			public const int edtNameFr = 2131099764;
+			
+			// aapt resource value: 0x7f06006c
+			public const int education1 = 2131099756;
 			
 			// aapt resource value: 0x7f060022
 			public const int end = 2131099682;
 			
-			// aapt resource value: 0x7f060097
-			public const int end_padder = 2131099799;
+			// aapt resource value: 0x7f06009e
+			public const int end_padder = 2131099806;
 			
 			// aapt resource value: 0x7f06003a
 			public const int expand_activities_button = 2131099706;
@@ -2185,26 +2206,29 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f060005
 			public const int home = 2131099653;
 			
+			// aapt resource value: 0x7f060072
+			public const int home1 = 2131099762;
+			
 			// aapt resource value: 0x7f060013
 			public const int homeAsUp = 2131099667;
 			
-			// aapt resource value: 0x7f060068
-			public const int house1 = 2131099752;
+			// aapt resource value: 0x7f06006f
+			public const int house1 = 2131099759;
 			
-			// aapt resource value: 0x7f060069
-			public const int house2 = 2131099753;
-			
-			// aapt resource value: 0x7f06006a
-			public const int house3 = 2131099754;
+			// aapt resource value: 0x7f060071
+			public const int house2 = 2131099761;
 			
 			// aapt resource value: 0x7f06006b
-			public const int house4 = 2131099755;
+			public const int house3 = 2131099755;
+			
+			// aapt resource value: 0x7f06006d
+			public const int house4 = 2131099757;
 			
 			// aapt resource value: 0x7f06003e
 			public const int icon = 2131099710;
 			
-			// aapt resource value: 0x7f060096
-			public const int icon_group = 2131099798;
+			// aapt resource value: 0x7f06009d
+			public const int icon_group = 2131099805;
 			
 			// aapt resource value: 0x7f06002c
 			public const int ifRoom = 2131099692;
@@ -2215,8 +2239,8 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f060067
 			public const int imageClick = 2131099751;
 			
-			// aapt resource value: 0x7f060092
-			public const int info = 2131099794;
+			// aapt resource value: 0x7f060099
+			public const int info = 2131099801;
 			
 			// aapt resource value: 0x7f060034
 			public const int italic = 2131099700;
@@ -2224,8 +2248,8 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f060000
 			public const int item_touch_helper_previous_elevation = 2131099648;
 			
-			// aapt resource value: 0x7f060098
-			public const int linLayout2 = 2131099800;
+			// aapt resource value: 0x7f06009f
+			public const int linLayout2 = 2131099807;
 			
 			// aapt resource value: 0x7f06000a
 			public const int line1 = 2131099658;
@@ -2236,20 +2260,20 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f06000f
 			public const int listMode = 2131099663;
 			
-			// aapt resource value: 0x7f06009c
-			public const int listView = 2131099804;
+			// aapt resource value: 0x7f0600a3
+			public const int listView = 2131099811;
 			
-			// aapt resource value: 0x7f0600ad
-			public const int listViewAch = 2131099821;
+			// aapt resource value: 0x7f0600b1
+			public const int listViewAch = 2131099825;
 			
 			// aapt resource value: 0x7f06003d
 			public const int list_item = 2131099709;
 			
-			// aapt resource value: 0x7f06008b
-			public const int media_actions = 2131099787;
+			// aapt resource value: 0x7f060092
+			public const int media_actions = 2131099794;
 			
-			// aapt resource value: 0x7f0600ae
-			public const int message = 2131099822;
+			// aapt resource value: 0x7f0600b2
+			public const int message = 2131099826;
 			
 			// aapt resource value: 0x7f060023
 			public const int middle = 2131099683;
@@ -2269,32 +2293,32 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f060010
 			public const int normal = 2131099664;
 			
+			// aapt resource value: 0x7f06009b
+			public const int notification_background = 2131099803;
+			
+			// aapt resource value: 0x7f060095
+			public const int notification_main_column = 2131099797;
+			
 			// aapt resource value: 0x7f060094
-			public const int notification_background = 2131099796;
-			
-			// aapt resource value: 0x7f06008e
-			public const int notification_main_column = 2131099790;
-			
-			// aapt resource value: 0x7f06008d
-			public const int notification_main_column_container = 2131099789;
+			public const int notification_main_column_container = 2131099796;
 			
 			// aapt resource value: 0x7f060041
 			public const int parentPanel = 2131099713;
 			
-			// aapt resource value: 0x7f06009f
-			public const int progressBar1 = 2131099807;
+			// aapt resource value: 0x7f060069
+			public const int progressBar1 = 2131099753;
 			
-			// aapt resource value: 0x7f0600a2
-			public const int progressBar2 = 2131099810;
+			// aapt resource value: 0x7f0600a6
+			public const int progressBar2 = 2131099814;
 			
-			// aapt resource value: 0x7f0600a5
-			public const int progressBar3 = 2131099813;
+			// aapt resource value: 0x7f0600a9
+			public const int progressBar3 = 2131099817;
 			
-			// aapt resource value: 0x7f0600a8
-			public const int progressBar4 = 2131099816;
+			// aapt resource value: 0x7f0600ac
+			public const int progressBar4 = 2131099820;
 			
-			// aapt resource value: 0x7f0600ab
-			public const int progressBar5 = 2131099819;
+			// aapt resource value: 0x7f0600af
+			public const int progressBar5 = 2131099823;
 			
 			// aapt resource value: 0x7f060006
 			public const int progress_circular = 2131099654;
@@ -2305,14 +2329,14 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f060051
 			public const int radio = 2131099729;
 			
-			// aapt resource value: 0x7f060093
-			public const int right_icon = 2131099795;
+			// aapt resource value: 0x7f06009a
+			public const int right_icon = 2131099802;
 			
-			// aapt resource value: 0x7f06008f
-			public const int right_side = 2131099791;
+			// aapt resource value: 0x7f060096
+			public const int right_side = 2131099798;
 			
-			// aapt resource value: 0x7f060080
-			public const int sample_main_layout = 2131099776;
+			// aapt resource value: 0x7f060087
+			public const int sample_main_layout = 2131099783;
 			
 			// aapt resource value: 0x7f06001a
 			public const int screen = 2131099674;
@@ -2359,8 +2383,8 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f060066
 			public const int select_dialog_listview = 2131099750;
 			
-			// aapt resource value: 0x7f060081
-			public const int settingsBtn = 2131099777;
+			// aapt resource value: 0x7f060088
+			public const int settingsBtn = 2131099784;
 			
 			// aapt resource value: 0x7f060050
 			public const int shortcut = 2131099728;
@@ -2374,14 +2398,17 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f060017
 			public const int showTitle = 2131099671;
 			
-			// aapt resource value: 0x7f060084
-			public const int sliding_tabs = 2131099780;
+			// aapt resource value: 0x7f06008b
+			public const int sliding_tabs = 2131099787;
 			
 			// aapt resource value: 0x7f060040
 			public const int spacer = 2131099712;
 			
 			// aapt resource value: 0x7f060008
 			public const int split_action_bar = 2131099656;
+			
+			// aapt resource value: 0x7f060070
+			public const int sport1 = 2131099760;
 			
 			// aapt resource value: 0x7f06001b
 			public const int src_atop = 2131099675;
@@ -2392,20 +2419,20 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f06001d
 			public const int src_over = 2131099677;
 			
-			// aapt resource value: 0x7f060072
-			public const int stCategory = 2131099762;
+			// aapt resource value: 0x7f060079
+			public const int stCategory = 2131099769;
 			
-			// aapt resource value: 0x7f06006f
-			public const int stDate = 2131099759;
+			// aapt resource value: 0x7f060076
+			public const int stDate = 2131099766;
 			
-			// aapt resource value: 0x7f060074
-			public const int stPriority = 2131099764;
+			// aapt resource value: 0x7f06007b
+			public const int stPriority = 2131099771;
 			
-			// aapt resource value: 0x7f060070
-			public const int stTime = 2131099760;
+			// aapt resource value: 0x7f060077
+			public const int stTime = 2131099767;
 			
-			// aapt resource value: 0x7f06008a
-			public const int status_bar_latest_event_content = 2131099786;
+			// aapt resource value: 0x7f060091
+			public const int status_bar_latest_event_content = 2131099793;
 			
 			// aapt resource value: 0x7f060052
 			public const int submenuarrow = 2131099730;
@@ -2413,11 +2440,11 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f060063
 			public const int submit_area = 2131099747;
 			
-			// aapt resource value: 0x7f060079
-			public const int tDescription = 2131099769;
+			// aapt resource value: 0x7f060080
+			public const int tDescription = 2131099776;
 			
-			// aapt resource value: 0x7f060078
-			public const int tName = 2131099768;
+			// aapt resource value: 0x7f06007f
+			public const int tName = 2131099775;
 			
 			// aapt resource value: 0x7f060011
 			public const int tabMode = 2131099665;
@@ -2428,11 +2455,11 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f06000d
 			public const int text2 = 2131099661;
 			
-			// aapt resource value: 0x7f060071
-			public const int textCategory = 2131099761;
+			// aapt resource value: 0x7f060078
+			public const int textCategory = 2131099768;
 			
-			// aapt resource value: 0x7f060073
-			public const int textPriority = 2131099763;
+			// aapt resource value: 0x7f06007a
+			public const int textPriority = 2131099770;
 			
 			// aapt resource value: 0x7f060046
 			public const int textSpacerNoButtons = 2131099718;
@@ -2440,23 +2467,23 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f060045
 			public const int textSpacerNoTitle = 2131099717;
 			
-			// aapt resource value: 0x7f06006c
-			public const int textView1 = 2131099756;
+			// aapt resource value: 0x7f060073
+			public const int textView1 = 2131099763;
 			
-			// aapt resource value: 0x7f06007c
-			public const int textView2 = 2131099772;
+			// aapt resource value: 0x7f060083
+			public const int textView2 = 2131099779;
 			
-			// aapt resource value: 0x7f06007d
-			public const int textView3 = 2131099773;
+			// aapt resource value: 0x7f060084
+			public const int textView3 = 2131099780;
 			
-			// aapt resource value: 0x7f06007b
-			public const int textView4 = 2131099771;
+			// aapt resource value: 0x7f060082
+			public const int textView4 = 2131099778;
 			
-			// aapt resource value: 0x7f06007e
-			public const int textView5 = 2131099774;
+			// aapt resource value: 0x7f060085
+			public const int textView5 = 2131099781;
 			
-			// aapt resource value: 0x7f060090
-			public const int time = 2131099792;
+			// aapt resource value: 0x7f060097
+			public const int time = 2131099799;
 			
 			// aapt resource value: 0x7f06000e
 			public const int title = 2131099662;
@@ -2473,35 +2500,35 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f06004a
 			public const int topPanel = 2131099722;
 			
-			// aapt resource value: 0x7f0600a6
-			public const int txtEducation = 2131099814;
+			// aapt resource value: 0x7f0600aa
+			public const int txtEducation = 2131099818;
 			
-			// aapt resource value: 0x7f0600a9
-			public const int txtFinace = 2131099817;
+			// aapt resource value: 0x7f0600ad
+			public const int txtFinace = 2131099821;
 			
-			// aapt resource value: 0x7f0600a0
-			public const int txtMain = 2131099808;
+			// aapt resource value: 0x7f06006a
+			public const int txtMain = 2131099754;
 			
-			// aapt resource value: 0x7f0600ac
-			public const int txtOther = 2131099820;
-			
-			// aapt resource value: 0x7f0600a3
-			public const int txtSport = 2131099811;
-			
-			// aapt resource value: 0x7f06009e
-			public const int txtView1 = 2131099806;
-			
-			// aapt resource value: 0x7f0600a1
-			public const int txtView2 = 2131099809;
-			
-			// aapt resource value: 0x7f0600a4
-			public const int txtView3 = 2131099812;
+			// aapt resource value: 0x7f0600b0
+			public const int txtOther = 2131099824;
 			
 			// aapt resource value: 0x7f0600a7
-			public const int txtView4 = 2131099815;
+			public const int txtSport = 2131099815;
 			
-			// aapt resource value: 0x7f0600aa
-			public const int txtView5 = 2131099818;
+			// aapt resource value: 0x7f060068
+			public const int txtView1 = 2131099752;
+			
+			// aapt resource value: 0x7f0600a5
+			public const int txtView2 = 2131099813;
+			
+			// aapt resource value: 0x7f0600a8
+			public const int txtView3 = 2131099816;
+			
+			// aapt resource value: 0x7f0600ab
+			public const int txtView4 = 2131099819;
+			
+			// aapt resource value: 0x7f0600ae
+			public const int txtView5 = 2131099822;
 			
 			// aapt resource value: 0x7f06001f
 			public const int uniform = 2131099679;
@@ -2512,11 +2539,11 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f060018
 			public const int useLogo = 2131099672;
 			
-			// aapt resource value: 0x7f060083
-			public const int viewPager = 2131099779;
+			// aapt resource value: 0x7f06008a
+			public const int viewPager = 2131099786;
 			
-			// aapt resource value: 0x7f06009d
-			public const int widget = 2131099805;
+			// aapt resource value: 0x7f0600a4
+			public const int widget = 2131099812;
 			
 			// aapt resource value: 0x7f06002e
 			public const int withText = 2131099694;
