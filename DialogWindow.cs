@@ -34,7 +34,7 @@ namespace AndroidSQLite
             return this.id;
         }
         
-        List<Person> lstSource = new List<Person>();
+        List<Task> lstSource = new List<Task>();
         
         DateTime selectedDateDate;
         DateTime selectedDateTime;
@@ -76,7 +76,7 @@ namespace AndroidSQLite
             DataBase.db = DataBase.getDataBase();
 
             DataBase.db.createDataBase();
-            lstSource = new List<Person>();
+            lstSource = new List<Task>();
             currentDate = Calendar.Instance;
 
             //SetActivity()
@@ -209,7 +209,7 @@ namespace AndroidSQLite
             };
 
             buttonDel.Click += delegate {
-                Person person = new Person()
+                Task person = new Task()
                 {
                     Id = selected_Element.Id, 
                     Category = selected_Element.Category,

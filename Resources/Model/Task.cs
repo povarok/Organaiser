@@ -13,7 +13,7 @@ using SQLite;
 
 namespace AndroidSQLite.Resources.Model
 {
-    public class Person
+    public class Task
     {
         [PrimaryKey,AutoIncrement]
         public int Id { get; set; }
