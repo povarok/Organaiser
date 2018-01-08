@@ -19,7 +19,7 @@ using static Android.App.TimePickerDialog;
 
 namespace AndroidSQLite
 {
-    public class DialogFragment1 : Android.Support.V4.App.DialogFragment, IDialogInterfaceOnDismissListener, IOnDateSetListener, IOnTimeSetListener
+    public class DialogWindow : Android.Support.V4.App.DialogFragment, IDialogInterfaceOnDismissListener, IOnDateSetListener, IOnTimeSetListener
     {
 
         public long id;
@@ -35,7 +35,7 @@ namespace AndroidSQLite
         }
         
         List<Person> lstSource = new List<Person>();
-        //DataBase db;
+        
         DateTime selectedDateDate;
         DateTime selectedDateTime;
         Calendar currentDate;
@@ -44,15 +44,13 @@ namespace AndroidSQLite
         // не работает 
         int globalHour = 21;
         int globalMin = 44;
-        public MainActivity _activityByDialogWindow;
+        public MainActivity _activity;
 
         public void SetActivity(MainActivity activity)
         {
-            _activityByDialogWindow = activity;
+            _activity = activity;
         }
-        //Fragment2 ma = new Fragment2();
-        //List<Person> lstSource = new List<Person>();
-        //DataBase db;
+       
 
         public override void OnDismiss(IDialogInterface dialog)
         {
@@ -63,26 +61,10 @@ namespace AndroidSQLite
             
         }
 
-        //private sealed class OnDismissListener : Java.Lang.Object, IDialogInterfaceOnDismissListener
-        //{
-        //    private readonly Action action;
-
-        //    public OnDismissListener(Action action)
-        //    {
-        //        this.action = action;
-        //    }
-
-        //    public void OnDismiss(IDialogInterface dialog)
-        //    {
-        //        this.action();
-        //    }
-        //}
-
-
-
-        public static DialogFragment1 NewInstance(Bundle bundle)
+      
+        public static DialogWindow NewInstance(Bundle bundle)
         {
-            DialogFragment1 fragment = new DialogFragment1();
+            DialogWindow fragment = new DialogWindow();
             fragment.Arguments = bundle;
 
             return fragment;
@@ -238,7 +220,7 @@ namespace AndroidSQLite
                     Priority = selected_Element.Priority  
                };
                 DataBase.db.deleteTablePerson(person);
-                _activityByDialogWindow._fragment2.LoadData();
+                _activity._fragment2.LoadData();
                 Dismiss();
 
 
@@ -304,8 +286,8 @@ namespace AndroidSQLite
                 else
                 {
                     DataBase.db.updateTablePerson(selected_Element);
-                    _activityByDialogWindow._fragment2.LoadData();
-                    _activityByDialogWindow._fragment2.StartAlarm(selectedDateDate.Year, selectedDateDate.Month, selectedDateDate.Day,
+                    _activity._fragment2.LoadData();
+                    _activity._fragment2.StartAlarm(selectedDateDate.Year, selectedDateDate.Month, selectedDateDate.Day,
                         selectedDateTime.Hour, selectedDateTime.Minute, getID);
                     Dismiss();
 

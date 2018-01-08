@@ -33,14 +33,7 @@ namespace AndroidSQLite.BroadCast
             DataBase.db = DataBase.getDataBase();
             var person = DataBase.db.get_Element(intent.GetLongExtra("id", 0));
 
-            //Console.WriteLine(intent.GetLongExtra("id", 228));
-
-            //NullRefEx тут
-            //SetActivity(main);
-
-            //var id = main._dialogFragment1.getId();
-
-            //Console.WriteLine("Полученный ID = " + id);
+            
             string icon;
             if (person[0].Category == "Образоване")
             {

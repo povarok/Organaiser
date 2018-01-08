@@ -39,7 +39,7 @@ namespace AndroidSQLite
         public ListViewAdapter adapter = new ListViewAdapter();
         public ListViewAdapterAchievements achievments_adapter = new ListViewAdapterAchievements();
 
-        public DialogFragment1 _dialogFragment1 = new DialogFragment1();
+        public DialogWindow _dialogFragment1 = new DialogWindow();
 
         Java.Util.Calendar mCurrentDate;
         Bitmap mGenerateDateIcon;
@@ -186,7 +186,8 @@ namespace AndroidSQLite
             return mFragmentHolder[position];
         }
     }
-    
+   
+    //Сортировка по типу задачи
     public class Fragment1 : Android.Support.V4.App.Fragment
     {
         private TextView mTextView;
@@ -241,6 +242,7 @@ namespace AndroidSQLite
             return "CityName";
         }
     }
+    
     //Основной экран
     //Создание, удалени и отображение заметок
     public class Fragment2 : Android.Support.V4.App.Fragment
@@ -305,7 +307,7 @@ namespace AndroidSQLite
                 }
                 ft.AddToBackStack(null);
                 
-                _activity._dialogFragment1 = DialogFragment1.NewInstance(frag_bundle);
+                _activity._dialogFragment1 = DialogWindow.NewInstance(frag_bundle);
                 var act = _activity._dialogFragment1.Activity;
                 //Показываем окно
                 _activity._dialogFragment1.SetActivity(_activity);
@@ -353,7 +355,7 @@ namespace AndroidSQLite
                             ft.Remove(prev);
                         }
                         ft.AddToBackStack(null);                
-                        _activity._dialogFragment1 = DialogFragment1.NewInstance(frag_bundle);
+                        _activity._dialogFragment1 = DialogWindow.NewInstance(frag_bundle);
                         _activity._dialogFragment1.SetActivity(_activity);
                         _activity._dialogFragment1.Show(ft, "dialog");
                        
@@ -448,6 +450,7 @@ namespace AndroidSQLite
 
         }        
     }
+    
     //Достижения пользователя
     public class Fragment3 : Android.Support.V4.App.Fragment
     {
@@ -587,7 +590,7 @@ namespace AndroidSQLite
             //    }
             //    ft.AddToBackStack(null);
             //    // Create and show the dialog.
-            //    DialogFragment1 newFragment = DialogFragment1.NewInstance(null);
+            //    DialogWindow newFragment = DialogWindow.NewInstance(null);
             //    //Add fragment
             //    newFragment.Show(ft, "dialog");
 
