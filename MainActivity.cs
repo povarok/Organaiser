@@ -365,7 +365,7 @@ namespace AndroidSQLite
                 //Заполняем поля данными
                 var txtName = e.View.FindViewById<TextView>(Resource.Id.textView1);
                 var checkedBox = e.View.FindViewById<CheckBox>(Resource.Id.chkBox);
-                var txtDone = e.View.FindViewById<TextView>(Resource.Id.textView5);
+                //var txtDone = e.View.FindViewById<TextView>(Resource.Id.textView5);
                 checkedBox.SetOnCheckedChangeListener(null);
 
             };

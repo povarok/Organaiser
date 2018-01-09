@@ -113,7 +113,7 @@ namespace AndroidSQLite.Resources
             var txtPriority = view.FindViewById<TextView>(Resource.Id.textView2);
             var txtCategory = view.FindViewById<TextView>(Resource.Id.textView3);
             var txtDateTime = view.FindViewById<TextView>(Resource.Id.textView4);
-            var txtDone = view.FindViewById<TextView>(Resource.Id.textView5);
+            //var txtDone = view.FindViewById<TextView>(Resource.Id.textView5);
             var checkBox = view.FindViewById<CheckBox>(Resource.Id.chkBox);
             string getStatus;
             //Ставим пустой слушатель на проверочнуюкоробку
@@ -256,7 +256,7 @@ namespace AndroidSQLite.Resources
             txtPriority.Text ="Приоритет: " + lstPerson[position].Priority;
             txtCategory.Text = "Категория: " + lstPerson[position].Category;
             txtDateTime.Text = lstPerson[position].Time.ToShortTimeString() + ", " + lstPerson[position].Date.ToLongDateString();
-            txtDone.Text = "Статус: " + getStatus;
+            //txtDone.Text = "Статус: " + getStatus;
 
             //_activityByListViewAdapter._fragment2.LoadData();
 
