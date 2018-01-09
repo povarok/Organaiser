@@ -31,35 +31,36 @@ namespace AndroidSQLite.BroadCast
         {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
             DataBase.db = DataBase.getDataBase();
-            var person = DataBase.db.get_Element(intent.GetLongExtra("id", 0));
-
             
-            string icon;
-            if (person[0].Category == "Образоване")
-            {
-                builder.SetSmallIcon(Resource.Drawable.education);
-            }
-            if (person[0].Category == "Финансы")
-            {
-                builder.SetSmallIcon(Resource.Drawable.finance);
-            }
-            if (person[0].Category == "Прочее")
-            {
-                builder.SetSmallIcon(Resource.Drawable.other);
-            }
-            if (person[0].Category == "Спорт")
-            {
-                builder.SetSmallIcon(Resource.Drawable.sport);
-            }
-
-
+            var task = DataBase.db.get_Last();
+            
             builder.SetAutoCancel(true)
                 .SetDefaults((int)NotificationDefaults.All)
                 
-                .SetContentTitle(person[0].Name)
-                .SetContentText(person[0].Description)
+                .SetContentTitle(task.Name)
+                .SetContentText(task.Description)
                 .SetContentInfo("Info");
-            
+            //Console.WriteLine("task[0].Category = " + task.Category);
+            if (task.Category == "Образоване")
+            {
+                builder.SetSmallIcon(Resource.Drawable.education);
+                //Console.WriteLine("Проверяем оповещения" + task.Category + " = Образование");
+            }
+            if (task.Category == "Финансы")
+            {
+                builder.SetSmallIcon(Resource.Drawable.finance);
+                //Console.WriteLine("Проверяем оповещения" + task.Category + " = Финансы");
+            }
+            if (task.Category == "Прочее")
+            {
+                builder.SetSmallIcon(Resource.Drawable.other);
+                //Console.WriteLine("Проверяем оповещения" + task.Category + " = Прочее");
+            }
+            if (task.Category == "Спорт")
+            {
+                builder.SetSmallIcon(Resource.Drawable.sport);
+                //Console.WriteLine("Проверяем оповещения" + task.Category + " = Спорт");
+            }
 
 
             NotificationManager manager = (NotificationManager)context.GetSystemService(Context.NotificationService);

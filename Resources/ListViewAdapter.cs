@@ -231,17 +231,7 @@ namespace AndroidSQLite.Resources
 
 
             };
-            //Не работает
-            //if(checkBox.Checked == false)
-            //{
-            //    lstPerson[position].Done = false;
-                
-            //}
-            //else
-            //{
-            //    lstPerson[position].Done = true;
-            //    Console.WriteLine(lstPerson[position].Name + " 231");
-            //}
+            
 
             if (lstPerson[position].Done == true)
             {
