@@ -245,7 +245,7 @@ namespace AndroidSQLite.Resources
             txtName.Text = lstPerson[position].Name;
             txtPriority.Text ="Приоритет: " + lstPerson[position].Priority;
             txtCategory.Text = "Категория: " + lstPerson[position].Category;
-            txtDateTime.Text = lstPerson[position].Time.ToShortTimeString() + ", " + lstPerson[position].Date.ToLongDateString();
+            txtDateTime.Text = lstPerson[position].Time.ToShortTimeString() + ", " + lstPerson[position].Date.ToShortDateString();
             //txtDone.Text = "Статус: " + getStatus;
 
             //_activityByListViewAdapter._fragment2.LoadData();
