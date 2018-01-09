@@ -485,6 +485,7 @@ namespace AndroidSQLite
                       
             DataBase.db = DataBase.getDataBase();
             DataBase.db.createDataBaseAchivments3();
+            DataBase.db.createDataBaseAchivments();
             var ach = DataBase.db.getAchievments();
             
             //Console.WriteLine("Ach name = "+ach[0].Name + " Exp = " + ach[0].MainExp);
@@ -634,17 +635,45 @@ namespace AndroidSQLite
 
         public void LoadDataByAchevements()
         {
-            
-            var ach = DataBase.db.getAchievments();
+            string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+            var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db"));
+
+            var ach = connection.Query<Achievement1>("SELECT * FROM Achievement1");
+
+
+
+
+
+            // ветка если БД еще не создана
+            if (ach.Count == 0)
+            {
+                Achievement1 achievement = new Achievement1()
+                {
+                    Name = "Достижения",
+                    EducationExp = 0,
+                    MainExp = 0,
+                    FinansiExp = 0,
+                    OtherExp = 0,
+
+
+                };
+                connection.Insert(achievement);
+
+                ach = connection.Query<Achievement1>("SELECT * FROM Achievement1");
+            }
+
+
+
             int newVal = 0;
             //switch??
-            if(ach[0].SportExp > 100)
+            Console.WriteLine("ОШИБКА ach = " + ach.Count);
+            if(ach[0].SportExp > 10)
             {
                  newVal = 1;
-            }else if(ach[0].SportExp > 200)
+            }else if(ach[0].SportExp > 20)
             {
                  newVal = 2;
-            }else if(ach[0].SportExp > 300)
+            }else if(ach[0].SportExp > 30)
             {
                  newVal = 3;
             }
@@ -660,6 +689,7 @@ namespace AndroidSQLite
 
                 //lstAch = DataBase.db.selectTableAchievement3();
                 lstAch.Add(test_achevement1);
+
                 Achievement3 test_achevement2 = new Achievement3()
                 {
                     Name = "test2",
