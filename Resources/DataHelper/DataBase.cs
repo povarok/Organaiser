@@ -120,81 +120,81 @@ namespace AndroidSQLite.Resources.DataHelper
                 }
         }
         //---------------------------------------------------------------------------------------------------
-        //Достижения
-        public bool createDataBaseAchivments()
+        //Опыт
+        public bool createDataBaseExp()
         {
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
-                    connection.CreateTable<Achievement1>();
+                    connection.CreateTable<Exp>();
                     return true;
                 }
         }
-        public List<Achievement1> getAchievments()
+        public List<Exp> getExp()
         {
             using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
             {
-                return connection.Table<Achievement1>().ToList();
+                return connection.Table<Exp>().ToList();
             }
         }
-        public void updateTableAchievements(string Category, long Id)
+        public void updateTableExp(string Category, long Id)
         {
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
                 {
                         if (Category == "Спорт")
                         {
-                            connection.Query<Achievement1>("UPDATE Achievement1 set SportExp = SportExp + 1  Where Name=?", "Достижения");
-                            connection.Query<Achievement1>("UPDATE Achievement1 set MainExp = MainExp + 1  Where Name=?", "Достижения");
+                            connection.Query<Exp>("UPDATE Exp set SportExp = SportExp + 1  Where Name=?", "Достижения");
+                            connection.Query<Exp>("UPDATE Exp set MainExp = MainExp + 1  Where Name=?", "Достижения");
                         }
                         if (Category == "Образоване")
                         {
-                            connection.Query<Achievement1>("UPDATE Achievement1 set EducationExp = EducationExp + 1 Where Name=?", "Достижения");
-                            connection.Query<Achievement1>("UPDATE Achievement1 set MainExp = MainExp + 1  Where Name=?", "Достижения");
+                            connection.Query<Exp>("UPDATE Exp set EducationExp = EducationExp + 1 Where Name=?", "Достижения");
+                            connection.Query<Exp>("UPDATE Exp set MainExp = MainExp + 1  Where Name=?", "Достижения");
                         }
                         if (Category == "Спорт")
                         {
-                            connection.Query<Achievement1>("UPDATE Achievement1 set SportExp = SportExp + 1  Where Name=?", "Достижения");
-                            connection.Query<Achievement1>("UPDATE Achievement1 set MainExp = MainExp + 1  Where Name=?", "Достижения");
+                            connection.Query<Exp>("UPDATE Exp set SportExp = SportExp + 1  Where Name=?", "Достижения");
+                            connection.Query<Exp>("UPDATE Exp set MainExp = MainExp + 1  Where Name=?", "Достижения");
                         }
                         if (Category == "Финансы")
                         {
-                            connection.Query<Achievement1>("UPDATE Achievement1 set FinansiExp = FinansiExp  + 1 Where Name=?", "Достижения");
-                            connection.Query<Achievement1>("UPDATE Achievement1 set MainExp = MainExp + 1  Where Name=?", "Достижения");
+                            connection.Query<Exp>("UPDATE Exp set FinansiExp = FinansiExp  + 1 Where Name=?", "Достижения");
+                            connection.Query<Exp>("UPDATE Exp set MainExp = MainExp + 1  Where Name=?", "Достижения");
                         }
                         if (Category == "Прочее")
                         {
-                            connection.Query<Achievement1>("UPDATE Achievement1 set OtherExp = OtherExp + 1 Where Name=?", "Достижения");
-                            connection.Query<Achievement1>("UPDATE Achievement1 set MainExp = MainExp + 1 Where Name=?", "Достижения");
+                            connection.Query<Exp>("UPDATE Exp set OtherExp = OtherExp + 1 Where Name=?", "Достижения");
+                            connection.Query<Exp>("UPDATE Exp set MainExp = MainExp + 1 Where Name=?", "Достижения");
                         }
 
                 }
         }
 
         // ---------------------------------------------------------------------------------------------
-        // Достижения3
-        public bool createDataBaseAchivments3()
+        // Ачивки
+        public bool createDataBaseAchivment()
         {   
             using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
             {
-                connection.CreateTable<Achievement3>();
+                connection.CreateTable<Achievement>();
                 return true;
             }
         }
 
-        public bool insertIntoTableAchievement3(Achievement3 achievement3)
+        public bool insertIntoTableAchievement(Achievement achievement)
         { 
             using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
             {
-                connection.Insert(achievement3);
+                connection.Insert(achievement);
                 return true;
             }
         }
 
-        public List<Achievement3> selectTableAchievement3()
+        public List<Achievement> selectTableAchievement()
         {
             using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db")))
             {
-                var a = connection.Table<Achievement3>().ToList();
-                return connection.Table<Achievement3>().ToList();
+                var a = connection.Table<Achievement>().ToList();
+                return connection.Table<Achievement>().ToList();
 
             }
         }

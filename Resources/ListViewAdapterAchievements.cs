@@ -37,14 +37,13 @@ namespace AndroidSQLite.Resources
         {
             _activityByListViewAdapter = activity;
         }
-        //DataBase db;
 
         public void SetFrActivity(Android.Support.V4.App.Fragment FrActivity)
         {
             this.activity = FrActivity;
         }
 
-        public void SetList(List<Achievement3> lstAch)
+        public void SetList(List<Achievement> lstAch)
         {
             this.lstAch = lstAch;
         }
@@ -52,14 +51,7 @@ namespace AndroidSQLite.Resources
 
 
         private Android.Support.V4.App.Fragment activity;
-        private List<Achievement3> lstAch;
-
-
-        //public ListViewAdapter(Android.Support.V4.App.Fragment activity, List<Person> lstPerson)
-        //{
-        //    this.activity = activity;
-        //    this.lstPerson = lstPerson;
-        //}
+        private List<Achievement> lstAch;
 
         public override int Count
         {
@@ -73,42 +65,23 @@ namespace AndroidSQLite.Resources
         {
             return null;
         }
-        //Возможно удалить
-        //public override long GetItemId(int position)
-        //{
-        //    return lstAch[position].Id;
-        //}
-        //public bool OnTouch(View view, MotionEvent motionEvent)
-        //{
-        //    if (motionEvent.Action == MotionEventActions.Down)
-        //    {
-
-        //        return true;
-        //    }
-        //    return false;
-        //}
-
 
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
 
             DataBase.db = DataBase.getDataBase();
-            DataBase.db.createDataBaseAchivments();   
-            DataBase.db.createDataBaseAchivments3();
+            DataBase.db.createDataBaseExp();   
+            DataBase.db.createDataBaseAchivment();
             string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             Log.Info("DB_PATH", folder);
 
 
             var view = convertView ?? activity.LayoutInflater.Inflate(Resource.Layout.list_view_achTemplate, parent, false);
 
-            //    public TextView Name { get; set; }
-            //public TextView Description { get; set; }
-            //public TextView Type { get; set; }
-            //public ImageView Stars { get; set; }
-
             var Name = view.FindViewById<TextView>(Resource.Id.tName);
             var Description = view.FindViewById<TextView>(Resource.Id.tDescription);
             var Star = view.FindViewById<ImageView>(Resource.Id.Star);
+            //Ставим нужное количество звезд за опыт пользователя
             if (lstAch[position].Stars == 0)
             {
                 Star.SetImageResource(Resource.Drawable.star0);
@@ -129,9 +102,6 @@ namespace AndroidSQLite.Resources
 
             Name.Text = lstAch[position].Name;
             Description.Text = lstAch[position].Description;
-            
-            
-
 
             return view;
         }
@@ -140,27 +110,5 @@ namespace AndroidSQLite.Resources
         {
             return 0;
         }
-
-        //public class CheckedChangeListener : Java.Lang.Object, CompoundButton.IOnCheckedChangeListener
-        //{
-        //    //private Activity activity;
-        //    private Android.Support.V4.App.Fragment activity;
-
-        //    public CheckedChangeListener(Android.Support.V4.App.Fragment activity)
-        //    {
-        //        this.activity = activity;
-        //    }
-
-        //    public void OnCheckedChanged(CompoundButton buttonView, bool isChecked)
-        //    {
-
-        //        if (isChecked)
-        //        {
-
-        //            Console.WriteLine("CheckedListiner");
-        //            //Toast.MakeText(this.activity, "Checked Listiner", ToastLength.Short).Show();
-        //        }
-        //    }
-        //}
     }
 }

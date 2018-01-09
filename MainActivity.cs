@@ -60,7 +60,7 @@ namespace AndroidSQLite
             mGenerateDateIcon = mGeneratorImage.GenerateDateImage(mCurrentDate, Resource.Drawable.EmptyCalendar);
             calendarDate = new DateTime(year, month+1, dayOfMonth, 1, 1, 1);
             mViewPager.SetCurrentItem(1, true);
-            _fragment2.LoadDataByDate(calendarDate);
+            _fragment2.SortByDate(calendarDate);
 
         }
 
@@ -122,7 +122,7 @@ namespace AndroidSQLite
             //Получаем экземпляр бд
             DataBase.db = DataBase.getDataBase();
             DataBase.db.createDataBase();
-            DataBase.db.createDataBaseAchivments();
+            DataBase.db.createDataBaseExp();
             string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             Log.Info("DB_PATH", folder);
 
@@ -209,24 +209,28 @@ namespace AndroidSQLite
             var house2 = view.FindViewById<LinearLayout>(Resource.Id.house2);
             var house3 = view.FindViewById<LinearLayout>(Resource.Id.house3);
             var house4 = view.FindViewById<LinearLayout>(Resource.Id.house4);
+            //Сортировка по категории спорт
             house1.Click += delegate
             {
                 Console.WriteLine("H1 clicked");
                 _activity.mViewPager.SetCurrentItem(1, true);
                 _activity._fragment2.SortCategory("Спорт");
             };
+            //Прочее
             house2.Click += delegate
             {
                 Console.WriteLine("H2 clicked");
                 _activity.mViewPager.SetCurrentItem(1, true);
                 _activity._fragment2.SortCategory("Прочее");
             };
+            //Образование
             house3.Click += delegate
             {
                 Console.WriteLine("H3 clicked");
                 _activity.mViewPager.SetCurrentItem(1, true);
                 _activity._fragment2.SortCategory("Образоване");
             };
+            //Финансы
             house4.Click += delegate
             {
                 Console.WriteLine("H4 clicked");
@@ -251,7 +255,7 @@ namespace AndroidSQLite
         public List<Resources.Model.Task> lstSource = new List<Resources.Model.Task>();
         private EditText mTxt;
         public MainActivity _activity;
-
+        
         public void SetActivity(MainActivity activity)
         {
             _activity = activity;
@@ -268,6 +272,9 @@ namespace AndroidSQLite
             long elementId;
             var view = inflater.Inflate(Resource.Layout.SecondFragmentLayout, container, false);
             lstData = view.FindViewById<ListView>(Resource.Id.listView);
+            //Задаем текст для пустого списка
+            var emptyView = inflater.Inflate(Resource.Layout.emptyList, container, false);
+            lstData.EmptyView = emptyView.FindViewById<TextView>(Resource.Id.empty);
 
             var btnAdd = view.FindViewById<FloatingActionButton>(Resource.Id.btnAdd);
             var btnRefresh = view.FindViewById<Button>(Resource.Id.btnRefresh);
@@ -325,7 +332,7 @@ namespace AndroidSQLite
             {
                 var Last = DataBase.db.get_Last();
                 Console.WriteLine("Last = " + Last.Id);
-                LoadDataByDate(Last.Date);
+                SortByDate(Last.Date);
 
             };
             //Просмотр/ редактирование существующей задачи
@@ -369,7 +376,30 @@ namespace AndroidSQLite
                 checkedBox.SetOnCheckedChangeListener(null);
 
             };
-
+            //Удержание на элементе
+            lstData.ItemLongClick += (s, e) =>
+            {
+                for (int i = 0; i < lstData.Count; i++)
+                {
+                    if (e.Position == i)
+                    {
+                        var selected_Element = DataBase.db.get_Element(lstData.Adapter.GetItemId(e.Position))[0];
+                        Resources.Model.Task task = new Resources.Model.Task()
+                        {
+                            Id = selected_Element.Id,
+                            Category = selected_Element.Category,
+                            Date = selected_Element.Date,
+                            Description = selected_Element.Description,
+                            Done = selected_Element.Done,
+                            Name = selected_Element.Name,
+                            Priority = selected_Element.Priority
+                        };
+                        DataBase.db.deleteTablePerson(task);
+                        _activity._fragment2.LoadData();
+                        Toast.MakeText(_activity, "Задача удалена", ToastLength.Long).Show();
+                    }
+                }
+            };
             return view;
         }
 
@@ -409,7 +439,7 @@ namespace AndroidSQLite
         }
 
         //Сортировка по дате
-        public void LoadDataByDate(DateTime date)
+        public void SortByDate(DateTime date)
         {     
             lstSource = DataBase.db.selectTablePerson();          
             var lstSource2 = new List<Resources.Model.Task>();
@@ -428,7 +458,7 @@ namespace AndroidSQLite
             this.lstData.Adapter = _activity.adapter;
         }
 
-        //Передать по категории
+        //Сортировать по категории
         public void SortCategory(string _category)
         {
             lstSource = DataBase.db.selectTablePerson();
@@ -454,7 +484,7 @@ namespace AndroidSQLite
     public class Fragment3 : Android.Support.V4.App.Fragment
     {
         ListView lstDataAch;
-        public List<Achievement3> lstAch = new List<Achievement3>();
+        public List<Achievement> lstAch = new List<Achievement>();
         //DataBase db;
 
         ProgressBar progressMain;
@@ -484,9 +514,9 @@ namespace AndroidSQLite
         {
                       
             DataBase.db = DataBase.getDataBase();
-            DataBase.db.createDataBaseAchivments3();
-            DataBase.db.createDataBaseAchivments();
-            var ach = DataBase.db.getAchievments();
+            DataBase.db.createDataBaseAchivment();
+            DataBase.db.createDataBaseExp();
+            var ach = DataBase.db.getExp();
             
             //Console.WriteLine("Ach name = "+ach[0].Name + " Exp = " + ach[0].MainExp);
             var view = inflater.Inflate(Resource.Layout.ThirdFragmentLayout, container, false);
@@ -543,12 +573,7 @@ namespace AndroidSQLite
 
                 if (ach[0].OtherExp <= 100) txtOther.Text = (ach[0].OtherExp % 100).ToString() + " / 100";
                 else txtOther.Text = (ach[0].OtherExp).ToString() + " / " + ((1 + ach[0].OtherExp / 100) * 100).ToString();
-
-                //txtSport.Text = (ach[0].MainExp / 100).ToString() ;
-                //txtEducation.Text = (ach[0].MainExp / 100).ToString();
-                //txtFinance.Text = (ach[0].MainExp / 100).ToString();
-                //txtOther.Text = (ach[0].MainExp / 100).ToString();
-
+                     
                 progressMain.Progress = (ach[0].MainExp % 100);
                 progressSport.Progress = (ach[0].SportExp % 100);
                 progressEducation.Progress = (ach[0].EducationExp % 100);
@@ -557,45 +582,7 @@ namespace AndroidSQLite
 
             }
 
-            //refreshBtn.Click += delegate
-            //{
-
-            //    ach = DataBase.db.getAchievments();
-            //    i++;
-            //    consos.Text ="Обновлено " + i + "раз\n" + ach[0].Name + "\n MainExp = " + ach[0].MainExp + "\n OtherExp = " + ach[0].OtherExp +
-            //        "\n SportExp = " + ach[0].SportExp + "\n Finansi Exp = " + ach[0].FinansiExp + "\n EducationExp = " + ach[0].EducationExp;
-            //    progressMainByString = ach[0].MainExp / 100;
-            //    progressSportByString = ach[0].MainExp / 100;
-            //    progressEducationByString = ach[0].MainExp / 100;
-            //    progressFinanceByString = ach[0].MainExp / 100;
-            //    progressOtherByString = ach[0].MainExp / 100;
-
-
-            //    progressMain.Progress = ach[0].MainExp % 100;
-            //    progressSport.Progress = ach[0].SportExp % 100;
-            //    progressEducation.Progress = ach[0].EducationExp % 100;
-            //    progressFinance.Progress = ach[0].FinansiExp % 100;
-            //    progressOther.Progress = ach[0].OtherExp % 100;
-            //};
-            //mButton = view.FindViewById<Button>(Resource.Id.btncheeee);
-            //mButton.Click += delegate
-            //{
-
-            //    Android.Support.V4.App.FragmentTransaction ft = FragmentManager.BeginTransaction();
-            //    //Remove fragment else it will crash as it is already added to backstack
-            //    Android.Support.V4.App.Fragment prev = FragmentManager.FindFragmentByTag("dialog");
-            //    if (prev != null)
-            //    {
-            //        ft.Remove(prev);
-            //    }
-            //    ft.AddToBackStack(null);
-            //    // Create and show the dialog.
-            //    DialogWindow newFragment = DialogWindow.NewInstance(null);
-            //    //Add fragment
-            //    newFragment.Show(ft, "dialog");
-
-            //};
-            LoadDataByAchevements();
+            LoadAchevementsData();
             return view;
         }
 
@@ -604,9 +591,9 @@ namespace AndroidSQLite
             return "Achievements";
         }
 
-        public void LoadDataByDateByFragment3()
+        public void LoadExpData()
         {
-            var ach = DataBase.db.getAchievments();
+            var ach = DataBase.db.getExp();
             if (ach.Count != 0)
             {
                 if (ach[0].MainExp <= 100) txtMain.Text = (ach[0].MainExp % 100).ToString() + " / 100";
@@ -633,21 +620,17 @@ namespace AndroidSQLite
             Console.WriteLine("Ach count = "+ach.Count);
         }
 
-        public void LoadDataByAchevements()
+        public void LoadAchevementsData()
         {
             string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db"));
 
-            var ach = connection.Query<Achievement1>("SELECT * FROM Achievement1");
-
-
-
-
-
+            var ach = connection.Query<Exp>("SELECT * FROM Exp");
+            
             // ветка если БД еще не создана
             if (ach.Count == 0)
             {
-                Achievement1 achievement = new Achievement1()
+                Exp achievement = new Exp()
                 {
                     Name = "Достижения",
                     EducationExp = 0,
@@ -659,38 +642,27 @@ namespace AndroidSQLite
                 };
                 connection.Insert(achievement);
 
-                ach = connection.Query<Achievement1>("SELECT * FROM Achievement1");
+                ach = connection.Query<Exp>("SELECT * FROM Exp");
             }
 
-
-
-            int newVal = 0;
-            //switch??
-            Console.WriteLine("ОШИБКА ach = " + ach.Count);
-            if(ach[0].SportExp > 10)
-            {
-                 newVal = 1;
-            }else if(ach[0].SportExp > 20)
-            {
-                 newVal = 2;
-            }else if(ach[0].SportExp > 30)
-            {
-                 newVal = 3;
-            }
+            int numberOfStars = 0;
+            if(ach[0].SportExp > 10) {numberOfStars = 1;}
+            else if(ach[0].SportExp > 20) {numberOfStars = 2;}
+            else if(ach[0].SportExp > 30) {numberOfStars = 3;}
             if (created == false)
             {
-                Achievement3 test_achevement1 = new Achievement3()
+                Achievement test_achevement1 = new Achievement()
                 {
                     Name = "Спорт",
                     Description = "Выполните 10 заданий в категории спорт",
                     Type = "sport",
-                    Stars = newVal
+                    Stars = numberOfStars
                 };
 
                 //lstAch = DataBase.db.selectTableAchievement3();
                 lstAch.Add(test_achevement1);
 
-                Achievement3 test_achevement2 = new Achievement3()
+                Achievement test_achevement2 = new Achievement()
                 {
                     Name = "test2",
                     Description = "test",

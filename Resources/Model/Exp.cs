@@ -9,18 +9,17 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using SQLite;
 
 namespace AndroidSQLite.Resources.Model
 {
-    public class Achievement3
+    public class Exp
     {
-        //[PrimaryKey, AutoIncrement]
-        //public int Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
-        public string Type { get; set; }
-        public int Stars { get; set; }
-        
+        public int MainExp { get; set; }
+        public int SportExp { get; set; }
+        public int OtherExp { get; set; }
+        public int EducationExp { get; set; }
+        public int FinansiExp { get; set; }
+       
     }
 }

@@ -124,9 +124,9 @@
     <Compile Include="Resources\DataHelper\DataBase.cs" />
     <Compile Include="Resources\ListViewAdapterAchievements.cs" />
     <Compile Include="Resources\ListViewAdapter.cs" />
-    <Compile Include="Resources\Model\Achievement1.cs" />
+    <Compile Include="Resources\Model\Exp.cs" />
     <Compile Include="Resources\Model\BannedId.cs" />
-    <Compile Include="Resources\Model\Achievement3.cs" />
+    <Compile Include="Resources\Model\Achievement.cs" />
     <Compile Include="Resources\Model\Task.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -157,6 +157,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\list_view_achTemplate.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\emptyList.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

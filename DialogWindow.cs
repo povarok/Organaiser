@@ -160,34 +160,15 @@ namespace AndroidSQLite
                 setPriority.SetSelection(2);
             }
 
-
-
-
-
-
-            //else
-            //{
-
-            //    //editName.Text = "";
-            //    //editAge.Text = "";
-            //    //editDescription.Text = "";
-
-
-            //}
-
-
             //Обработка выбора элемента из выпадающего списка
             setCategory.ItemSelected += (s, e) =>
             {
-                //Пока что вывод в консоль
-                Console.WriteLine("Выбрана категория: " + e.Parent.GetItemAtPosition(e.Position).ToString());
+               
             };
 
             setPriority.ItemSelected += (s, e) =>
             {
-                //Пока что вывод в консоль
-                Console.WriteLine("Выбран приоритет: " + e.Parent.GetItemAtPosition(e.Position).ToString());
-
+                
             };
 
             setTime.Click += delegate
@@ -209,7 +190,7 @@ namespace AndroidSQLite
             };
 
             buttonDel.Click += delegate {
-                Task person = new Task()
+                Task task = new Task()
                 {
                     Id = selected_Element.Id, 
                     Category = selected_Element.Category,
@@ -219,7 +200,7 @@ namespace AndroidSQLite
                     Name = selected_Element.Name,
                     Priority = selected_Element.Priority  
                };
-                DataBase.db.deleteTablePerson(person);
+                DataBase.db.deleteTablePerson(task);
                 _activity._fragment2.LoadData();
                 Dismiss();
 
