@@ -11,13 +11,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView1" />
     <EditText
-        android:hint="Enter your Name"
+        android:hint="Введите задачу"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/edtNameFr" />
-    
     <EditText
-        android:hint="Enter Description"
+        android:hint="Введите описание"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/edtDescription" />
@@ -31,7 +30,7 @@
         android:focusableInTouchMode="false"
         android:gravity="center_horizontal"
         android:id="@+id/stDate" />
-   <EditText
+    <EditText
         android:hint="Set Time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,7 +40,6 @@
         android:focusableInTouchMode="false"
         android:gravity="center_horizontal"
         android:id="@+id/stTime" />
-  
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -74,13 +72,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/stPriority" />
     </LinearLayout>
-<!--<TextView
-        android:text=""
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView2"
-        android:layout_marginTop="10dp" />-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -89,16 +80,16 @@
             android:id="@+id/btnSaveFr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Edit"
+            android:text="Сохранить"
             android:layout_marginTop="10dp" />
-      <Button
-            android:text="Delete"
+        <Button
+            android:text="Удалить"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/DeleteButton"
             android:layout_marginTop="10dp" />
         <Button
-            android:text="Close"
+            android:text="Закрыть"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/CloseButton"

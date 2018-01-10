@@ -9,12 +9,7 @@
         android:orientation="horizontal"
         android:layout_marginTop="10sp"
         android:layout_marginLeft="10sp">
-    <!--<Button
-            android:id="@+id/btnAdd"
-            android:text="новая задача"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp" />-->
+
         <Button
             android:id="@+id/btnRefresh"
             android:text="сброс"
@@ -23,24 +18,10 @@
         <Button
             android:id="@+id/btnLoadDataByDateByLast"
             android:text="last"
+            android:visibility="invisible"
             android:layout_width="wrap_content"
             android:layout_height="44sp" />
     </LinearLayout>
-    <!--<TextView
-        android:text="Заданий нет"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:paddingLeft="50dp"
-        android:paddingTop="80dp"
-        android:id="@+id/textView1" />-->
-<!--<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:minWidth="25px"
-        android:minHeight="25px" />-->
-<!-- Это кнопка добавления новой задачи-->
     <Refractored.Fab.FloatingActionButton
         android:clickable="true"
         android:id="@+id/btnAdd"
@@ -59,10 +40,4 @@
         android:layout_marginBottom="71sp"
         android:id="@+id/listView"
         android:layout_below="@+id/linLayout2" />
-<!--<LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:minWidth="25px"
-        android:minHeight="25px" />-->
 </RelativeLayout>

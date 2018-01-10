@@ -243,7 +243,7 @@ namespace AndroidSQLite
 
         public override string ToString() //Called on line 156 in SlidingTabScrollView
         {
-            return "CityName";
+            return "Город";
         }
     }
     
@@ -405,7 +405,7 @@ namespace AndroidSQLite
 
         public override string ToString() //Called on line 156 in SlidingTabScrollView
         {
-            return "To Do List";
+            return "Задачи";
         }
         //Устанавливаем напоминание о задаче
         public void StartAlarm(int Year, int Month, int Day, int Hour, int Minute, long id)
@@ -588,7 +588,7 @@ namespace AndroidSQLite
 
         public override string ToString() //Called on line 156 in SlidingTabScrollView
         {
-            return "Achievements";
+            return "Достижения";
         }
 
         public void LoadExpData()
