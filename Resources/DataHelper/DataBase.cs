@@ -150,11 +150,6 @@ namespace AndroidSQLite.Resources.DataHelper
                             connection.Query<Exp>("UPDATE Exp set EducationExp = EducationExp + 1 Where Name=?", "Достижения");
                             connection.Query<Exp>("UPDATE Exp set MainExp = MainExp + 1  Where Name=?", "Достижения");
                         }
-                        if (Category == "Спорт")
-                        {
-                            connection.Query<Exp>("UPDATE Exp set SportExp = SportExp + 1  Where Name=?", "Достижения");
-                            connection.Query<Exp>("UPDATE Exp set MainExp = MainExp + 1  Where Name=?", "Достижения");
-                        }
                         if (Category == "Финансы")
                         {
                             connection.Query<Exp>("UPDATE Exp set FinansiExp = FinansiExp  + 1 Where Name=?", "Достижения");
