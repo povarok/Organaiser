@@ -109,7 +109,7 @@ namespace AndroidSQLite.Resources
                     lstPerson[position].Done = true;
                     Console.WriteLine("Name from list"+lstPerson[position].Name);
                     selected_Element.Done = true;
-                    DataBase.db.updateTablePerson(selected_Element);
+                    DataBase.db.updateTableTask(selected_Element);
 
                     var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db"));
 
@@ -173,7 +173,7 @@ namespace AndroidSQLite.Resources
                     selected_Element.Done = false;
                     var t = System.Threading.Tasks.Task.Factory.StartNew(() =>
                     {
-                        DataBase.db.updateTablePerson(selected_Element);
+                        DataBase.db.updateTableTask(selected_Element);
                     });
                     t.Wait();
                     t.Dispose();

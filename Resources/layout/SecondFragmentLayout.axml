@@ -16,9 +16,8 @@
             android:layout_width="wrap_content"
             android:layout_height="44sp" />
         <Button
-            android:id="@+id/btnLoadDataByDateByLast"
-            android:text="last"
-            android:visibility="invisible"
+            android:id="@+id/btnDeleteAll"
+            android:text="Удалить выполненные"
             android:layout_width="wrap_content"
             android:layout_height="44sp" />
     </LinearLayout>

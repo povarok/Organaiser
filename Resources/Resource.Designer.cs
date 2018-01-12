@@ -2132,7 +2132,7 @@ namespace AndroidSQLite
 			public const int btnCalendar = 2131099782;
 			
 			// aapt resource value: 0x7f06009e
-			public const int btnLoadDataByDateByLast = 2131099806;
+			public const int btnDeleteAll = 2131099806;
 			
 			// aapt resource value: 0x7f06009d
 			public const int btnRefresh = 2131099805;

@@ -117,7 +117,10 @@ namespace AndroidSQLite
             
             var selected_Element = DataBase.db.get_Element(getID)[0];
 
+
             Console.WriteLine("Выбран " + selected_Element.Id + " ый эл-т");
+            Console.WriteLine("дата выбранного элемента" + selected_Element.Date);
+            Console.WriteLine("время выбранного элемента" + selected_Element.Time);
             //Console.WriteLine("Name - " + selected_Element.Name);
             //Console.WriteLine("Date - " + selected_Element.Date.ToLongDateString());
             //Console.WriteLine("Time - " + selected_Element.Time.ToLongTimeString());
@@ -200,7 +203,7 @@ namespace AndroidSQLite
                     Name = selected_Element.Name,
                     Priority = selected_Element.Priority  
                };
-                DataBase.db.deleteTablePerson(task);
+                DataBase.db.deleteTableTask(task);
                 _activity._fragment2.LoadData();
                 Dismiss();
 
@@ -266,7 +269,7 @@ namespace AndroidSQLite
                 }
                 else
                 {
-                    DataBase.db.updateTablePerson(selected_Element);
+                    DataBase.db.updateTableTask(selected_Element);
                     _activity._fragment2.LoadData();
                     _activity._fragment2.StartAlarm(selectedDateDate.Year, selectedDateDate.Month, selectedDateDate.Day,
                         selectedDateTime.Hour, selectedDateTime.Minute, getID);
@@ -292,7 +295,7 @@ namespace AndroidSQLite
                 if (selected_Element.Name == "" || selected_Element.Name == "Null")
                 {
                     Toast.MakeText(Activity, "Отмена создания", ToastLength.Short).Show();
-                    DataBase.db.deleteTablePerson(selected_Element);
+                    DataBase.db.deleteTableTask(selected_Element);
                     Dismiss();
 
                 }
@@ -323,7 +326,7 @@ namespace AndroidSQLite
         public void OnDateSet(DatePicker view, int year, int month, int dayOfMonth)
         {
             Toast.MakeText(this.Context, $"{dayOfMonth}-{month + 1}-{year}", ToastLength.Long).Show();
-            selectedDateDate = new DateTime(year, month, dayOfMonth ,0, 0, 0);
+            selectedDateDate = new DateTime(year, month+1, dayOfMonth ,0, 0, 0);
             setDateTime.Text = selectedDateDate.Day.ToString()  + "/" + selectedDateDate.Month.ToString() + "/" + selectedDateDate.Date.Year.ToString();
             //setTime.Text = globalHour.ToString() + " : " + globalMin.ToString();
 
@@ -345,7 +348,7 @@ namespace AndroidSQLite
         //Найти метод onResume или че нибудь такое... И в него запилить Loaddata 
         //private void LoadData()
         //{
-        //    lstSource = db.selectTablePerson();
+        //    lstSource = db.selectTableTask();
         //    var adapter = new ListViewAdapter(, lstSource);
         //    lstData.Adapter = adapter;
         //}

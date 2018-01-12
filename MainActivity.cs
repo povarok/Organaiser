@@ -58,7 +58,7 @@ namespace AndroidSQLite
             Toast.MakeText(this, $"{dayOfMonth}-{month + 1}-{year}", ToastLength.Long).Show();
             mCurrentDate.Set(year, month, dayOfMonth);
             mGenerateDateIcon = mGeneratorImage.GenerateDateImage(mCurrentDate, Resource.Drawable.EmptyCalendar);
-            calendarDate = new DateTime(year, month+1, dayOfMonth, 1, 1, 1);
+            calendarDate = new DateTime(year, month+1, dayOfMonth, 0, 0, 0);
             mViewPager.SetCurrentItem(1, true);
             _fragment2.SortByDate(calendarDate);
 
@@ -278,18 +278,21 @@ namespace AndroidSQLite
 
             var btnAdd = view.FindViewById<FloatingActionButton>(Resource.Id.btnAdd);
             var btnRefresh = view.FindViewById<Button>(Resource.Id.btnRefresh);
-            var btnLoadDataByDateByLast = view.FindViewById<Button>(Resource.Id.btnLoadDataByDateByLast);
+            var btnDeleteAll = view.FindViewById<Button>(Resource.Id.btnDeleteAll);
             //Загружаем данные из бд и обновляем список задач
             LoadData();
             //Добавить новую задачу
             btnAdd.Click += delegate
             {
                 //Создаем пустую запись в бд
+                
+
                 Resources.Model.Task task = new Resources.Model.Task()
                 {
+                
                     Name = "",
-                    Date = DateTime.Now,
-                    Time = DateTime.Now, 
+                    Date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day),
+                    Time = new DateTime(1, 1, 1, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second), 
                     Description = "", 
                     Category = "Спорт", 
                     Priority = "0", 
@@ -297,7 +300,7 @@ namespace AndroidSQLite
                 };
                 var t = System.Threading.Tasks.Task.Factory.StartNew(() =>
                 {
-                    DataBase.db.insertIntoTablePerson(task);
+                    DataBase.db.insertIntoTableTask(task);
                 });
                 t.Wait();
                 t.Dispose();
@@ -327,13 +330,27 @@ namespace AndroidSQLite
                 LoadData();
             };
 
-            // Эта кнопка берет последний элемент из БД и выводит на экран
-            btnLoadDataByDateByLast.Click += delegate
+            // Эта кнопка удаляет все выполненные задачи
+            btnDeleteAll.Click += delegate
             {
-                var Last = DataBase.db.get_Last();
-                Console.WriteLine("Last = " + Last.Id);
-                SortByDate(Last.Date);
+                Android.App.AlertDialog.Builder delDoneDialog = new Android.App.AlertDialog.Builder(_activity);
+                delDoneDialog.SetTitle("Удалить все выполненные задачи");
+                delDoneDialog.SetMessage("Вы уверены?");
+                delDoneDialog.SetPositiveButton("Да", (senderAlert, args) =>
+                {
+                    DataBase.db.delAllDoneTask();
+                    _activity._fragment2.LoadData();
+                });
+                delDoneDialog.SetNegativeButton("Нет", (senderAlert, args) =>
+                {
+                    return;
+                });
+                Dialog dialog = delDoneDialog.Create();
+                dialog.Show();
 
+                //delDoneWindow.Show;
+                
+               
             };
             //Просмотр/ редактирование существующей задачи
             lstData.ItemClick += (s, e) => {
@@ -346,6 +363,7 @@ namespace AndroidSQLite
                         var t = System.Threading.Tasks.Task.Factory.StartNew(() =>
                         {
                             elementId = DataBase.db.selectQuery(lstData.Adapter.GetItemId(e.Position));
+                            
                             return elementId;
                         });
                         t.Wait();
@@ -355,6 +373,7 @@ namespace AndroidSQLite
                         Android.Support.V4.App.Fragment prev = FragmentManager.FindFragmentByTag("dialog");
                         Bundle frag_bundle = new Bundle();
                         frag_bundle.PutLong("Id", t.Result);
+                        
                         t.Dispose();
 
                         if (prev != null)
@@ -379,26 +398,29 @@ namespace AndroidSQLite
             //Удержание на элементе
             lstData.ItemLongClick += (s, e) =>
             {
-                for (int i = 0; i < lstData.Count; i++)
+                Android.App.AlertDialog.Builder delDialog = new Android.App.AlertDialog.Builder(_activity);
+                delDialog.SetTitle("Удалить задачу");
+                delDialog.SetMessage("Вы уверены?");
+                delDialog.SetPositiveButton("Да", (senderAlert, args) =>
                 {
-                    if (e.Position == i)
+
+                    for (int i = 0; i < lstData.Count; i++)
                     {
-                        var selected_Element = DataBase.db.get_Element(lstData.Adapter.GetItemId(e.Position))[0];
-                        Resources.Model.Task task = new Resources.Model.Task()
+                        if (e.Position == i)
                         {
-                            Id = selected_Element.Id,
-                            Category = selected_Element.Category,
-                            Date = selected_Element.Date,
-                            Description = selected_Element.Description,
-                            Done = selected_Element.Done,
-                            Name = selected_Element.Name,
-                            Priority = selected_Element.Priority
-                        };
-                        DataBase.db.deleteTablePerson(task);
-                        _activity._fragment2.LoadData();
-                        Toast.MakeText(_activity, "Задача удалена", ToastLength.Long).Show();
+                            var selected_Element = DataBase.db.get_Element(lstData.Adapter.GetItemId(e.Position))[0];                           
+                            DataBase.db.delTask(selected_Element.Id);
+                            _activity._fragment2.LoadData();
+                            Toast.MakeText(_activity, "Задача удалена", ToastLength.Long).Show();
+                        }
                     }
-                }
+                });
+                delDialog.SetNegativeButton("Нет", (senderAlert, args) =>
+                {
+                    return;
+                });
+                Dialog dialog = delDialog.Create();
+                dialog.Show();
             };
             return view;
         }
@@ -431,7 +453,7 @@ namespace AndroidSQLite
         //Сортировка по id
         public void LoadData()
         {
-            lstSource = DataBase.db.selectTablePerson();
+            lstSource = DataBase.db.selectTableTask();
             _activity.adapter.SetFrActivity(this);
             _activity.adapter.SetList(lstSource);
             _activity.adapter.SetActivity(_activity);
@@ -440,18 +462,19 @@ namespace AndroidSQLite
 
         //Сортировка по дате
         public void SortByDate(DateTime date)
-        {     
-            lstSource = DataBase.db.selectTablePerson();          
-            var lstSource2 = new List<Resources.Model.Task>();
-            foreach (var value in lstSource)
-            {
-                if (value.Date.Date == date.Date)
-                {
-                    lstSource2.Add(value);
-                }
-            }
+        {
+            Console.WriteLine("дата передаваемая для сравнения в БД"+date);
+            lstSource = DataBase.db.showDate(date);          
+            //var lstSource2 = new List<Resources.Model.Task>();
+            //foreach (var value in lstSource)
+            //{
+            //    if (value.Date.Date == date.Date)
+            //    {
+            //        lstSource2.Add(value);
+            //    }
+            //}
 
-            this.lstSource = lstSource2;
+            //this.lstSource = lstSource2;
 
             _activity.adapter.SetFrActivity(this);
             _activity.adapter.SetList(lstSource);
@@ -461,18 +484,12 @@ namespace AndroidSQLite
         //Сортировать по категории
         public void SortCategory(string _category)
         {
-            lstSource = DataBase.db.selectTablePerson();
-            var lstSource2 = new List<Resources.Model.Task>();
+            lstSource = DataBase.db.showCategory(_category);
+            //var lstSource2 = new List<Resources.Model.Task>();
 
-            foreach(var value in lstSource)
-            {
-                if(value.Category == _category)
-                {
-                    lstSource2.Add(value);
-                }
-            }
+            
 
-            this.lstSource = lstSource2;
+            //this.lstSource = lstSource2;
             _activity.adapter.SetFrActivity(this);
             _activity.adapter.SetList(lstSource);
             this.lstData.Adapter = _activity.adapter;
