@@ -179,6 +179,7 @@ namespace AndroidSQLite
                 int Hour = currentDate.Get(CalendarField.Hour);
                 int Min = currentDate.Get(CalendarField.Minute);
                 TimePickerDialog timeDialog = new TimePickerDialog(this.Context, Android.App.AlertDialog.ThemeDeviceDefaultLight, this, Hour, Min, true);
+                
                 timeDialog.Show();
             };
 
