@@ -60,12 +60,12 @@ namespace AndroidSQLite.Resources.DataHelper
         }
        
 
-        public bool updateTableTask(Task person)
+        public bool updateTableTask(Task task)
         {
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, dbTable)))
                 {
                     connection.Query<Task>("UPDATE Task set Name=?,Date=?,Time=?,Description=?,Priority=?,Category=?,Done=? Where Id=?",
-                        person.Name,person.Date,person.Time,person.Description,person.Priority,person.Category,person.Done,person.Id);
+                        task.Name,task.Date,task.Time,task.Description,task.Priority,task.Category,task.Done,task.Id);
                     return true;
                 }
         }
@@ -233,9 +233,44 @@ namespace AndroidSQLite.Resources.DataHelper
             }
         }
 
+        // -------------------------------------------------------------------------------------
+        // Settings
 
+        public bool createDataBaseSettings()
+        {
+            using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, dbTable)))
+            {
+                connection.CreateTable<Settings>();
+                return true;
+            }
+        }
 
-
+        public List<Settings> getSettings()
+        {
+            using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, dbTable)))
+            {
+                return connection.Table<Settings>().ToList();
+            }
+        }
+        public void insertStartSettings()
+        {
+            using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, dbTable)))
+            {
+                Settings settings = new Settings()
+                {
+                    fastDel = true
+                };
+                connection.Insert(settings);
+            }
+        }
+        public void updateSettings(bool value)
+        {
+            using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, dbTable)))
+            {
+                //connection.Update(settings);
+                connection.Query<Settings>("UPDATE Settings set fastDel = ?",value);
+            }
+        }
 
 
         // -------------------------------------------------------------------------------------

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using AndroidSQLite.Resources.Model;
 using AndroidSQLite.Resources.DataHelper;
 using AndroidSQLite.Resources;
-//using AndroidSQLite.BroadCast;
 using Android.Util;
 using SQLite;
 using Android.Content;
@@ -31,6 +30,7 @@ namespace AndroidSQLite
     [Activity(Label = "AndroidSQLite", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : FragmentActivity, IOnDateSetListener
     {
+        //Основные экраны приложения
         public  Fragment1 _fragment1 = new Fragment1();
         public  Fragment2 _fragment2 = new Fragment2();
         public  Fragment3 _fragment3 = new Fragment3();
@@ -38,8 +38,9 @@ namespace AndroidSQLite
 
         public ListViewAdapter adapter = new ListViewAdapter();
         public ListViewAdapterAchievements achievments_adapter = new ListViewAdapterAchievements();
-
+        //Диалоговые окна
         public DialogWindow _dialogFragment1 = new DialogWindow();
+        public SettingsWindow _settingsWindow = new SettingsWindow();
 
         Java.Util.Calendar mCurrentDate;
         Bitmap mGenerateDateIcon;
@@ -66,10 +67,11 @@ namespace AndroidSQLite
 
         protected override void OnCreate(Bundle bundle)
         {
+            
             _fragment1.SetActivity(this);
             _fragment2.SetActivity(this);
             _fragment3.SetActivity(this);
-
+            _settingsWindow.SetActivity(this);
             base.OnCreate(bundle);
             //dialogwindow.SetActivity(
 
@@ -123,6 +125,12 @@ namespace AndroidSQLite
             DataBase.db = DataBase.getDataBase();
             DataBase.db.createDataBase();
             DataBase.db.createDataBaseExp();
+            DataBase.db.createDataBaseSettings();
+            //Первичные настройки приложения
+            if (DataBase.db.getSettings().Count == 0)
+            {
+                DataBase.db.insertStartSettings();
+            }
             string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             Log.Info("DB_PATH", folder);
 
@@ -130,34 +138,27 @@ namespace AndroidSQLite
             //var imgBtn = FindViewById<ImageButton>(Resource.Id.imgBtn);
             
             FloatingActionButton settingsBtn = FindViewById<FloatingActionButton>(Resource.Id.settingsBtn);
-            //var btnNot = FindViewById<Button>(Resource.Id.btncheeee);
-            //------------------------------------------------------------------
-            // Instantiate the builder and set notification elements:
-            //Notification.Builder builder = new Notification.Builder(this)
-            //    .SetContentTitle("Sample Notification")
-            //    .SetContentText("Hello World! This is my first notification!")
-            //    .SetSmallIcon(Resource.Drawable.ic_launcher);
 
-            //builder.SetWhen(Java.Lang.JavaSystem.CurrentTimeMillis());
-
-            //// Build the notification:
-            //Notification notification = builder.Build();
-
-            //// Get the notification manager:
-            //NotificationManager notificationManager =
-            //    GetSystemService(Context.NotificationService) as NotificationManager;
-
-            //// Publish the notification:
-            //const int notificationId = 0;
-            //notificationManager.Notify(notificationId, notification);
-            //------------------------------------------------------------------
-
-
-
-            //Пока что костыль
             settingsBtn.Click += delegate
-            {               
-                Console.WriteLine("SETTINGS BUTTON PRESSED");                
+            {
+                //Создаем окно для добавления новой задачи
+                Android.App.FragmentTransaction ft = FragmentManager.BeginTransaction();
+                Android.App.Fragment prev = FragmentManager.FindFragmentByTag("dialog");
+                //Передаем id новой заметки для корректной записи в бд
+                Bundle frag_bundle = new Bundle();
+                //frag_bundle.PutLong("Id", task.Id);
+
+                if (prev != null)
+                {
+                    ft.Remove(prev);
+                }
+                ft.AddToBackStack(null);
+                
+                _settingsWindow = SettingsWindow.NewInstance(frag_bundle);
+                var act = _settingsWindow.Activity;
+                //Показываем окно
+                _settingsWindow.SetActivity(this);
+                _settingsWindow.Show(ft, "dialog");
             };
         }
     }
@@ -398,29 +399,32 @@ namespace AndroidSQLite
             //Удержание на элементе
             lstData.ItemLongClick += (s, e) =>
             {
-                Android.App.AlertDialog.Builder delDialog = new Android.App.AlertDialog.Builder(_activity);
-                delDialog.SetTitle("Удалить задачу");
-                delDialog.SetMessage("Вы уверены?");
-                delDialog.SetPositiveButton("Да", (senderAlert, args) =>
-                {
-
-                    for (int i = 0; i < lstData.Count; i++)
+                if (DataBase.db.getSettings()[0].fastDel == true || DataBase.db.getSettings()[0].fastDel == null)
+                { 
+                    Android.App.AlertDialog.Builder delDialog = new Android.App.AlertDialog.Builder(_activity);
+                    delDialog.SetTitle("Удалить задачу");
+                    delDialog.SetMessage("Вы уверены?");
+                    delDialog.SetPositiveButton("Да", (senderAlert, args) =>
                     {
-                        if (e.Position == i)
+
+                        for (int i = 0; i < lstData.Count; i++)
                         {
-                            var selected_Element = DataBase.db.get_Element(lstData.Adapter.GetItemId(e.Position))[0];                           
-                            DataBase.db.delTask(selected_Element.Id);
-                            _activity._fragment2.LoadData();
-                            Toast.MakeText(_activity, "Задача удалена", ToastLength.Long).Show();
+                            if (e.Position == i)
+                            {
+                                var selected_Element = DataBase.db.get_Element(lstData.Adapter.GetItemId(e.Position))[0];
+                                DataBase.db.delTask(selected_Element.Id);
+                                _activity._fragment2.LoadData();
+                                Toast.MakeText(_activity, "Задача удалена", ToastLength.Long).Show();
+                            }
                         }
-                    }
-                });
-                delDialog.SetNegativeButton("Нет", (senderAlert, args) =>
-                {
-                    return;
-                });
-                Dialog dialog = delDialog.Create();
-                dialog.Show();
+                    });
+                    delDialog.SetNegativeButton("Нет", (senderAlert, args) =>
+                    {
+                        return;
+                    });
+                    Dialog dialog = delDialog.Create();
+                    dialog.Show();
+                }
             };
             return view;
         }

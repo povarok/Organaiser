@@ -127,9 +127,11 @@
     <Compile Include="Resources\Model\Achievement.cs" />
     <Compile Include="Resources\Model\BannedId.cs" />
     <Compile Include="Resources\Model\Exp.cs" />
+    <Compile Include="Resources\Model\Settings.cs" />
     <Compile Include="Resources\Model\Task.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingsWindow.cs" />
     <Compile Include="SlidingTabScrollView.cs" />
     <Compile Include="SlidingTabStrip.cs" />
   </ItemGroup>
@@ -160,6 +162,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\emptyList.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\settings_layout.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

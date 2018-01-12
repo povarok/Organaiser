@@ -101,9 +101,6 @@ namespace AndroidSQLite.Resources
 
             checkBox.Click += delegate 
             {
-
-
-
                 if(checkBox.Checked == true)
                 {
                     lstPerson[position].Done = true;

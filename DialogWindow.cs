@@ -41,7 +41,6 @@ namespace AndroidSQLite
         Calendar currentDate;
         EditText setTime;
         EditText setDateTime;
-        // не работает 
         int globalHour = 21;
         int globalMin = 44;
         public MainActivity _activity;
@@ -79,14 +78,8 @@ namespace AndroidSQLite
             lstSource = new List<Task>();
             currentDate = Calendar.Instance;
 
-            //SetActivity()
-            //ma.lstData = View.FindViewById<ListView>(Resource.Id.listView);
-
-
             string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             Log.Info("DB_PATH", folder);
-
-
 
             View view = inflater.Inflate(Resource.Layout.fragment_layout, container, false);
 
@@ -104,27 +97,12 @@ namespace AndroidSQLite
 
             Spinner setCategory = view.FindViewById<Spinner>(Resource.Id.stCategory);
             Spinner setPriority = view.FindViewById<Spinner>(Resource.Id.stPriority);
-            //var getID = savedInstanceState.GetLong("Id",1288);
+
             var getID = Arguments.GetLong("Id", 0);
             setId(getID);
-            //Console.Write("asd");
-            //Bundle new_bundle = this.Arguments.GetBundle("ID");
 
-            //var selected_Element = new AndroidSQLite.Resources.Model.Person();
-
-            //if (getID != ((long)0))
-            //{
             
             var selected_Element = DataBase.db.get_Element(getID)[0];
-
-
-            Console.WriteLine("Выбран " + selected_Element.Id + " ый эл-т");
-            Console.WriteLine("дата выбранного элемента" + selected_Element.Date);
-            Console.WriteLine("время выбранного элемента" + selected_Element.Time);
-            //Console.WriteLine("Name - " + selected_Element.Name);
-            //Console.WriteLine("Date - " + selected_Element.Date.ToLongDateString());
-            //Console.WriteLine("Time - " + selected_Element.Time.ToLongTimeString());
-
 
             editName.Text = selected_Element.Name;
             editDescription.Text = selected_Element.Description;
@@ -219,8 +197,6 @@ namespace AndroidSQLite
                 else
                 { selected_Element.Name = "Null"; }
 
-                //--------------------------------------------------------------------------------
-
                 if (editDescription.Text != null)
                 { selected_Element.Description = editDescription.Text; }
                 else
@@ -229,40 +205,15 @@ namespace AndroidSQLite
                 selected_Element.Category = setCategory.SelectedItem.ToString();
                 selected_Element.Priority = setPriority.SelectedItem.ToString();
 
-                //--------------------------------------------------------------------------------
-
                 if (selectedDateDate != null)
                 {
-                    selected_Element.Date = selectedDateDate;
-                    Console.WriteLine("selected date: " + selectedDateDate.ToLongDateString());
+                    selected_Element.Date = selectedDateDate;                   
                 }
-                //else
-                //{
-                //   // selected_Element.Date = DateTime.Now;
-                //    //Было
-                //    selected_Element.Date = new DateTime(1, 1, 2018, 21, 21 , 59);
-                    
-                //    Console.WriteLine("selected date = NULL " + selectedDateDate.ToLongDateString());
-                //}
-
-                //--------------------------------------------------------------------------------
 
                 if (selectedDateTime != null)
                 {
-                    selected_Element.Time = selectedDateTime;
-                    Console.WriteLine("selected time: " + selectedDateDate.ToLongTimeString());
+                    selected_Element.Time = selectedDateTime;                    
                 }
-                //else
-                //{
-                //    // selected_Element.Date = DateTime.Now;
-                //    //Было
-                //    selected_Element.Time = new DateTime(1, 1, 2018, 21, 21, 59);
-
-                //    Console.WriteLine("selected date = NULL " + selectedDateDate.ToLongTimeString());
-                //}
-
-
-                
 
                 if (selected_Element.Name == "Null" || selected_Element.Name == "")
                 {
@@ -277,17 +228,6 @@ namespace AndroidSQLite
                     Dismiss();
 
                 }
-                //Fragment2 fragment2 = new Fragment2();
-                //fragment2.LoadData();
-                //ma.LoadData(lstData);
-
-                //Console.WriteLine("Сохраняю " + selected_Element.Id + " ый эл-т");
-                //Console.WriteLine("Name - " + selected_Element.Name);
-                //Console.WriteLine("Date - " + selected_Element.Date.ToLongDateString());
-                //Console.WriteLine("Time - " + selected_Element.Time.ToLongTimeString());
-
-                
-
             };
 
             buttonCl.Click += delegate
@@ -300,16 +240,13 @@ namespace AndroidSQLite
                     Dismiss();
 
                 }
-                //Обработать диалогом подтверждение закрытия без сохранения!!!
                 else
                 {
-
                     Dismiss();
                     Toast.MakeText(Activity, "Dialog fragment dismissed!", ToastLength.Short).Show();
                 }
             };
-            // Use this to return your custom view for this Fragment
-            // return inflater.Inflate(Resource.Layout.YourFragment, container, false);
+
 
             return view;
         }
@@ -336,22 +273,9 @@ namespace AndroidSQLite
         public void OnTimeSet(TimePicker view, int hourOfDay, int minute)
         {
             globalHour = hourOfDay;
-            globalMin = minute;
-            //Console.WriteLine("globalHour " + globalHour + "globalMin " + globalMin);
+            globalMin = minute;           
             selectedDateTime = new DateTime(1,1,1, globalHour, globalMin, 0);
             setTime.Text = globalHour.ToString() + " : " + globalMin.ToString();
         }
-
-
-
-        //Найти как обратится к майн активити
-        //Или починить
-        //Найти метод onResume или че нибудь такое... И в него запилить Loaddata 
-        //private void LoadData()
-        //{
-        //    lstSource = db.selectTableTask();
-        //    var adapter = new ListViewAdapter(, lstSource);
-        //    lstData.Adapter = adapter;
-        //}
     }
 }
