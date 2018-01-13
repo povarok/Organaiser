@@ -53,9 +53,8 @@ namespace AndroidSQLite.Resources.DataHelper
         {
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, dbTable)))
                 {
-                    var a = connection.Table<Task>().ToList();
+                    //var a = connection.Table<Task>().ToList();
                     return connection.Table<Task>().ToList();
-                   
                 }
         }
        
@@ -175,6 +174,15 @@ namespace AndroidSQLite.Resources.DataHelper
                 return connection.Table<Exp>().ToList();
             }
         }
+
+        public void insertExp(Exp exp)
+        {
+            using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, dbTable)))
+            {
+                connection.Insert(exp);
+            }
+        }
+
         public void updateTableExp(string Category, long Id)
         {
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, dbTable)))

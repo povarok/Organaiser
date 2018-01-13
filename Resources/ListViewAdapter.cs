@@ -46,21 +46,21 @@ namespace AndroidSQLite.Resources
             this.activity = FrActivity;
         }
 
-        public void SetList(List<Model.Task> lstPerson)
+        public void SetList(List<Model.Task> lstTask)
         {
-            this.lstPerson = lstPerson;
+            this.lstSource = lstTask;
         }
 
 
 
         private Android.Support.V4.App.Fragment activity;
-        private List<Model.Task> lstPerson;
+        private List<Model.Task> lstSource;
 
         public override int Count
         {
             get
             {
-                return lstPerson.Count;
+                return lstSource.Count;
             }
         }
 
@@ -71,13 +71,13 @@ namespace AndroidSQLite.Resources
 
         public override long GetItemId(int position)
         {
-            return lstPerson[position].Id;
+            return lstSource[position].Id;
         }
 
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
 
-            DataBase.db = DataBase.getDataBase();//new DataBase();
+            DataBase.db = DataBase.getDataBase();
             DataBase.db.createDataBase();
             DataBase.db.createDataBaseExp();
             DataBase.db.createDataBaseBannedId();
@@ -96,27 +96,25 @@ namespace AndroidSQLite.Resources
             string getStatus;
             //Ставим пустой слушатель на проверочнуюкоробку
             checkBox.SetOnCheckedChangeListener(null);
-            checkBox.Checked = lstPerson[position].Done;
-            var selected_Element = DataBase.db.get_Element(lstPerson[position].Id)[0];
+            checkBox.Checked = lstSource[position].Done;
+            var selected_Element = DataBase.db.get_Element(lstSource[position].Id)[0];
 
             checkBox.Click += delegate 
             {
                 if(checkBox.Checked == true)
                 {
-                    lstPerson[position].Done = true;
-                    Console.WriteLine("Name from list"+lstPerson[position].Name);
+                    lstSource[position].Done = true;
+                    Console.WriteLine("Name from list"+lstSource[position].Name);
                     selected_Element.Done = true;
                     DataBase.db.updateTableTask(selected_Element);
-
-                    var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db"));
-
-                    var someData = connection.Query<Exp>("SELECT * FROM Exp");
+                    
+                    var someData = DataBase.db.selectTableTask();
 
                     BannedId bannedId = new BannedId()
                     {
-                        Id = lstPerson[position].Id
+                        Id = lstSource[position].Id
                     };
-                    var checkId = DataBase.db.findBannedId(lstPerson[position].Id);
+                    var checkId = DataBase.db.findBannedId(lstSource[position].Id);
                     Console.WriteLine("checkId = " + checkId.Count());
 
                     // ветка если БД еще не создана
@@ -129,35 +127,33 @@ namespace AndroidSQLite.Resources
                             MainExp = 0,
                             FinansiExp = 0,
                             OtherExp = 0,
-                            
-                            
+
                         };
-                        connection.Insert(exp);
-                        
-                        someData = connection.Query<Exp>("SELECT * FROM Exp");
-                        Console.WriteLine("MAIN EXP " + someData[0].MainExp);
+                        DataBase.db.insertExp(exp);
+                        //connection.Insert(exp);
+
+                        someData = DataBase.db.selectTableTask();
 
                         if (checkId.Count() == 0)
                         {
-                            var t = System.Threading.Tasks.Task.Factory.StartNew(() => Console.WriteLine("ну таск))"));
+                            var t = System.Threading.Tasks.Task.Factory.StartNew(() => {
+                                DataBase.db.insertIntoTableBannedId(bannedId);
+                                DataBase.db.updateTableExp(lstSource[position].Category, lstSource[position].Id);
+                            });                        
                             t.Wait();
                             t.Dispose();
-                            DataBase.db.insertIntoTableBannedId(bannedId);
-                            DataBase.db.updateTableExp(lstPerson[position].Category, lstPerson[position].Id);
+                           
                         }
 
                     }
                     // ветка если БД уже существует
                     else
                     {
-
-
-
                         if (checkId.Count() == 0)
                         {
                             var t = System.Threading.Tasks.Task.Factory.StartNew(() => {
                                 DataBase.db.insertIntoTableBannedId(bannedId);
-                                DataBase.db.updateTableExp(lstPerson[position].Category, lstPerson[position].Id);
+                                DataBase.db.updateTableExp(lstSource[position].Category, lstSource[position].Id);
                             });
                             t.Wait();
                             t.Dispose();                         
@@ -166,7 +162,7 @@ namespace AndroidSQLite.Resources
                 }
                 else
                 {
-                    lstPerson[position].Done = false;
+                    lstSource[position].Done = false;
                     selected_Element.Done = false;
                     var t = System.Threading.Tasks.Task.Factory.StartNew(() =>
                     {
@@ -181,12 +177,10 @@ namespace AndroidSQLite.Resources
                 _activityByListViewAdapter._fragment3.LoadExpData();
                 //Обновляем звездочки в достижениях
                 _activityByListViewAdapter._fragment3.LoadAchevementsData();
-
-
             };
             
 
-            if (lstPerson[position].Done == true)
+            if (lstSource[position].Done == true)
             {
                 getStatus = "Выполнено";
             }
@@ -195,10 +189,10 @@ namespace AndroidSQLite.Resources
                 getStatus = "Не выполнено";
             }
 
-            txtName.Text = lstPerson[position].Name;
-            txtPriority.Text ="Приоритет: " + lstPerson[position].Priority;
-            txtCategory.Text = "Категория: " + lstPerson[position].Category;
-            txtDateTime.Text = lstPerson[position].Time.ToShortTimeString() + ", " + lstPerson[position].Date.ToShortDateString();
+            txtName.Text = lstSource[position].Name;
+            txtPriority.Text ="Приоритет: " + lstSource[position].Priority;
+            txtCategory.Text = "Категория: " + lstSource[position].Category;
+            txtDateTime.Text = lstSource[position].Time.ToShortTimeString() + ", " + lstSource[position].Date.ToShortDateString();
             return view;
         }
     }
