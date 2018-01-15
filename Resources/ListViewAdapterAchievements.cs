@@ -85,19 +85,23 @@ namespace AndroidSQLite.Resources
             if (lstAch[position].Stars == 0)
             {
                 Star.SetImageResource(Resource.Drawable.star0);
+                Console.WriteLine("кол-во звезд - " + lstAch[position].Stars +" "+ lstAch[position].Name);
             }
             else if (lstAch[position].Stars == 1)
             {
                 Star.SetImageResource(Resource.Drawable.star1);
+                Console.WriteLine("кол-во звезд - " + lstAch[position].Stars);
             }
             else if (lstAch[position].Stars == 2)
             {
                 Star.SetImageResource(Resource.Drawable.star2);
+                Console.WriteLine("кол-во звезд - " + lstAch[position].Stars);
 
             }
             else
             {
                 Star.SetImageResource(Resource.Drawable.star3);
+                Console.WriteLine("кол-во звезд - " + lstAch[position].Stars);
             }
 
             Name.Text = lstAch[position].Name;
