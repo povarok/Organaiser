@@ -67,7 +67,7 @@ namespace AndroidSQLite
 
         protected override void OnCreate(Bundle bundle)
         {
-            
+            this.RequestedOrientation = Android.Content.PM.ScreenOrientation.Portrait;
             _fragment1.SetActivity(this);
             _fragment2.SetActivity(this);
             _fragment3.SetActivity(this);
@@ -200,8 +200,7 @@ namespace AndroidSQLite
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-        {
-            
+        {           
             var view = inflater.Inflate(Resource.Layout.FirstFragmentLayout, container, false);
             
             var img = view.FindViewById<ImageView>(Resource.Id.imageClick);
