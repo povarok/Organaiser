@@ -31,15 +31,15 @@ namespace AndroidSQLite
     public class MainActivity : FragmentActivity, IOnDateSetListener
     {
         //Основные экраны приложения
-        public  Fragment1 _fragment1 = new Fragment1();
-        public  Fragment2 _fragment2 = new Fragment2();
-        public  Fragment3 _fragment3 = new Fragment3();
+        public Fragment1 _fragment1 = new Fragment1();
+        public Fragment2 _fragment2 = new Fragment2();
+        public Fragment3 _fragment3 = new Fragment3();
 
 
         public ListViewAdapter adapter = new ListViewAdapter();
         public ListViewAdapterAchievements achievments_adapter = new ListViewAdapterAchievements();
         //Диалоговые окна
-        public DialogWindow _dialogFragment1 = new DialogWindow();
+        public DialogWindow _taskWindow = new DialogWindow();
         public SettingsWindow _settingsWindow = new SettingsWindow();
 
         Java.Util.Calendar mCurrentDate;
@@ -47,19 +47,19 @@ namespace AndroidSQLite
         ImageGenerator mGeneratorImage;
         ImageView mDisplayGeneratedImage;
 
-        public ViewPager mViewPager;   
+        public ViewPager mViewPager;
         public SlidingTabScrollView mScrollView;
         DateTime calendarDate;
-       
 
-        
+
+
         public void OnDateSet(DatePicker view, int year, int month, int dayOfMonth)
         {
             //Передаем выбранную дату
             Toast.MakeText(this, $"{dayOfMonth}-{month + 1}-{year}", ToastLength.Long).Show();
             mCurrentDate.Set(year, month, dayOfMonth);
             mGenerateDateIcon = mGeneratorImage.GenerateDateImage(mCurrentDate, Resource.Drawable.EmptyCalendar);
-            calendarDate = new DateTime(year, month+1, dayOfMonth, 0, 0, 0);
+            calendarDate = new DateTime(year, month + 1, dayOfMonth, 0, 0, 0);
             mViewPager.SetCurrentItem(1, true);
             _fragment2.SortByDate(calendarDate);
 
@@ -105,7 +105,7 @@ namespace AndroidSQLite
             {
 
                 //mCurrentDate = Java.Util.Calendar.Instance;
-               
+
                 int mYear = mCurrentDate.Get(CalendarField.Year);
                 int mMonth = mCurrentDate.Get(CalendarField.Month);
                 int mDay = mCurrentDate.Get(CalendarField.DayOfMonth);
@@ -115,7 +115,7 @@ namespace AndroidSQLite
 
 
             };
-            
+
             mScrollView = FindViewById<SlidingTabScrollView>(Resource.Id.sliding_tabs);
             mViewPager = FindViewById<ViewPager>(Resource.Id.viewPager);
             mViewPager.Adapter = new SamplePagerAdapter(this, SupportFragmentManager);
@@ -136,7 +136,7 @@ namespace AndroidSQLite
 
             //var imgBtn = new ImageButton
             //var imgBtn = FindViewById<ImageButton>(Resource.Id.imgBtn);
-            
+
             FloatingActionButton settingsBtn = FindViewById<FloatingActionButton>(Resource.Id.settingsBtn);
 
             settingsBtn.Click += delegate
@@ -153,7 +153,7 @@ namespace AndroidSQLite
                     ft.Remove(prev);
                 }
                 ft.AddToBackStack(null);
-                
+
                 _settingsWindow = SettingsWindow.NewInstance(frag_bundle);
                 var act = _settingsWindow.Activity;
                 //Показываем окно
@@ -187,7 +187,7 @@ namespace AndroidSQLite
             return mFragmentHolder[position];
         }
     }
-   
+
     //Сортировка по типу задачи
     public class Fragment1 : Android.Support.V4.App.Fragment
     {
@@ -200,9 +200,9 @@ namespace AndroidSQLite
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-        {           
+        {
             var view = inflater.Inflate(Resource.Layout.FirstFragmentLayout, container, false);
-            
+
             var img = view.FindViewById<ImageView>(Resource.Id.imageClick);
 
             var house1 = view.FindViewById<LinearLayout>(Resource.Id.house1);
@@ -246,7 +246,7 @@ namespace AndroidSQLite
             return "Город";
         }
     }
-    
+
     //Основной экран
     //Создание, удалени и отображение заметок
     public class Fragment2 : Android.Support.V4.App.Fragment
@@ -255,12 +255,12 @@ namespace AndroidSQLite
         public List<Resources.Model.Task> lstSource = new List<Resources.Model.Task>();
         private EditText mTxt;
         public MainActivity _activity;
-        
+
         public void SetActivity(MainActivity activity)
         {
             _activity = activity;
         }
-        
+
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             DataBase.db = DataBase.getDataBase();
@@ -285,17 +285,17 @@ namespace AndroidSQLite
             btnAdd.Click += delegate
             {
                 //Создаем пустую запись в бд
-                
+
 
                 Resources.Model.Task task = new Resources.Model.Task()
                 {
-                
+
                     Name = "",
                     Date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day),
-                    Time = new DateTime(1, 1, 1, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second), 
-                    Description = "", 
-                    Category = "Спорт", 
-                    Priority = "0", 
+                    Time = new DateTime(1, 1, 1, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second),
+                    Description = "",
+                    Category = "Спорт",
+                    Priority = "0",
                     Done = false
                 };
                 var t = System.Threading.Tasks.Task.Factory.StartNew(() =>
@@ -316,13 +316,13 @@ namespace AndroidSQLite
                     ft.Remove(prev);
                 }
                 ft.AddToBackStack(null);
-                
-                _activity._dialogFragment1 = DialogWindow.NewInstance(frag_bundle);
-                var act = _activity._dialogFragment1.Activity;
+
+                _activity._taskWindow = DialogWindow.NewInstance(frag_bundle);
+                var act = _activity._taskWindow.Activity;
                 //Показываем окно
-                _activity._dialogFragment1.SetActivity(_activity);
-                _activity._dialogFragment1.Show(ft, "dialog");
-                
+                _activity._taskWindow.SetActivity(_activity);
+                _activity._taskWindow.Show(ft, "dialog");
+
             };
 
             btnRefresh.Click += delegate
@@ -349,21 +349,22 @@ namespace AndroidSQLite
                 dialog.Show();
 
                 //delDoneWindow.Show;
-                
-               
+
+
             };
             //Просмотр/ редактирование существующей задачи
-            lstData.ItemClick += (s, e) => {
+            lstData.ItemClick += (s, e) =>
+            {
 
                 for (int i = 0; i < lstData.Count; i++)
                 {
                     if (e.Position == i)
-                    {                       
+                    {
                         //Получаем id выбранного в списке элемента
                         var t = System.Threading.Tasks.Task.Factory.StartNew(() =>
                         {
                             elementId = DataBase.db.selectQuery(lstData.Adapter.GetItemId(e.Position));
-                            
+
                             return elementId;
                         });
                         t.Wait();
@@ -373,19 +374,19 @@ namespace AndroidSQLite
                         Android.Support.V4.App.Fragment prev = FragmentManager.FindFragmentByTag("dialog");
                         Bundle frag_bundle = new Bundle();
                         frag_bundle.PutLong("Id", t.Result);
-                        
+
                         t.Dispose();
 
                         if (prev != null)
                         {
                             ft.Remove(prev);
                         }
-                        ft.AddToBackStack(null);                
-                        _activity._dialogFragment1 = DialogWindow.NewInstance(frag_bundle);
-                        _activity._dialogFragment1.SetActivity(_activity);
-                        _activity._dialogFragment1.Show(ft, "dialog");
-                       
-                    }                
+                        ft.AddToBackStack(null);
+                        _activity._taskWindow = DialogWindow.NewInstance(frag_bundle);
+                        _activity._taskWindow.SetActivity(_activity);
+                        _activity._taskWindow.Show(ft, "dialog");
+
+                    }
                 }
 
                 //Заполняем поля данными
@@ -399,7 +400,7 @@ namespace AndroidSQLite
             lstData.ItemLongClick += (s, e) =>
             {
                 if (DataBase.db.getSettings()[0].fastDel == true || DataBase.db.getSettings()[0].fastDel == null)
-                { 
+                {
                     Android.App.AlertDialog.Builder delDialog = new Android.App.AlertDialog.Builder(_activity);
                     delDialog.SetTitle("Удалить задачу");
                     delDialog.SetMessage("Вы уверены?");
@@ -436,7 +437,7 @@ namespace AndroidSQLite
         public void StartAlarm(int Year, int Month, int Day, int Hour, int Minute, long id)
         {
             var Current = Java.Lang.JavaSystem.CurrentTimeMillis();
-            
+
             AlarmManager manager = (AlarmManager)_activity.GetSystemService(Context.AlarmService);
             Intent myIntent;
             PendingIntent pendingIntent;
@@ -449,7 +450,7 @@ namespace AndroidSQLite
             var CurrentTime = DateTime.Now;
             var AlarmTime = unixTime - CurrentTime;
             long ATMillis = (long)AlarmTime.TotalMilliseconds;
-            manager.Set(AlarmType.RtcWakeup, JavaSystem.CurrentTimeMillis()+ATMillis, pendingIntent);
+            manager.Set(AlarmType.RtcWakeup, JavaSystem.CurrentTimeMillis() + ATMillis, pendingIntent);
 
         }
 
@@ -466,19 +467,7 @@ namespace AndroidSQLite
         //Сортировка по дате
         public void SortByDate(DateTime date)
         {
-            Console.WriteLine("дата передаваемая для сравнения в БД"+date);
-            lstSource = DataBase.db.showDate(date);          
-            //var lstSource2 = new List<Resources.Model.Task>();
-            //foreach (var value in lstSource)
-            //{
-            //    if (value.Date.Date == date.Date)
-            //    {
-            //        lstSource2.Add(value);
-            //    }
-            //}
-
-            //this.lstSource = lstSource2;
-
+            lstSource = DataBase.db.showDate(date);
             _activity.adapter.SetFrActivity(this);
             _activity.adapter.SetList(lstSource);
             this.lstData.Adapter = _activity.adapter;
@@ -488,18 +477,12 @@ namespace AndroidSQLite
         public void SortCategory(string _category)
         {
             lstSource = DataBase.db.showCategory(_category);
-            //var lstSource2 = new List<Resources.Model.Task>();
-
-            
-
-            //this.lstSource = lstSource2;
             _activity.adapter.SetFrActivity(this);
             _activity.adapter.SetList(lstSource);
             this.lstData.Adapter = _activity.adapter;
-
-        }        
+        }
     }
-    
+
     //Достижения пользователя
     public class Fragment3 : Android.Support.V4.App.Fragment
     {
@@ -529,51 +512,32 @@ namespace AndroidSQLite
             _activity = activity;
         }
 
-              
+
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-                      
+
             DataBase.db = DataBase.getDataBase();
             DataBase.db.createDataBaseAchivment();
             DataBase.db.createDataBaseExp();
             var ach = DataBase.db.getExp();
-            
-            //Console.WriteLine("Ach name = "+ach[0].Name + " Exp = " + ach[0].MainExp);
+
+
             var view = inflater.Inflate(Resource.Layout.ThirdFragmentLayout, container, false);
-            //Button refreshBtn = view.FindViewById<Button>(Resource.Id.refresh);
-            //TextView consos = view.FindViewById<TextView>(Resource.Id.consos);
-            //consos.Text = ach[0].Name + "\n MainExp = " + ach[0].MainExp + "\n OtherExp = " + ach[0].OtherExp +
-            //  "\n SportExp = " + ach[0].SportExp + "\n Finansi Exp = " + ach[0].FinansiExp + "\n EducationExp = " + ach[0].EducationExp;
-
-            //------------------------------------
-
-            //achievement3 test_achevement = new achievement3()
-            //{
-            //    name = "test",
-            //    //description = "test",
-            //    type = "sport",
-            //    stars = 1
-            //};
-
-            //DataBase.db.insertIntoTableAchievement3(test_achevement);
 
 
-
-
-            lstDataAch = view.FindViewById < ListView >(Resource.Id.listViewAch);
+            lstDataAch = view.FindViewById<ListView>(Resource.Id.listViewAch);
             progressMain = view.FindViewById<ProgressBar>(Resource.Id.progressBar1);
             progressSport = view.FindViewById<ProgressBar>(Resource.Id.progressBar2);
             progressEducation = view.FindViewById<ProgressBar>(Resource.Id.progressBar3);
             progressFinance = view.FindViewById<ProgressBar>(Resource.Id.progressBar4);
             progressOther = view.FindViewById<ProgressBar>(Resource.Id.progressBar5);
 
-            txtMain = view.FindViewById<TextView>(Resource.Id.txtMain); 
+            txtMain = view.FindViewById<TextView>(Resource.Id.txtMain);
             txtSport = view.FindViewById<TextView>(Resource.Id.txtSport);
             txtEducation = view.FindViewById<TextView>(Resource.Id.txtEducation);
             txtFinance = view.FindViewById<TextView>(Resource.Id.txtFinace);
             txtOther = view.FindViewById<TextView>(Resource.Id.txtOther);
-            //progressBar.Progress = 1;
-            //int _progress = 0;
+
 
             //Первичное заполнение опыта
 
@@ -593,7 +557,7 @@ namespace AndroidSQLite
 
                 if (ach[0].OtherExp <= 100) txtOther.Text = (ach[0].OtherExp % 100).ToString() + " / 100";
                 else txtOther.Text = (ach[0].OtherExp).ToString() + " / " + ((1 + ach[0].OtherExp / 100) * 100).ToString();
-                     
+
                 progressMain.Progress = (ach[0].MainExp % 100);
                 progressSport.Progress = (ach[0].SportExp % 100);
                 progressEducation.Progress = (ach[0].EducationExp % 100);
@@ -611,6 +575,7 @@ namespace AndroidSQLite
             return "Достижения";
         }
 
+        // Заполняем XP бары запросом в БД
         public void LoadExpData()
         {
             var ach = DataBase.db.getExp();
@@ -637,16 +602,15 @@ namespace AndroidSQLite
                 progressFinance.Progress = ach[0].FinansiExp % 100;
                 progressOther.Progress = ach[0].OtherExp % 100;
             }
-            Console.WriteLine("Ach count = "+ach.Count);
+            Console.WriteLine("Ach count = " + ach.Count);
         }
 
         public void LoadAchevementsData()
         {
             string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db"));
-
             var ach = connection.Query<Exp>("SELECT * FROM Exp");
-            
+
             // ветка если БД еще не создана
             if (ach.Count == 0)
             {
@@ -666,12 +630,12 @@ namespace AndroidSQLite
             }
 
             int numberOfStars = 0;
-            if(ach[0].SportExp > 10) {numberOfStars = 1;}
-            else if(ach[0].SportExp > 20) {numberOfStars = 2;}
-            else if(ach[0].SportExp > 30) {numberOfStars = 3;}
+            if (ach[0].SportExp > 10) { numberOfStars = 1; }
+            else if (ach[0].SportExp > 20) { numberOfStars = 2; }
+            else if (ach[0].SportExp > 30) { numberOfStars = 3; }
             if (created == false)
             {
-                Achievement test_achevement1 = new Achievement()
+                Achievement sportAch = new Achievement()
                 {
                     Name = "Спорт",
                     Description = "Выполните 10 заданий в категории спорт",
@@ -679,19 +643,69 @@ namespace AndroidSQLite
                     Stars = numberOfStars
                 };
 
-                //lstAch = DataBase.db.selectTableAchievement3();
-                lstAch.Add(test_achevement1);
 
-                Achievement test_achevement2 = new Achievement()
+                lstAch.Add(sportAch);
+            }
+
+
+            numberOfStars = 0;
+            if (ach[0].FinansiExp > 10) { numberOfStars = 1; }
+            else if (ach[0].FinansiExp > 20) { numberOfStars = 2; }
+            else if (ach[0].FinansiExp > 30) { numberOfStars = 3; }
+            if (created == false)
+            {
+                Achievement financeAch = new Achievement()
                 {
-                    Name = "test2",
-                    Description = "test",
-                    Type = "sport",
-                    Stars = 1
+                    Name = "Финансы",
+                    Description = "Выполните 10 заданий в категории финансы",
+                    Type = "finance",
+                    Stars = numberOfStars
                 };
 
-                lstAch.Add(test_achevement2);
+
+                lstAch.Add(financeAch);
+
             }
+
+            numberOfStars = 0;
+            if (ach[0].OtherExp > 10) { numberOfStars = 1; }
+            else if (ach[0].OtherExp > 20) { numberOfStars = 2; }
+            else if (ach[0].OtherExp > 30) { numberOfStars = 3; }
+            if (created == false)
+            {
+                Achievement otherAch = new Achievement()
+                {
+                    Name = "Прочее",
+                    Description = "Выполните 10 заданий в категории прочее",
+                    Type = "other",
+                    Stars = numberOfStars
+                };
+
+
+                lstAch.Add(otherAch);
+
+            }
+
+
+            numberOfStars = 0;
+            if (ach[0].EducationExp > 10) { numberOfStars = 1; }
+            else if (ach[0].EducationExp > 20) { numberOfStars = 2; }
+            else if (ach[0].EducationExp > 30) { numberOfStars = 3; }
+            if (created == false)
+            {
+                Achievement educationAch = new Achievement()
+                {
+                    Name = "Образование",
+                    Description = "Выполните 10 заданий в категории образование",
+                    Type = "edication",
+                    Stars = numberOfStars
+                };
+
+
+                lstAch.Add(educationAch);
+
+            }
+
             _activity.achievments_adapter.SetFrActivity(this);
             _activity.achievments_adapter.SetList(lstAch);
             _activity.achievments_adapter.SetActivity(_activity);
