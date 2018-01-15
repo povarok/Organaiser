@@ -246,8 +246,7 @@ namespace AndroidSQLite
                     Toast.MakeText(Activity, "Dialog fragment dismissed!", ToastLength.Short).Show();
                 }
             };
-
-
+            Cancelable = false;
             return view;
         }
         //Так происходит привязка анимации к диалогу
@@ -259,6 +258,7 @@ namespace AndroidSQLite
             base.OnActivityCreated(savedInstanceState);
             //Обращение к файлу стилей по "name"
             Dialog.Window.Attributes.WindowAnimations = Resource.Style.dialog_animation;
+            //Dialog.SetCancelable(false);
         }
         //Отсюда берем значения
         public void OnDateSet(DatePicker view, int year, int month, int dayOfMonth)
