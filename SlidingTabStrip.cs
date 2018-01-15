@@ -17,11 +17,11 @@ namespace AndroidSQLite
     public class SlidingTabStrip : LinearLayout
     {
         //Copy and paste from here................................................................
-        private const int DEFAULT_BOTTOM_BORDER_THICKNESS_DIPS = 2;
+        private const int DEFAULT_BOTTOM_BORDER_THICKNESS_DIPS = 0;
         private const byte DEFAULT_BOTTOM_BORDER_COLOR_ALPHA = 0X26;
         private const int SELECTED_INDICATOR_THICKNESS_DIPS = 8;
         private int[] INDICATOR_COLORS = { 0x19A319 };
-        private int[] DIVIDER_COLORS = { 0xC5C5C5 };
+        private int[] DIVIDER_COLORS = { 0xFFFFFF };
 
         private const int DEFAULT_DIVIDER_THICKNESS_DIPS = 1;
         private const float DEFAULT_DIVIDER_HEIGHT = 0.5f;
@@ -70,7 +70,7 @@ namespace AndroidSQLite
 
             mBottomBorderThickness = (int)(DEFAULT_BOTTOM_BORDER_THICKNESS_DIPS * density);
             mBottomBorderPaint = new Paint();
-            mBottomBorderPaint.Color = GetColorFromInteger(0xC5C5C5); //Gray
+            mBottomBorderPaint.Color = GetColorFromInteger(0xFFFFFF); //white
 
            // mSelectedIndicatorThickness = (int)(SELECTED_INDICATOR_THICKNESS_DIPS * density);
             //mSelectedIndicatorPaint = new Paint();

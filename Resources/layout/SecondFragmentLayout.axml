@@ -9,17 +9,17 @@
         android:orientation="horizontal"
         android:layout_marginTop="10sp"
         android:layout_marginLeft="10sp">
-
         <Button
             android:id="@+id/btnRefresh"
-            android:text="сброс"
-            android:layout_width="wrap_content"
-            android:layout_height="44sp" />
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:background="@drawable/refreshbutton" />
         <Button
             android:id="@+id/btnDeleteAll"
-            android:text="Удалить выполненные"
-            android:layout_width="wrap_content"
-            android:layout_height="44sp" />
+            android:layout_marginLeft="10sp"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:background="@drawable/trashbutton" />
     </LinearLayout>
     <Refractored.Fab.FloatingActionButton
         android:clickable="true"

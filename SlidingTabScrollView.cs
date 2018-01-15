@@ -49,12 +49,12 @@ namespace AndroidSQLite
         public SlidingTabScrollView(Context context, IAttributeSet attrs, int defaultStyle) : base(context, attrs, defaultStyle)
         {
             //Disable the scroll bar
-            HorizontalScrollBarEnabled = true;
+            HorizontalScrollBarEnabled = false;
             ///HorizontalScrollbarHeight = 0;
 
             //Make sure the tab strips fill the view
             FillViewport = true;
-            this.SetBackgroundColor(Android.Graphics.Color.Rgb(0xE5, 0xE5, 0xE5)); //Gray color
+            this.SetBackgroundColor(Android.Graphics.Color.Rgb(0x3F, 0xBA, 0x3C)); //Green color
 
             mTitleOffset = (int)(TITLE_OFFSET_DIPS * Resources.DisplayMetrics.Density);
 
@@ -159,7 +159,7 @@ namespace AndroidSQLite
                 var a = Resources.DisplayMetrics.WidthPixels;
                 TextView tabView = CreateDefaultTabView(Context);
                 tabView.Text = ((FragmentPagerAdapter)adapter).GetItem(i).ToString();
-                tabView.SetTextColor(Android.Graphics.Color.Black);
+                tabView.SetTextColor(Android.Graphics.Color.White);
                 tabView.Tag = i;
                
                 tabView.Click += tabView_Click;
@@ -208,7 +208,7 @@ namespace AndroidSQLite
             }
 
             int padding = (int)(TAB_VIEW_PADDING_DIPS * Resources.DisplayMetrics.Density);
-            textView.SetPadding(padding, padding, padding, padding);
+            textView.SetPadding(padding-100, padding, padding-100, padding);
 
             return textView;
         }
