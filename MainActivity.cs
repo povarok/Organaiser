@@ -27,7 +27,7 @@ using Refractored.Fab;
 
 namespace AndroidSQLite
 {
-    [Activity(Label = "AndroidSQLite", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "BuildUp", MainLauncher = true, Icon = "@drawable/app_icon")]
     public class MainActivity : FragmentActivity, IOnDateSetListener
     {
         //Основные экраны приложения
