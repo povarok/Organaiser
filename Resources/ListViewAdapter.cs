@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace AndroidSQLite.Resources
 {
-    
+
     public class ViewHolder : Java.Lang.Object
     {
         public TextView txtName { get; set; }
@@ -29,9 +29,9 @@ namespace AndroidSQLite.Resources
         public TextView txtDateTime { get; set; }
         public TextView txtDone { get; set; }
         public CheckBox checkBox { get; set; }
-        
+
     }
-    public class ListViewAdapter:BaseAdapter
+    public class ListViewAdapter : BaseAdapter
     {
 
         public MainActivity _activityByListViewAdapter;
@@ -99,15 +99,16 @@ namespace AndroidSQLite.Resources
             checkBox.Checked = lstSource[position].Done;
             var selected_Element = DataBase.db.get_Element(lstSource[position].Id)[0];
 
-            checkBox.Click += delegate 
+            checkBox.Click += delegate
             {
-                if(checkBox.Checked == true)
+                Console.WriteLine("нажата галка");
+                if (checkBox.Checked == true)
                 {
                     lstSource[position].Done = true;
-                    Console.WriteLine("Name from list"+lstSource[position].Name);
+                    Console.WriteLine("Name from list" + lstSource[position].Name);
                     selected_Element.Done = true;
                     DataBase.db.updateTableTask(selected_Element);
-                    
+
                     var someData = DataBase.db.selectTableTask();
 
                     BannedId bannedId = new BannedId()
@@ -118,8 +119,9 @@ namespace AndroidSQLite.Resources
                     Console.WriteLine("checkId = " + checkId.Count());
 
                     // ветка если БД еще не создана
-                    if (someData.Count() == 0 )
+                    if (someData.Count() == 0)
                     {
+                        Console.WriteLine("заходим в ветку бд не создана");
                         Exp exp = new Exp()
                         {
                             Name = "Достижения",
@@ -130,33 +132,39 @@ namespace AndroidSQLite.Resources
 
                         };
                         DataBase.db.insertExp(exp);
-                        //connection.Insert(exp);
+
 
                         someData = DataBase.db.selectTableTask();
-
+                        //если в БД с забаненными id ничего нет то добавляем текущий id в нее и начисляем опыт
                         if (checkId.Count() == 0)
                         {
-                            var t = System.Threading.Tasks.Task.Factory.StartNew(() => {
-                                DataBase.db.insertIntoTableBannedId(bannedId);
-                                DataBase.db.updateTableExp(lstSource[position].Category, lstSource[position].Id);
-                            });                        
-                            t.Wait();
-                            t.Dispose();
-                           
+                            //var t = System.Threading.Tasks.Task.Factory.StartNew(() => {
+                            DataBase.db.insertIntoTableBannedId(bannedId);
+                            DataBase.db.updateTableExp(lstSource[position].Category, lstSource[position].Id);
+                            //});                        
+                            //t.Wait();
+                            //t.Dispose();
+                            _activityByListViewAdapter._fragment3.LoadExpData();
+                            _activityByListViewAdapter._fragment3.LoadAchevementsData();
+
                         }
 
                     }
                     // ветка если БД уже существует
                     else
                     {
+                        Console.WriteLine("заходм в ветку где бд создана");
                         if (checkId.Count() == 0)
                         {
-                            var t = System.Threading.Tasks.Task.Factory.StartNew(() => {
-                                DataBase.db.insertIntoTableBannedId(bannedId);
-                                DataBase.db.updateTableExp(lstSource[position].Category, lstSource[position].Id);
-                            });
-                            t.Wait();
-                            t.Dispose();                         
+                            //var t = System.Threading.Tasks.Task.Factory.StartNew(() => {
+                            DataBase.db.insertIntoTableBannedId(bannedId);
+                            DataBase.db.updateTableExp(lstSource[position].Category, lstSource[position].Id);
+                            //});
+                            //t.Wait();
+                            //t.Dispose();
+                            _activityByListViewAdapter._fragment3.LoadExpData();
+
+                            _activityByListViewAdapter._fragment3.LoadAchevementsData();
                         }
                     }
                 }
@@ -170,17 +178,15 @@ namespace AndroidSQLite.Resources
                     });
                     t.Wait();
                     t.Dispose();
-                    
-                        _activityByListViewAdapter._fragment2.LoadData();
-                   
+
+                    _activityByListViewAdapter._fragment2.LoadData();
+
                 }
 
                 //Обновляем звездочки в достижениях
-                _activityByListViewAdapter._fragment3.LoadExpData();
-                
-                _activityByListViewAdapter._fragment3.LoadAchevementsData();
+
             };
-            
+
 
             if (lstSource[position].Done == true)
             {
@@ -192,7 +198,7 @@ namespace AndroidSQLite.Resources
             }
 
             txtName.Text = lstSource[position].Name;
-            txtPriority.Text ="Приоритет: " + lstSource[position].Priority;
+            txtPriority.Text = "Приоритет: " + lstSource[position].Priority;
             txtCategory.Text = "Категория: " + lstSource[position].Category;
             txtDateTime.Text = lstSource[position].Time.ToShortTimeString() + ", " + lstSource[position].Date.ToShortDateString();
             return view;

@@ -578,6 +578,7 @@ namespace AndroidSQLite
         // Заполняем XP бары запросом в БД
         public void LoadExpData()
         {
+            Console.WriteLine("перезагружаем опыт бары");
             var ach = DataBase.db.getExp();
             if (ach.Count != 0)
             {
@@ -609,8 +610,8 @@ namespace AndroidSQLite
         {
             string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "PersonsTest.db"));
-            var ach = connection.Query<Exp>("SELECT * FROM Exp");
-
+            var ach = DataBase.db.getExp();
+            Console.WriteLine("перезагружаем достижения");
             // ветка если БД еще не создана
             if (ach.Count == 0)
             {
@@ -710,7 +711,7 @@ namespace AndroidSQLite
             _activity.achievments_adapter.SetList(lstAch);
             _activity.achievments_adapter.SetActivity(_activity);
             lstDataAch.Adapter = _activity.achievments_adapter;
-            created = true;
+            //created = true;
         }
     }
 }

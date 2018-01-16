@@ -75,7 +75,7 @@ namespace AndroidSQLite.Resources
             string folder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             Log.Info("DB_PATH", folder);
 
-
+            
             var view = convertView ?? activity.LayoutInflater.Inflate(Resource.Layout.list_view_achTemplate, parent, false);
 
             var Name = view.FindViewById<TextView>(Resource.Id.tName);
@@ -90,23 +90,23 @@ namespace AndroidSQLite.Resources
             else if (lstAch[position].Stars == 1)
             {
                 Star.SetImageResource(Resource.Drawable.star1);
-                Console.WriteLine("кол-во звезд - " + lstAch[position].Stars);
+                Console.WriteLine("кол-во звезд - " + lstAch[position].Stars + " " + lstAch[position].Name);
             }
             else if (lstAch[position].Stars == 2)
             {
                 Star.SetImageResource(Resource.Drawable.star2);
-                Console.WriteLine("кол-во звезд - " + lstAch[position].Stars);
+                Console.WriteLine("кол-во звезд - " + lstAch[position].Stars + " " + lstAch[position].Name);
 
             }
             else
             {
                 Star.SetImageResource(Resource.Drawable.star3);
-                Console.WriteLine("кол-во звезд - " + lstAch[position].Stars);
+                Console.WriteLine("кол-во звезд - " + lstAch[position].Stars + " " + lstAch[position].Name);
             }
 
             Name.Text = lstAch[position].Name;
             Description.Text = lstAch[position].Description;
-
+            
             return view;
         }
 
