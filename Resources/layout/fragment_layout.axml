@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="#80bb47"
     android:padding="10dp">
     <TextView
@@ -50,6 +50,7 @@
             android:text="Выбрать категорию: "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#ffffff"
             android:id="@+id/textCategory" />
         <Spinner
             android:entries="@array/Category"
@@ -65,6 +66,7 @@
         <TextView
             android:text="Выбрать важность: "
             android:layout_width="wrap_content"
+            android:textColor="#ffffff"
             android:layout_height="wrap_content"
             android:id="@+id/textPriority" />
         <Spinner
@@ -73,27 +75,35 @@
             android:layout_height="wrap_content"
             android:id="@+id/stPriority" />
     </LinearLayout>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
             android:id="@+id/btnSaveFr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Сохранить"
-            android:layout_marginTop="10dp" />
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/accept"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="12dp"
+            />
         <Button
-            android:text="Удалить"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:background="@drawable/delete"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:id="@+id/DeleteButton"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="12dp"
+            android:layout_centerHorizontal="true"
+            />
         <Button
-            android:text="Закрыть"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:background="@drawable/cancel"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:id="@+id/CloseButton"
-            android:layout_marginTop="10dp" />
-    </LinearLayout>
+            android:layout_marginTop="12dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="12dp"
+            />
+    </RelativeLayout>
 </LinearLayout>

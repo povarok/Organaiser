@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:minWidth="300px"
-    android:minHeight="500px">
+    android:background="#80bb47"
+    android:minWidth="300dp"
+    android:minHeight="500dp"
+    android:padding="10dp">
     <TextView
         android:text="Настройки"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -13,15 +15,20 @@
         android:id="@+id/textView1" />
     <CheckBox
         android:layout_marginTop="15dp"
+        android:layout_below="@id/textView1"
         android:text="Быстрое удаление задач"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/fastDelChBx" />
     <Button
-        android:layout_marginTop="95dp"
-        android:layout_marginLeft="50dp"
-        android:text="Закрыть"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/closeBtn" />
-</LinearLayout>
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/cancel"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:id="@+id/closeBtn"
+        android:layout_marginTop="12dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="12dp"
+        android:layout_gravity="bottom"
+          />
+</RelativeLayout>

@@ -209,6 +209,37 @@ namespace AndroidSQLite
             var house2 = view.FindViewById<LinearLayout>(Resource.Id.house2);
             var house3 = view.FindViewById<LinearLayout>(Resource.Id.house3);
             var house4 = view.FindViewById<LinearLayout>(Resource.Id.house4);
+
+            ImageView other = view.FindViewById<ImageView>(Resource.Id.home1);
+            ImageView education = view.FindViewById<ImageView>(Resource.Id.education1);
+            ImageView sport = view.FindViewById<ImageView>(Resource.Id.sport1);
+            ImageView finance = view.FindViewById<ImageView>(Resource.Id.bank1);
+
+
+            DataBase.db = DataBase.getDataBase();
+            var expData = DataBase.db.getExp();
+            if (expData.Count != 0)
+            {
+                if (expData[0].OtherExp > 10)
+                {
+                    other.SetImageResource(Resource.Drawable.home2);
+                }
+                if (expData[0].SportExp > 10)
+                {
+                    sport.SetImageResource(Resource.Drawable.sport2);
+                }
+                if (expData[0].EducationExp > 10)
+                {
+                    education.SetImageResource(Resource.Drawable.education2);
+                }
+                if (expData[0].FinansiExp > 10)
+                {
+                    finance.SetImageResource(Resource.Drawable.bank22);
+                }
+            }
+
+            //other.SetImageResource(Resource.Drawable.home2);
+
             //Сортировка по категории спорт
             house1.Click += delegate
             {
@@ -629,17 +660,18 @@ namespace AndroidSQLite
 
                 ach = connection.Query<Exp>("SELECT * FROM Exp");
             }
-
+            lstAch.Clear();
             int numberOfStars = 0;
             if (ach[0].SportExp > 10) { numberOfStars = 1; }
             else if (ach[0].SportExp > 20) { numberOfStars = 2; }
             else if (ach[0].SportExp > 30) { numberOfStars = 3; }
             if (created == false)
             {
+                int txtStars = numberOfStars + 1;
                 Achievement sportAch = new Achievement()
                 {
                     Name = "Спорт",
-                    Description = "Выполните 10 заданий в категории спорт",
+                    Description = "Выполните " + txtStars + "0 заданий в категории спорт",
                     Type = "sport",
                     Stars = numberOfStars
                 };
@@ -650,15 +682,18 @@ namespace AndroidSQLite
 
 
             numberOfStars = 0;
-            if (ach[0].FinansiExp > 1) { numberOfStars = 1; }
-            else if (ach[0].FinansiExp > 2) { numberOfStars = 2; }
-            else if (ach[0].FinansiExp > 3) { numberOfStars = 3; }
+
+            if (ach[0].FinansiExp > 10) { numberOfStars = 1; }
+            if (ach[0].FinansiExp > 20) { numberOfStars = 2; }
+            if (ach[0].FinansiExp > 30) { numberOfStars = 3; }
             if (created == false)
             {
+                int txtStars = numberOfStars + 1;
+                Console.WriteLine("проверка финансов");
                 Achievement financeAch = new Achievement()
                 {
                     Name = "Финансы",
-                    Description = "Выполните 10 заданий в категории финансы",
+                    Description = "Выполните "+ txtStars+"0 заданий в категории финансы",
                     Type = "financi",
                     Stars = numberOfStars
                 };
@@ -674,10 +709,11 @@ namespace AndroidSQLite
             else if (ach[0].OtherExp > 30) { numberOfStars = 3; }
             if (created == false)
             {
+                int txtStars = numberOfStars + 1;
                 Achievement otherAch = new Achievement()
                 {
                     Name = "Прочее",
-                    Description = "Выполните 10 заданий в категории прочее",
+                    Description = "Выполните " + txtStars + "0 заданий в категории прочее",
                     Type = "other",
                     Stars = numberOfStars
                 };
@@ -694,10 +730,11 @@ namespace AndroidSQLite
             else if (ach[0].EducationExp > 30) { numberOfStars = 3; }
             if (created == false)
             {
+                int txtStars = numberOfStars + 1;
                 Achievement educationAch = new Achievement()
                 {
                     Name = "Образование",
-                    Description = "Выполните 10 заданий в категории образование",
+                    Description = "Выполните " + txtStars + "0 заданий в категории образование",
                     Type = "edication",
                     Stars = numberOfStars
                 };
