@@ -7,6 +7,7 @@
     android:padding="10dp">
     <TextView
         android:text="Редактор"
+        android:textColor="#000000"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,9 +49,9 @@
         android:orientation="horizontal">
         <TextView
             android:text="Выбрать категорию: "
+            android:textColor="#606060"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#ffffff"
             android:id="@+id/textCategory" />
         <Spinner
             android:entries="@array/Category"
@@ -66,7 +67,7 @@
         <TextView
             android:text="Выбрать важность: "
             android:layout_width="wrap_content"
-            android:textColor="#ffffff"
+            android:textColor="#606060"
             android:layout_height="wrap_content"
             android:id="@+id/textPriority" />
         <Spinner
@@ -86,16 +87,14 @@
             android:background="@drawable/accept"
             android:layout_gravity="bottom"
             android:layout_marginTop="12dp"
-            android:layout_marginRight="12dp"
-            />
+            android:layout_marginRight="12dp" />
         <Button
             android:background="@drawable/delete"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:id="@+id/DeleteButton"
             android:layout_marginTop="12dp"
-            android:layout_centerHorizontal="true"
-            />
+            android:layout_centerHorizontal="true" />
         <Button
             android:background="@drawable/cancel"
             android:layout_width="48dp"
@@ -103,7 +102,6 @@
             android:id="@+id/CloseButton"
             android:layout_marginTop="12dp"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="12dp"
-            />
+            android:layout_marginLeft="12dp" />
     </RelativeLayout>
 </LinearLayout>

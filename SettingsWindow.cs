@@ -48,7 +48,21 @@ namespace AndroidSQLite
             {
                 Dismiss();
             };
-            
+            Button about = view.FindViewById<Button>(Resource.Id.about);
+            about.Click += delegate
+            {
+                Android.App.AlertDialog.Builder delDialog = new Android.App.AlertDialog.Builder(_activity);
+                delDialog.SetTitle("О приложении");
+                delDialog.SetMessage("BuildUp - это приложение, способное сделать Вас градостроителем, пока вы выполняете свои бытовые дела. Нет времени объяснять, пора строить планы!");
+                delDialog.SetPositiveButton("Поехали!", (senderAlert, args) =>
+                {
+
+                    return;
+                });
+                
+                Dialog dialog = delDialog.Create();
+                dialog.Show();
+            };
             return view;
         }
 
