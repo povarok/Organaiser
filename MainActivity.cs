@@ -649,16 +649,16 @@ namespace AndroidSQLite
 
 
             numberOfStars = 0;
-            if (ach[0].FinansiExp > 10) { numberOfStars = 1; }
-            else if (ach[0].FinansiExp > 20) { numberOfStars = 2; }
-            else if (ach[0].FinansiExp > 30) { numberOfStars = 3; }
+            if (ach[0].FinansiExp > 1) { numberOfStars = 1; }
+            else if (ach[0].FinansiExp > 2) { numberOfStars = 2; }
+            else if (ach[0].FinansiExp > 3) { numberOfStars = 3; }
             if (created == false)
             {
                 Achievement financeAch = new Achievement()
                 {
                     Name = "Финансы",
                     Description = "Выполните 10 заданий в категории финансы",
-                    Type = "finance",
+                    Type = "financi",
                     Stars = numberOfStars
                 };
 

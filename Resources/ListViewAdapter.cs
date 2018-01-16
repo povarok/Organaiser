@@ -174,8 +174,10 @@ namespace AndroidSQLite.Resources
                         _activityByListViewAdapter._fragment2.LoadData();
                    
                 }
-                _activityByListViewAdapter._fragment3.LoadExpData();
+
                 //Обновляем звездочки в достижениях
+                _activityByListViewAdapter._fragment3.LoadExpData();
+                
                 _activityByListViewAdapter._fragment3.LoadAchevementsData();
             };
             
