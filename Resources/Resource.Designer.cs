@@ -1962,11 +1962,11 @@ namespace AndroidSQLite
 			// aapt resource value: 0x7f02006a
 			public const int notification_icon_background = 2130837610;
 			
-			// aapt resource value: 0x7f020077
-			public const int notification_template_icon_bg = 2130837623;
+			// aapt resource value: 0x7f020079
+			public const int notification_template_icon_bg = 2130837625;
 			
-			// aapt resource value: 0x7f020078
-			public const int notification_template_icon_low_bg = 2130837624;
+			// aapt resource value: 0x7f02007a
+			public const int notification_template_icon_low_bg = 2130837626;
 			
 			// aapt resource value: 0x7f02006b
 			public const int notification_tile_bg = 2130837611;
@@ -1978,31 +1978,37 @@ namespace AndroidSQLite
 			public const int other = 2130837613;
 			
 			// aapt resource value: 0x7f02006e
-			public const int sport = 2130837614;
+			public const int refreshbutton = 2130837614;
 			
 			// aapt resource value: 0x7f02006f
-			public const int sport1 = 2130837615;
+			public const int sport = 2130837615;
 			
 			// aapt resource value: 0x7f020070
-			public const int star0 = 2130837616;
+			public const int sport1 = 2130837616;
 			
 			// aapt resource value: 0x7f020071
-			public const int star1 = 2130837617;
+			public const int star0 = 2130837617;
 			
 			// aapt resource value: 0x7f020072
-			public const int star2 = 2130837618;
+			public const int star1 = 2130837618;
 			
 			// aapt resource value: 0x7f020073
-			public const int star3 = 2130837619;
+			public const int star2 = 2130837619;
 			
 			// aapt resource value: 0x7f020074
-			public const int tooltip_frame_dark = 2130837620;
+			public const int star3 = 2130837620;
 			
 			// aapt resource value: 0x7f020075
-			public const int tooltip_frame_light = 2130837621;
+			public const int tooltip_frame_dark = 2130837621;
 			
 			// aapt resource value: 0x7f020076
-			public const int town = 2130837622;
+			public const int tooltip_frame_light = 2130837622;
+			
+			// aapt resource value: 0x7f020077
+			public const int town = 2130837623;
+			
+			// aapt resource value: 0x7f020078
+			public const int trashbutton = 2130837624;
 			
 			static Drawable()
 			{

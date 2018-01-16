@@ -12,14 +12,14 @@
 
         <Button
             android:id="@+id/btnRefresh"
-            android:text="сброс"
-            android:layout_width="wrap_content"
-            android:layout_height="44sp" />
+            android:background="@drawable/refreshbutton"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
         <Button
             android:id="@+id/btnDeleteAll"
-            android:text="Удалить выполненные"
-            android:layout_width="wrap_content"
-            android:layout_height="44sp" />
+            android:background="@drawable/trashbutton"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
     </LinearLayout>
     <Refractored.Fab.FloatingActionButton
         android:clickable="true"

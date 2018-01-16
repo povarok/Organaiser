@@ -22,7 +22,7 @@ namespace AndroidSQLite
 
         private const int TITLE_OFFSET_DIPS = 24;
         private const int TAB_VIEW_PADDING_DIPS = 16;
-        private const int TAB_VIEW_TEXT_SIZE_SP = 9;
+        private const int TAB_VIEW_TEXT_SIZE_SP = 10;
 
         private int mTitleOffset;
 
@@ -54,7 +54,7 @@ namespace AndroidSQLite
 
             //Make sure the tab strips fill the view
             FillViewport = true;
-            this.SetBackgroundColor(Android.Graphics.Color.Rgb(0xE5, 0xE5, 0xE5)); //Gray color
+            this.SetBackgroundColor(Android.Graphics.Color.Rgb(0x55, 0x8B, 0x2F)); //Green color
 
             mTitleOffset = (int)(TITLE_OFFSET_DIPS * Resources.DisplayMetrics.Density);
 
@@ -159,7 +159,7 @@ namespace AndroidSQLite
                 var a = Resources.DisplayMetrics.WidthPixels;
                 TextView tabView = CreateDefaultTabView(Context);
                 tabView.Text = ((FragmentPagerAdapter)adapter).GetItem(i).ToString();
-                tabView.SetTextColor(Android.Graphics.Color.Black);
+                tabView.SetTextColor(Android.Graphics.Color.White);
                 tabView.Tag = i;
                
                 tabView.Click += tabView_Click;
